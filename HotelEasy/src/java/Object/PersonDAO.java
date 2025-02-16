@@ -36,11 +36,70 @@ public class PersonDAO {
         return null;
 
     }
+
+    public void RegisterPerson(PersonDTA p) {
+        try {
+            Connection con = DBUtils.getConnection();
+            String sql = "INSERT INTO Person (PersonID, Password, Name, Gender, Phone, RoleID) VALUES  \n"
+                    + " (?,?,?,?,?,?)";
+            
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setString(1, p.getPersonID());
+            stm.setString(2, p.getPassword());
+            stm.setString(3, p.getName());
+            stm.setString(4, p.getGender());
+            stm.setString(5, p.getPhone());
+            stm.setString(6, p.getRoleName());
+            stm.executeQuery();
+        } catch (Exception e) {
+        }
+    
+    }
+
+    public boolean CheckUserName(String username) {
+        try {
+            Connection con = DBUtils.getConnection();
+            String sql = "select PersonID, Password, Name,Gender,Phone,RoleName from Person p, Role r  where p.PersonID = ? ";
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setString(1, username);
+
+            ResultSet rs = stm.executeQuery();
+
+            if (rs.next()) {
+                return true;
+            }
+
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
+    public boolean checkPassword(String password) {
+        int countLetter = 0;
+        int countNumber = 0;
+
+        if (password.length() < 6 || password.length() > 18) {
+            return false;
+        }
+        for (int i = 0; i < password.length(); i++) {
+            if (Character.isLetter(password.charAt(i))) {
+                countLetter++;
+            }
+            if (Character.isDigit(password.charAt(i))) {
+                countNumber++;
+            }
+        }
+        if (countLetter == 0 || countNumber == 0) {
+            return false;
+        }
+        return true;
+    }
 //lý do mà nó dư một khoảng trắng phía sau theo t nghĩ thì là do lúc tạ bảng mình tạo 255 ký tự nên nó dư ra nhiêu nên phải dùng trim vào xóa khoảng trắng
+
     public static void main(String[] args) {
         PersonDAO p = new PersonDAO();
+        System.out.println(p.checkPassword("D24332"));
 
-        System.out.println(p.Login("quyet", "quyet").toString());
     }
 
 }

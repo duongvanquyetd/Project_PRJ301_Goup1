@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Lenovo
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "RegisterServlet", urlPatterns = {"/RegisterServlet"})
+public class RegisterServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,25 +35,78 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            request.setCharacterEncoding("UTF-8");
+
+
             /* TODO output your page here. You may use following sample code. */
-            String user = request.getParameter("user");
-            String pass = request.getParameter("password");
+            String user = request.getParameter("user").trim();
+            String password = request.getParameter("password").replaceAll(" ", "");
+            String confirmpassword = request.getParameter("confirmpassword").replaceAll(" ", "");
+            String name = request.getParameter("name").trim();
+            String phone = request.getParameter("phone").replaceAll(" ", "");
+            String roleid = request.getParameter("role");
+            String gender = request.getParameter("gender");
             PersonDAO p = new PersonDAO();
-            PersonDTA  pe= p.Login(user, pass);
-            if(pe != null)
-            {
-              out.print("helllo "+pe.getRoleName()+"  "+pe.getName());
             
+
+            
+            int cout = 0;
+            if (user.isEmpty()) {
+                request.setAttribute("username", "empty");
+               cout++;
+               
+            } else  if (p.CheckUserName(user)) {
+                  cout++;
+                request.setAttribute("username", "same");
+                
+            }  
+            
+            if (password.isEmpty()) {
+                  cout++;
+                request.setAttribute("password", "empty");
+                
+            } else if (!p.checkPassword(password)) {
+                  cout++;
+                request.setAttribute("password", "notsuitable");
+                
+
+            }  
+            
+            
+            
+            if (confirmpassword.isEmpty()) {
+                  cout++;
+                request.setAttribute("confirmpassword", "empty");
+                
+            }  else if (!password.equals(confirmpassword)) {
+                request.setAttribute("confirmpassword", "notmatch");
+                
+            } 
+            if(name.isEmpty()){
+                  cout++;
+                request.setAttribute("name", "empty");
+                
             }
-            else
-            {   request.setAttribute("status","false" );
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+            
+            
+            
+            if (phone.isEmpty()) {
+                  cout++;
+                request.setAttribute("phone", "empty");
+                
+            } 
+            if (cout > 0 )
+            {
+                request.getRequestDispatcher("register.jsp").forward(request, response);
             }
-                    
-                    
-                    
-                 
-                  
+            else{
+            out.print(user + "///" + password + "//" + confirmpassword + "//" + name + "//" + phone + "//" + roleid + "//" + gender);
+               PersonDTA  pe = new PersonDTA(user, password, name, gender, phone, roleid);
+               
+               p.RegisterPerson(pe);
+            }
+            
+
         }
     }
 

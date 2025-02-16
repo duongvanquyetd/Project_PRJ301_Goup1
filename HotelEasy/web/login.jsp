@@ -1,9 +1,11 @@
+<%-- 
+    Document   : login
+    Created on : Feb 16, 2025, 11:46:07 AM
+    Author     : Lenovo
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>TODO supply a title</title>
@@ -89,9 +91,9 @@ and open the template in the editor.
             </div> 
             <div class='form_login'>
                 <h1>Login</h1>
-                <form action='#' method='post'>
-                    <div class='form_input'><div class='form_input_image'><img src='image/User.jpg'></div> <div><input type="text" name ="user" ></div></div>
-                    <div class="form_input"><div class='form_input_image'><img src='image/pass.jpg'></div>  <div><input type ="password" name ='password'></div>  </div>
+                <form action='LoginServlet' method='post'>
+                    <div class='form_input'><div class='form_input_image'><img src='image/User.jpg'></div> <div><input type="text" name ="user" placeholder="Nhập tên tài khoản" ></div></div>
+                    <div class="form_input"><div class='form_input_image'><img src='image/pass.jpg'></div>  <div><input type ="password" name ='password' placeholder="Nhập mật khẩu" ></div>  </div>
                     <div class ="button">
                         <input type='submit' value='Login'>              </div>
                     <div style='margin-top: 20px;color: rgb(26,188,156)'> 

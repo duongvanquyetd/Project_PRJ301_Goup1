@@ -1,0 +1,333 @@
+/* Reset CSS */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    scroll-behavior: smooth; /* Cuộn mượt */
+}
+
+/* Header */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.container_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+header img {
+    height: 50px; /* Điều chỉnh kích thước logo */
+    transition: transform 0.3s ease;
+}
+
+header img:hover {
+    transform: scale(1.1); /* Hiệu ứng phóng to khi hover */
+}
+
+nav {
+    display: flex;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #ff6347; /* Đổi màu khi hover */
+}
+
+/* Search Bar */
+.search-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    margin: 20px auto;
+    max-width: 1200px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-input, #room-type, #check-in, #check-out {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-input:focus, #room-type:focus, #check-in:focus, #check-out:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+#search-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#search-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Hiệu ứng nổi lên khi hover */
+}
+
+/* Image Section */
+.img-inf {
+    display: flex;
+    gap: 10px;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#img-left {
+    flex: 2;
+}
+
+#img-left img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+#img-left img:hover {
+    transform: scale(1.02); /* Hiệu ứng phóng to khi hover */
+}
+
+#img-right {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.img-div {
+    flex: 1 1 calc(50% - 10px);
+}
+
+.img-div img {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.img-div img:hover {
+    transform: scale(1.05); /* Hiệu ứng phóng to khi hover */
+}
+
+/* Room Details */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.room-details {
+    margin-bottom: 30px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.room-details h2 {
+    font-size: 2em;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.room-details img {
+    width: 300px;
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.room-details img:hover {
+    transform: scale(1.05); /* Hiệu ứng phóng to khi hover */
+}
+
+.room-highlights {
+    margin-bottom: 20px;
+}
+
+.room-highlights p {
+    font-size: 1.2em;
+    color: #555;
+    margin: 5px 0;
+}
+
+.room-offers h3 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.room-offers ul {
+    list-style-type: circle;
+    padding-left: 20px;
+}
+
+.room-offers ul li {
+    font-size: 1em;
+    color: #555;
+    margin: 5px 0;
+}
+
+.room-offers .note {
+    font-size: 0.9em;
+    color: #888;
+    margin-top: 10px;
+}
+
+/* Amenities */
+.amenities {
+    margin-bottom: 30px;
+}
+
+.amenities h2 {
+    font-size: 2em;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.amenities-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.amenity-item {
+    background-color: #f8f9fa;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1em;
+    color: #333;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.amenity-item:hover {
+    transform: translateY(-5px); /* Hiệu ứng nổi lên khi hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Booking Form */
+.booking-form-section {
+    margin-bottom: 30px;
+}
+
+.booking-form-section h2 {
+    font-size: 2em;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
+    font-size: 1em;
+    color: #555;
+}
+
+.form-group input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.form-group button {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.form-group button:hover {
+    background-color: #218838;
+    transform: translateY(-2px); /* Hiệu ứng nổi lên khi hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .img-inf {
+        flex-direction: column;
+    }
+
+    .img-div {
+        flex: 1 1 100%;
+    }
+
+    .room-details {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .room-details img {
+        width: 100%;
+    }
+
+    .amenities-list {
+        flex-direction: column;
+    }
+
+    .booking-form {
+        width: 100%;
+    }
+}

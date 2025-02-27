@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +8,9 @@
     <link rel="stylesheet" href="RegisterHotel.css">
 </head>
 <body>
+    
+    <%@ include file="../Header/Header.jsp" %>
+
     <!--Choose-->
     <div class="choose">
         <a href="">

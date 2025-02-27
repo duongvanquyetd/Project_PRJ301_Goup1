@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -9,6 +10,8 @@
 </head>
 
 <body>
+    <%@ include file="../Header/Header.jsp" %>
+
 
     <div class="content-container">
         <!--Choose-->
@@ -26,7 +29,7 @@
             <div class="image-container">
                 <img src="https://demoda.vn/wp-content/uploads/2022/01/hinh-anh-con-meo-ngo-nghinh.jpg" alt="">
             </div>
-            <div class="stars">★★★★★</div>
+            <div class="stars">âââââ</div>
             <div class="hotel-name">Name</div>
             <div class="location">location</div>
             <div>

@@ -1,14 +1,20 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="vi">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Change Hotel Infomation</title>
+    <title>Change Hotel Information</title>
     <link rel="stylesheet" href="ChangeHotelInfo.css">
 </head>
 
 <body>
+    <%@ include file="../Header/Header.jsp" %>
+
+
+
     <!--Choose-->
     <div class="choose">
         <a href="">

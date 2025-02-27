@@ -1,12 +1,19 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="RegisterRoom.css">
+    <title>Change Hotel Information</title>
+    <link rel="stylesheet" href="ChangeRoomInfo.css">
 </head>
+
 <body>
+    
+    <%@ include file="../Header/Header.jsp" %>
+
+    <!--Choose-->
     <div class="choose">
         <a href="">
             <h3>Booking Management</h3>
@@ -48,6 +55,7 @@
             <input type="text" class="input-field" placeholder="Input Type" >
         </div>
     </div>
-    <button class="save-btn">Register</button>
+    <button class="save-btn">Save</button>
 </body>
+
 </html>

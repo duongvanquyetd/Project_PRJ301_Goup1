@@ -53,9 +53,10 @@
         }
         .img img{
             width: 100%;
+            border-radius: 15px;
         }
         body{
-            background-color: rgb(26,188,156);
+            background-color: white;
             text-align: center;
             justify-content: center;
             display: flex;
@@ -63,7 +64,7 @@
 
         .button input{
             padding: 5px 20px;
-            background-color: rgb(26,188,156);
+            background-color: #333;
             color:white;
 
             padding: 5px 130px;
@@ -74,7 +75,7 @@
             border-color: white;
             padding:15px;
             margin-top: 0px;
-            background-color: rgb(26,188,156);
+            background-color: #333;
             color:white;
         }
         .form_input_image img{
@@ -127,7 +128,8 @@
 
 
                     <div class ="button">
-                        <input type='submit' value='Login'>              </div>
+                        <input type='submit' value='Login'>              
+                    </div>
                     <div style='margin-top: 20px;color: rgb(26,188,156)'> 
                         Don't have a account? <a href="#">SignUp Now</a>
                     </div>

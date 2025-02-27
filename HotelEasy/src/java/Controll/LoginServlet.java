@@ -42,7 +42,16 @@ public class LoginServlet extends HttpServlet {
             PersonDTA  pe= p.Login(user, pass);
             if(pe != null)
             {
-              out.print("helllo "+pe.getRoleName()+"  "+pe.getName());
+                
+              if(pe.getRoleName().equalsIgnoreCase("Admin"))
+              {
+                  response.sendRedirect("adminreport");
+              }
+              else
+              {
+                  out.print("helllo "+pe.getRoleName()+"  "+pe.getName());
+              }
+              
             
             }
             else

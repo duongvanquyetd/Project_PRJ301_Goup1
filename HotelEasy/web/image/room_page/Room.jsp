@@ -19,7 +19,7 @@
 <body>
     <header>
         <div class="container_header">
-            <a href="#"><img src="img/logo.png" alt="hint error"></a>
+            <a href="#"><img src="img_room/logo.png" alt="hint error"></a>
             <nav>
                 <div><a href="#">Home</a>
                     <a href="#">Favourite</a>
@@ -50,13 +50,13 @@
 
     <div class="img-inf">
         <div id="img-left">
-            <img src="img/Screenshot 2025-02-17 003405.png" alt="">
+            <img src="img_room/Screenshot 2025-02-17 003405.png" alt="">
         </div>
         <div id="img-right">
-            <div class="img-div"><img src="img/Screenshot 2025-02-17 003218.png" alt=""></div>
-            <div class="img-div"><img src="img/Screenshot 2025-02-17 003308.png" alt=""></div>
-            <div class="img-div"><img src="img/Screenshot 2025-02-17 003329.png" alt=""></div>
-            <div class="img-div"><img src="img/Screenshot 2025-02-17 003346.png" alt=""></div>
+            <div class="img-div"><img src="img_room/ Screenshot 2025-02-17 003218.png" alt=""></div>
+            <div class="img-div"><img src="img_room/Screenshot 2025-02-17 003308.png" alt=""></div>
+            <div class="img-div"><img src="img_room/Screenshot 2025-02-17 003329.png" alt=""></div>
+            <div class="img-div"><img src="img_room/Screenshot 2025-02-17 003346.png" alt=""></div>
             
            
         </div>

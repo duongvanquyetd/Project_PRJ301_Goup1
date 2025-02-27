@@ -13,6 +13,14 @@ public class PersonDTA {
 
     private String PersonID, Password, Name,Gender,Phone,RoleName;
 
+    public PersonDTA(String PersonID, String Name, String Gender, String Phone, String RoleName) {
+        this.PersonID = PersonID;
+        this.Name = Name;
+        this.Gender = Gender;
+        this.Phone = Phone;
+        this.RoleName = RoleName;
+    }
+  
     public PersonDTA(String PersonID, String Password, String Name, String Gender, String Phone, String RoleName) {
         this.PersonID = PersonID;
         this.Password = Password;

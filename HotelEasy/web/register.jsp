@@ -42,17 +42,21 @@
             height:23px;
             border-left: none;
 
+
         }
         .img{
             width: 500px;
             height:480px;
+
         }
         .img img{
             width: 100%;
             height:100%;
+            border-radius: 15px;
+            border-right: none;
         }
         body{
-            background-color: rgb(26,188,156);
+            background-color:white;
             text-align: center;
             justify-content: center;
             display: flex;
@@ -60,9 +64,8 @@
 
         .button input{
             padding: 5px 20px;
-            background-color: rgb(26,188,156);
+            background-color: #333;
             color:white;
-
             padding: 5px 130px;
             font-size: large;
         }
@@ -71,7 +74,7 @@
             border-color: white;
             padding:15px;
             margin-top: 0px;
-            background-color: rgb(26,188,156);
+            background-color: #333;
             color:white;
         }
         .form_input_image img{
@@ -104,7 +107,7 @@
 
                     <%
 
-                        String username = (String)request.getAttribute("username");                        
+                        String username = (String) request.getAttribute("username");
                         if (username != null) {
                             if (username.equals("empty")) {
                     %>
@@ -126,13 +129,11 @@
 
 
                     <div class="form_input"><div class='form_input_image'><img src='image/pass.jpg'></div>  <div><input type ="password" name ='password' placeholder="Nhập mật khẩu" ></div></div>
-                     <%
+                            <%                         String password = (String) request.getAttribute("password");
 
-                        String password = (String)request.getAttribute("password");         
-                       
-                        if (password != null ) {
-                            if (password.equals("empty")) {
-                    %>
+                                if (password != null) {
+                                    if (password.equals("empty")) {
+                            %>
                     <div class="message">Không được để trống !</div>
 
                     <%
@@ -142,19 +143,16 @@
                     <%
                             }
 
-
                         }
 
                     %>
-                    
-                    <div class="form_input"><div class='form_input_image'><img src='image/pass.jpg'></div>  <div><input type ="password" name ='confirmpassword' placeholder="Nhập lại  mật khẩu" ></div></div>
-                    <%
 
-                        String confirmpassword = (String)request.getAttribute("confirmpassword");         
-                       
-                        if (confirmpassword != null ) {
-                            if (confirmpassword.equals("empty")) {
-                    %>
+                    <div class="form_input"><div class='form_input_image'><img src='image/pass.jpg'></div>  <div><input type ="password" name ='confirmpassword' placeholder="Nhập lại  mật khẩu" ></div></div>
+                            <%                        String confirmpassword = (String) request.getAttribute("confirmpassword");
+
+                                if (confirmpassword != null) {
+                                    if (confirmpassword.equals("empty")) {
+                            %>
                     <div class="message">Không được để trống !</div>
 
                     <%
@@ -164,48 +162,46 @@
                     <%
                             }
 
-
                         }
 
                     %>
-                    
-                    
-                    
-                    
-                    <div class="form_input"><div class=''><img style='width:25px' src='image/name.jpg'></div>  <div><input style="margin-left:9px" type ="text" name ='name' placeholder="Nhập Họ và Tên " ></div></div>
-                     <%
 
-                        String name = (String)request.getAttribute("name");         
-                       
-                        if (name != null ) {
-                            if (name.equals("empty")) {
-                    %>
+
+
+
+                    <div class="form_input"><div class=''><img style='width:25px' src='image/name.jpg'></div>  <div><input style="margin-left:9px" type ="text" name ='name' placeholder="Nhập Họ và Tên " ></div></div>
+                            <%                         String name = (String) request.getAttribute("name");
+
+                                if (name != null) {
+                                    if (name.equals("empty")) {
+                            %>
                     <div class="message">Không được để trống !</div>
 
                     <%
-                    }}
+                            }
+                        }
                     %>
-                    
-                    
-                    <div class="form_input"><div class='form_input_image'><img src='image/phone.jpg'></div>  <div><input type ="text" name ='phone' placeholder="Nhập số điện thoại" ></div></div>
-                   
-                      <%
 
-                        String phone = (String)request.getAttribute("phone");         
-                       
-                        if (phone != null ) {
+
+                    <div class="form_input"><div class='form_input_image'><img src='image/phone.jpg'></div>  <div><input type ="text" name ='phone' placeholder="Nhập số điện thoại" ></div></div>
+
+                    <%
+                        String phone = (String) request.getAttribute("phone");
+
+                        if (phone != null) {
                             if (phone.equals("empty")) {
                     %>
                     <div class="message">Không được để trống !</div>
 
                     <%
-                    }}
+                            }
+                        }
                     %>
-                    
-                    
-                    
-                    
-                    
+
+
+
+
+
                     <div class="" style="display:flex;margin-left: 140px">
                         <div style="color:rgb(26,188,156)">
                             Đăng ký làm : 
@@ -222,7 +218,7 @@
 
                     </div>
                     <div class ="button">
-                        <input type='submit' value='Register'>              </div>
+                        <input type='submit' value='Register'> </div>
 
 
 

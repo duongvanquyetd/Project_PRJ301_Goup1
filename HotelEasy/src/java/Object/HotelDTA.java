@@ -13,6 +13,38 @@ public class HotelDTA {
     private String HotelID, PersonName,city, district , Streets,NameHotel;
     private String RateHotel;
     private int approved;
+    private  double  discount;
+    private  double  price;
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public HotelDTA(String HotelID, String city, String district, String Streets, String NameHotel, String RateHotel, double discount, double price) {
+        this.HotelID = HotelID;
+        this.city = city;
+        this.district = district;
+        this.Streets = Streets;
+        this.NameHotel = NameHotel;
+        this.RateHotel = RateHotel;
+        this.discount = discount;
+        this.price = price;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    
+    
 
     public HotelDTA(String HotelID, String PersonID, String city, String district, String Streets, String NameHotel, String RateHotel, int approved) {
         this.HotelID = HotelID;
@@ -23,6 +55,7 @@ public class HotelDTA {
         this.NameHotel = NameHotel;
         this.RateHotel = RateHotel;
         this.approved = approved;
+        
     }
 
     public HotelDTA() {

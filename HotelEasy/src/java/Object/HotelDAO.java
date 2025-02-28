@@ -18,6 +18,36 @@ import ultilies.DBUtils;
  */
 public class HotelDAO {
 
+    public List<HotelDTA> getHotelDiscount() {
+        try {
+            Connection con = DBUtils.getConnection();
+            String sql = "SELECT TOP(5) H.HotelID,H.City,H.District,H.Streets,H.NameHotel,H.RateHotel,R.Discount,R.Price "
+                    + "FROM Hotel H,Room R\n"
+                    + "WHERE H.HotelID =R.HotelID AND Approved != 0\n"
+                    + "ORDER BY R.Discount  DESC";
+            PreparedStatement stm = con.prepareStatement(sql);
+
+            List<HotelDTA> list = new ArrayList();
+            ResultSet rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                String id = rs.getString("HotelID").trim();
+                String city = rs.getString("City");
+                String district = rs.getString("District");
+                String streets = rs.getString("Streets");
+                String nameHotel = rs.getString("NameHotel");
+                String rate = rs.getString("RateHotel");
+                double discount =rs.getDouble("Discount");
+                double price = rs.getDouble("Price");
+                HotelDTA ht = new HotelDTA(id, city, district, streets, nameHotel,rate,discount,price);
+                list.add(ht);
+            }
+            return  list;
+        } catch (Exception e) {
+        }
+        return  null;
+
+    }
+
     public List<HotelDTA> getNotApproveHotel() {
         try {
             Connection con = DBUtils.getConnection();
@@ -61,13 +91,9 @@ public class HotelDAO {
             PreparedStatement stm = con.prepareStatement(sql);
 
             ResultSet rs = stm.executeQuery();
-            if(rs.next())
-            {
-               return rs.getInt("NumberOfHotel"); 
+            if (rs.next()) {
+                return rs.getInt("NumberOfHotel");
             }
-            
-                    
-                  
 
         } catch (Exception e) {
         }
@@ -76,11 +102,9 @@ public class HotelDAO {
 
     public static void main(String[] args) {
         HotelDAO d = new HotelDAO();
-       
-         
-                 System.out.println(d.NumberOfHotel());
-                         
-                         
+
+        System.out.println(d.getHotelDiscount());
+
         List<HotelDTA> list = d.getNotApproveHotel();
         for (HotelDTA hotelDTA : list) {
             System.out.println(hotelDTA);

@@ -5,10 +5,14 @@
  */
 package Controll;
 
+import Object.BookingDAO;
 import Object.HotelDAO;
 import Object.HotelDTA;
 import Object.HotelImageDAO;
 import Object.HotelImageDTA;
+import Object.PersonDAO;
+import Object.PersonDTA;
+import Object.RoomDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -22,8 +26,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Lenovo
  */
-@WebServlet(name = "Admin_ManagerHotel", urlPatterns = {"/adminmanagerhotel"})
-public class Admin_ManagerHotel extends HttpServlet {
+@WebServlet(name = "AdminController", urlPatterns = {"/AdminController"})
+public class AdminController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,26 +42,55 @@ public class Admin_ManagerHotel extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            HotelDAO h = new HotelDAO();
             /* TODO output your page here. You may use following sample code. */
-            
-             String HotelID = request.getParameter("hotelid");
-             if(HotelID != null && !HotelID.trim().isEmpty())
-             {
-                 h.AppvovedHotel(HotelID);
-             }
-            
-            
-            
-            
-           
-            List<HotelDTA> listH = h.getNotApproveHotel();
-            HotelImageDAO hm = new HotelImageDAO();
-            List<HotelImageDTA> listI = hm.getNotApHotel();
-        
-            request.setAttribute("listA", listH);
-            request.setAttribute("listB", listI);
-            request.getRequestDispatcher("Admin_managerHotel.jsp").forward(request, response);
+            String action = request.getParameter("action");
+
+            if (action == null || action.isEmpty()) {
+                HotelDAO h = new HotelDAO();
+                int nhotel = h.NumberOfHotel();
+                PersonDAO p = new PersonDAO();
+                int nUser = p.NumberOfUser();
+                int nHotelOwner = p.NumberOfHotelOwner();
+                RoomDAO r = new RoomDAO();
+                int nRoom = r.NumberOfRoom();
+                BookingDAO d = new BookingDAO();
+                int nBooking = d.NumberOfBooking();
+                long nPrice = d.NumberOfBookingPrice();
+
+                request.setAttribute("nhotel", nhotel);
+                request.setAttribute("nuser", nUser);
+                request.setAttribute("nhotelowner", nHotelOwner);
+                request.setAttribute("nroom", nRoom);
+                request.setAttribute("nbooking", nBooking);
+                request.setAttribute("nprice", nPrice);
+                request.getRequestDispatcher("Admin_Reports.jsp").forward(request, response);
+            } else if (action != null && action.equals("ManagerAccount")) {
+                PersonDAO p = new PersonDAO();
+                String userid = request.getParameter("userid");
+
+                if (userid != null && !userid.isEmpty()) {
+                    p.deletebyUserid(userid);
+                }
+
+                List<PersonDTA> list = p.getAllPerson();
+
+                request.setAttribute("list", list);
+                request.getRequestDispatcher("Admin_ManagerAcount.jsp").forward(request, response);
+            } else if (action != null && action.equals("ManagerHotel")) {
+                HotelDAO h = new HotelDAO();
+                /* TODO output your page here. You may use following sample code. */
+
+                String HotelID = request.getParameter("hotelid");
+                if (HotelID != null && !HotelID.trim().isEmpty()) {
+                    h.AppvovedHotel(HotelID);
+                }
+                List<HotelDTA> listH = h.getNotApproveHotel();
+                HotelImageDAO hm = new HotelImageDAO();
+                List<HotelImageDTA> listI = hm.getNotApHotel();
+                request.setAttribute("listA", listH);
+                request.setAttribute("listB", listI);
+                request.getRequestDispatcher("Admin_managerHotel.jsp").forward(request, response);
+            }
         }
     }
 

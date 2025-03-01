@@ -1,0 +1,146 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    scroll-behavior: smooth;
+}
+
+.choose {
+    display: flex;
+    gap: 10px; /* Reduced gap */
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 10px; /* Reduced margin */
+}
+
+.choose a {
+    color: white;
+    background-color: #18375D;
+    text-decoration: none;
+    width: 40%; /* Reduced width */
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    padding: 10px 0; /* Reduced padding */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-size: 14px; /* Reduced font size */
+}
+
+.choose a:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.choose a:hover {
+    background-color: #18375D;
+    transform: scale(1.05);
+}
+
+/* Container chứa các phòng */
+.rooms-container {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-around; 
+    gap: 20px; 
+    padding: 20px;
+}
+
+/* Card hiển thị thông tin từng phòng */
+.room {
+    width: calc(33.33% - 40px); /* Đảm bảo 3 phòng trên một hàng */
+    max-width: 350px; 
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+.room-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #1f4e78;
+    text-align: center;
+}
+
+
+.room-image img {
+    width: 100%;
+    border-radius: 8px;
+    transition: transform 0.3s;
+}
+
+
+.room-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.features li{
+    list-style-type: none;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.edit {
+    background-color: #1f4e78;
+    color: white;
+}
+
+.edit:hover {
+    background-color: #163a57;
+}
+
+.delete {
+    background-color: black;
+    color: white;
+}
+
+.delete:hover {
+    background-color: #333;
+}
+
+.add-more {
+    background-color: #1f4e78;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.add-more:hover {
+    background-color: #163a57;
+}
+
+.checkmark {
+    color: #28a745; /* Green color */
+    font-size: 16px; /* Adjust the size as needed */
+}
+

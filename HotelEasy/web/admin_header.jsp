@@ -28,9 +28,9 @@
     <div class="header">
         <div class="logo"><img src="image/User.jpg"></div>
         <div class="menu">
-            <div><a href="adminreport" class="link">Report</a></div>
-            <div><a href="adminmanagerhotel" class="link">Manager Hotel</a></div>
-            <div><a href="AdminManagerAcount" class="link">Manager Account</a></div>
+            <div><a href="AdminController" class="link">Report</a></div>
+            <div><a href="AdminController?action=ManagerHotel" class="link">Manager Hotel</a></div>
+            <div><a href="AdminController?action=ManagerAccount" class="link">Manager Account</a></div>
         </div>
         <div>Hi Admin | <a href="login.jsp">Logout</a></div>
     </div>

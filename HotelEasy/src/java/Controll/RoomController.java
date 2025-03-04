@@ -7,6 +7,8 @@ package Controll;
 
 import Object.RoomDAO;
 import Object.RoomDTO;
+import Object.RoomImageDAO;
+import Object.RoomImageDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -33,17 +35,25 @@ public class RoomController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+        try {
             RoomDAO dao = new RoomDAO();
             List<RoomDTO> list = dao.load();
+
             
             request.setAttribute("listRoom", list);
+
+            RoomImageDAO imgdao = new RoomImageDAO();
+            List<RoomImageDTO> listRoomImg = imgdao.load();
             
-            
-            
-            
-            
+            request.setAttribute("roomImg", listRoomImg);
+
+            // Chuyển hướng đến JSP
+            request.getRequestDispatcher("../Room.jsp").forward(request, response);
+
+        } catch (Exception e) {
+            System.out.println("Error in RoomController: " + e.getMessage());
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Server Error.");
         }
     }
 

@@ -48,7 +48,6 @@ public class RoomDAO {
 
             if (rs != null) {
                 while (rs.next()) {
-                    String img = rs.getString("Path");
                     int HotelID = rs.getInt("HotelID");
                     int RoomID = rs.getInt("RoomID");
                     int CapacityChild = rs.getInt("CapacityChild");
@@ -72,7 +71,7 @@ public class RoomDAO {
 
     public static void main(String[] args) {
         RoomDAO d = new RoomDAO();
-        System.out.println(d.NumberOfRoom());
+        System.out.println(d);
 
     }
 }

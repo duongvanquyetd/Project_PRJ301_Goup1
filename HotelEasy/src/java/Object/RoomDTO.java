@@ -11,7 +11,6 @@ package Object;
  */
 public class RoomDTO {
 
-    private String img;
     private int HotelID;
     private int RoomID;
     private int CapacityChild;
@@ -21,12 +20,16 @@ public class RoomDTO {
     private String TypeRoom;
     private int Status;
 
-    public String getImg() {
-        return img;
-    }
+    public RoomDTO(int HotelID, int RoomID, int CapacityChild, int CapacityAdult, int Price, int Discount, String TypeRoom, int Status) {
 
-    public void setImg(String img) {
-        this.img = img;
+        this.HotelID = HotelID;
+        this.RoomID = RoomID;
+        this.CapacityChild = CapacityChild;
+        this.CapacityAdult = CapacityAdult;
+        this.Price = Price;
+        this.Discount = Discount;
+        this.TypeRoom = TypeRoom;
+        this.Status = Status;
     }
 
     public int getHotelID() {
@@ -95,9 +98,7 @@ public class RoomDTO {
 
     @Override
     public String toString() {
-        return "RoomDTO{" + "img=" + img + ", HotelID=" + HotelID + ", RoomID=" + RoomID + ", CapacityChild=" + CapacityChild + ", CapacityAdult=" + CapacityAdult + ", Price=" + Price + ", Discount=" + Discount + ", TypeRoom=" + TypeRoom + ", Status=" + Status + '}';
+        return "RoomDTO{" + "HotelID=" + HotelID + ", RoomID=" + RoomID + ", CapacityChild=" + CapacityChild + ", CapacityAdult=" + CapacityAdult + ", Price=" + Price + ", Discount=" + Discount + ", TypeRoom=" + TypeRoom + ", Status=" + Status + '}';
     }
-    
-    
 
 }

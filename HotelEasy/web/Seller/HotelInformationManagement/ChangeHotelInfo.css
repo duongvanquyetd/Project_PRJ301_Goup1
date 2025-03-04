@@ -63,30 +63,30 @@ h2 {
     padding: 12px; /* Reduced padding */
     text-align: center;
     border-radius: 5px;
-    font-size: 16px; /* Reduced font size */
+    font-size: 16px; 
 }
 
 .input-field {
     flex: 1;
     background-color: lightgray;
-    padding: 12px; /* Reduced padding */
-    margin-left: 12px; /* Reduced margin */
+    padding: 12px; 
+    margin-left: 12px; 
     border-radius: 5px;
     border: none;
     color: gray;
-    font-size: 16px; /* Reduced font size */
+    font-size: 16px; 
 }
 
 .save-btn {
     background-color: green;
     color: white;
-    padding: 15px 30px; /* Reduced padding */
+    padding: 15px 30px; 
     border: none;
     border-radius: 5px;
     cursor: pointer;
     display: block;
-    margin: 20px auto; /* Centered button and increased margin */
-    font-size: 16px; /* Reduced font size */
+    margin: 20px auto; 
+    font-size: 16px; 
 }
 
 .save-btn:hover {

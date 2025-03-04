@@ -15,7 +15,6 @@ public class HotelDTA {
     private int approved;
     private  double  discount;
     private  double  price;
-
     public double getDiscount() {
         return discount;
     }

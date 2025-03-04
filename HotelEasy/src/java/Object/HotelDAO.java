@@ -17,6 +17,10 @@ import ultilies.DBUtils;
  * @author Lenovo
  */
 public class HotelDAO {
+    
+    
+    
+    
 
     public List<HotelDTA> getHotelDiscount() {
         try {
@@ -28,7 +32,7 @@ public class HotelDAO {
             PreparedStatement stm = con.prepareStatement(sql);
 
             List<HotelDTA> list = new ArrayList();
-            ResultSet rs = stm.executeQuery(sql);
+            ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 String id = rs.getString("HotelID").trim();
                 String city = rs.getString("City");
@@ -48,6 +52,11 @@ public class HotelDAO {
 
     }
 
+    
+    
+    
+    
+    
     public List<HotelDTA> getNotApproveHotel() {
         try {
             Connection con = DBUtils.getConnection();
@@ -103,9 +112,9 @@ public class HotelDAO {
     public static void main(String[] args) {
         HotelDAO d = new HotelDAO();
 
-        System.out.println(d.getHotelDiscount());
+       
 
-        List<HotelDTA> list = d.getNotApproveHotel();
+        List<HotelDTA> list = d.getHotelDiscount();
         for (HotelDTA hotelDTA : list) {
             System.out.println(hotelDTA);
 

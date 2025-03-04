@@ -364,7 +364,7 @@ footer {
             <div class="card-img-container">
                 <img style="border-radius: 10px"; src="image/hotel/KhachSanPageMain/HT1.jpg" class="card-img-top" alt="Hotel">
                 <span class="discount-badge">Tiết kiệm -25% </span>
-                <span class="start"> <img style="margin-left:75px;" src="image/star/5sao.png" ></span>
+                <span class="start"> <img style="margin-left:75px;" src="image/Star/5sao.png" ></span>
                 <i class="fa-solid fa-heart favorite-icon"></i>
             </div>
             <div class="card-body">
@@ -392,7 +392,7 @@ footer {
             <div class="card-img-container">
                 <img style="border-radius: 10px"; src="image/hotel/KhachSanPageMain/HT2.jpg" class="card-img-top" alt="Hotel">
                 <span class="discount-badge">Tiết kiệm -50%</span>
-                <span class="start"> <img style="margin-left:75px;" src="image/star/5sao.png"></span>
+                <span class="start"> <img style="margin-left:75px;" src="image/Star/5sao.png"></span>
                 <i class="fa-solid fa-heart favorite-icon"></i>
             </div>
             <div class="card-body">
@@ -420,7 +420,7 @@ footer {
             <div class="card-img-container">
                 <img style="border-radius: 10px"; src="image/hotel/KhachSanPageMain/HT3.jpg" class="card-img-top" alt="Hotel">
                 <span class="discount-badge">Tiết kiệm -50%</span>
-                <span class="start"> <img style="margin-left:75px;" src="image/star/5sao.png" ></span>
+                <span class="start"> <img style="margin-left:75px;" src="image/Star/5sao.png" ></span>
                 <i class="fa-solid fa-heart favorite-icon"></i>
             </div>
             <div class="card-body">
@@ -449,7 +449,7 @@ footer {
             <div class="card-img-container">
                 <img style="border-radius: 10px"; src="image/hotel/KhachSanPageMain/HT2.jpg" class="card-img-top" alt="Hotel">
                 <span class="discount-badge">Tiết kiệm -50%</span>
-                <span class="start"> <img style="margin-left:75px;" src="image/star/5sao.png" ></span>
+                <span class="start"> <img style="margin-left:75px;" src="image/Star/5sao.png" ></span>
                 <i class="fa-solid fa-heart favorite-icon"></i>
             </div>
             <div class="card-body">
@@ -478,7 +478,7 @@ footer {
             <div class="card-img-container">
                 <img style="border-radius: 10px"; src="image/hotel/KhachSanPageMain/HT2.jpg" class="card-img-top" alt="Hotel">
                 <span class="discount-badge">Tiết kiệm -50%</span>
-                <span class="start"> <img style="margin-left:75px;" src="image/star/5sao.png" ></span>
+                <span class="start"> <img style="margin-left:75px;" src="image/Star/5sao.png" ></span>
                 <i class="fa-solid fa-heart favorite-icon"></i>
             </div>
             <div class="card-body">

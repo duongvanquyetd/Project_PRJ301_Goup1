@@ -1,3 +1,7 @@
+<%@page import="Object.HotelImageDTA"%>
+<%@page import="Object.HotelDTA"%>
+<%@page import="Object.HotelDAO"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -311,10 +315,8 @@ footer {
             <a href="#"><img src="image/hotel/KhachSanPageMain/Logo.png" alt="hint error"></a>
             <nav>
                 <div class="Menu">
-                    <a href="#">Home</a>
-                    <a style="margin-right: 550px;
-                    background-color: dimgrey;padding: 10px 15px;border-radius: 20px;
-                    border: 1px solid white;" href="#">Favourite</a>
+                    <a  style="background-color: dimgrey;padding: 10px 15px; border-radius: 20px; border: 1px solid white;"href="#">Home</a>
+                    <a style="margin-right: 550px;" href="#">Favourite</a>
                     <a href="#">Login</a>
                     <a href="#">Register</a>
                 </div>
@@ -360,148 +362,46 @@ footer {
 
     <!-- Phần hiển thị các phòng -->
     <div class="Main_page">
+        <% 
+            List<HotelDTA>list = (List<HotelDTA>)request.getAttribute("List");
+            List<HotelImageDTA> i = (List<HotelImageDTA>)request.getAttribute("Img");
+            
+            for (HotelDTA h : list) {
+                    
+                
+        %>
         <div class="card">
             <div class="card-img-container">
-                <img style="border-radius: 10px"; src="image/hotel/KhachSanPageMain/HT1.jpg" class="card-img-top" alt="Hotel">
-                <span class="discount-badge">Tiết kiệm -25% </span>
-                <span class="start"> <img style="margin-left:75px;" src="image/star/5sao.png" ></span>
-                <i class="fa-solid fa-heart favorite-icon"></i>
+                <% 
+                    for (HotelImageDTA b : i) {
+                        if(h.getHotelID().equals(b.getHotelID())){
+                            
+                        
+                       
+                    %>
+                    <img style="border-radius: 10px"; src="<%=b.getImage().get(0) %>" class="card-img-top" alt="Hotel">
+                <% }
+                }
+                %>
+                <span class="discount-badge">Tiết kiệm <%=h.getDiscount()%>% </span>
+                <span class="start"> <img style="margin-left:75px;" src="<%=h.getRateHotel() %>" ></span>
             </div>
             <div class="card-body">
-                <div class="rating">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <h5>Wink Hottel DaNang Centre</h5>
+                <h5><%=h.getNameHotel()%></h5>
                 <p class="location">
-                    <a href="https://www.google.com/maps?q=12+Thùy+Vân,+TP+Đà+Nẵng" target="_blank">
-                        12 Thùy Vân, TP Đà Nẵng
+                    <a href="https://www.google.com/maps?q=<%=h.getStreets()+"+"+ h.getDistrict()+"+"+h.getCity() %>" target="_blank">
+                        <%=h.getStreets()+","+ h.getDistrict()+","+h.getCity() %>
                     </a>
                 </p>
                 <p class="price">
-                    <del>1,490,000 VND</del> <!-- del dùng để gạch ngang-->
-                    <strong>1,175,000 VND</strong>
+                    <del><%=h.getPrice()  %>VND</del> <!-- del dùng để gạch ngang-->
+                    <strong><%=h.getPrice() -(h.getDiscount()* h.getPrice()) %>VND</strong>
                 </p>
             </div>
         </div>
-
-        <div class="card">
-            <div class="card-img-container">
-                <img style="border-radius: 10px"; src="image/hotel/KhachSanPageMain/HT2.jpg" class="card-img-top" alt="Hotel">
-                <span class="discount-badge">Tiết kiệm -50%</span>
-                <span class="start"> <img style="margin-left:75px;" src="image/star/3sao.png" ></span>
-                <i class="fa-solid fa-heart favorite-icon"></i>
-            </div>
-            <div class="card-body">
-                <div class="rating">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <h5>Khách sạn Riva Vũng Tàu</h5>
-                <p class="location">
-                    <a href="https://www.google.com/maps?q=03-05+Thùy+Vân,+TP+Vũng+Tàu" target="_blank">
-                        03-05 Thùy Vân, TP Vũng Tàu
-                    </a>
-                </p>
-                <p class="price">
-                    <del>1,800,000 VND</del> 
-                    <strong>900,000 VND</strong>
-                </p>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-img-container">
-                <img style="border-radius: 10px"; src="image/hotel/KhachSanPageMain/HT3.jpg" class="card-img-top" alt="Hotel">
-                <span class="discount-badge">Tiết kiệm -50%</span>
-                <span class="start"> <img style="margin-left:75px;" src="image/star/5sao.png" ></span>
-                <i class="fa-solid fa-heart favorite-icon"></i>
-            </div>
-            <div class="card-body">
-                <div class="rating">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <h5>La Sapinette Hottel</h5>
-                <p class="location">
-                    <a href="https://www.google.com/maps?q=05+Lý+Chính+Thắng,+TP+Đà+Lạt" target="_blank">
-                        05 Lý Chính Thắng, TP Đà Lạt
-                    </a>
-                </p>
-                <p class="price">
-                    <del>2,000,000 VND</del> 
-                    <strong>1,000,000 VND</strong>
-                </p>
-            </div>
-        </div>
-
-
-        <div class="card">
-            <div class="card-img-container">
-                <img style="border-radius: 10px"; src="image/hotel/KhachSanPageMain/HT2.jpg" class="card-img-top" alt="Hotel">
-                <span class="discount-badge">Tiết kiệm -50%</span>
-                <span class="start"> <img style="margin-left:75px;" src="image/star/3sao.png" ></span>
-                <i class="fa-solid fa-heart favorite-icon"></i>
-            </div>
-            <div class="card-body">
-                <div class="rating">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <h5>Khách sạn Riva Vũng Tàu</h5>
-                <p class="location">
-                    <a href="https://www.google.com/maps?q=03-05+Thùy+Vân,+TP+Vũng+Tàu" target="_blank">
-                        03-05 Thùy Vân, TP Vũng Tàu
-                    </a>
-                </p>
-                <p class="price">
-                    <del>1,800,000 VND</del> 
-                    <strong>900,000 VND</strong>
-                </p>
-            </div>
-        </div>
-
-
-        <div class="card">
-            <div class="card-img-container">
-                <img style="border-radius: 10px"; src="image/hotel/KhachSanPageMain/HT2.jpg" class="card-img-top" alt="Hotel">
-                <span class="discount-badge">Tiết kiệm -50%</span>
-                <span class="start"> <img style="margin-left:75px;" src="image/star/3sao.png" ></span>
-                <i class="fa-solid fa-heart favorite-icon"></i>
-            </div>
-            <div class="card-body">
-                <div class="rating">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <h5>Khách sạn Riva Vũng Tàu</h5>
-                <p class="location">
-                    <a href="https://www.google.com/maps?q=03-05+Thùy+Vân,+TP+Vũng+Tàu" target="_blank">
-                        03-05 Thùy Vân, TP Vũng Tàu
-                    </a>
-                </p>
-                <p class="price">
-                    <del>1,800,000 VND</del> 
-                    <strong>900,000 VND</strong>
-                </p>
-            </div>
-        </div>
-
+        
+        <% }%>
+        
 
     </div>
 

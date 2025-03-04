@@ -39,6 +39,12 @@ public class RoomDAO {
         return 0;
     }
     
+    
+    public RoomDAO load(){
+        
+        return null;
+    }
+    
     public static void main(String[] args) {
         RoomDAO d = new RoomDAO();
         System.out.println(d.NumberOfRoom()); 

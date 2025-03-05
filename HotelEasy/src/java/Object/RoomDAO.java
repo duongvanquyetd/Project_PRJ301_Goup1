@@ -37,27 +37,25 @@ public class RoomDAO {
     }
 
     public List<RoomDTO> load() {
-
         List<RoomDTO> list = new ArrayList<RoomDTO>();
-        String sql = " select * from Room ";
-
         try {
+            String sql = " select * from Room ";
             Connection conn = DBUtils.getConnection();
             PreparedStatement stm = conn.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
 
             if (rs != null) {
                 while (rs.next()) {
-                    int HotelID = rs.getInt("HotelID");
-                    int RoomID = rs.getInt("RoomID");
+                    String HotelID = rs.getString("HotelID").trim();
+                    String RoomID = rs.getString("RoomID").trim();
                     int CapacityChild = rs.getInt("CapacityChild");
                     int CapacityAdult = rs.getInt("CapacityAdult");
                     int Price = rs.getInt("Price");
-                    int Discount = rs.getInt("Discount");
-                    String TypeRoom = rs.getString("TypeRoom");
-                    int Status = rs.getInt("Status");
-
-                    list.add(new RoomDTO(HotelID, RoomID, CapacityChild, CapacityAdult, Price, Discount, TypeRoom, Status));
+                    String Discount = rs.getString("Discount").trim();
+                    String TypeRoom = rs.getString("TypeRoom").trim();
+                    String Status = rs.getString("Status").trim();
+                    RoomDTO room = new RoomDTO(HotelID, RoomID, CapacityChild, CapacityAdult, Price, Discount, TypeRoom, Status);
+                    list.add(room);
                 }
             }
             conn.close();
@@ -65,13 +63,15 @@ public class RoomDAO {
             System.out.println("Load Room Data fail " + e.getMessage());
             e.printStackTrace();
         }
-
         return list;
     }
 
     public static void main(String[] args) {
-        RoomDAO d = new RoomDAO();
-        System.out.println(d);
+        RoomDAO dao = new RoomDAO();
+        List<RoomDTO> list = dao.load();
+        for (RoomDTO arg : list) {
+            System.out.println(arg);
+        }
 
     }
 }

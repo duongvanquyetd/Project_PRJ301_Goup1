@@ -17,10 +17,6 @@ import ultilies.DBUtils;
  * @author Lenovo
  */
 public class HotelDAO {
-    
-    
-    
-    
 
     public List<HotelDTA> getHotelDiscount() {
         try {
@@ -40,23 +36,18 @@ public class HotelDAO {
                 String streets = rs.getString("Streets");
                 String nameHotel = rs.getString("NameHotel");
                 String rate = rs.getString("RateHotel");
-                double discount =rs.getDouble("Discount");
+                double discount = rs.getDouble("Discount");
                 double price = rs.getDouble("Price");
-                HotelDTA ht = new HotelDTA(id, city, district, streets, nameHotel,rate,discount,price);
+                HotelDTA ht = new HotelDTA(id, city, district, streets, nameHotel, rate, discount, price);
                 list.add(ht);
             }
-            return  list;
+            return list;
         } catch (Exception e) {
         }
-        return  null;
+        return null;
 
     }
 
-    
-    
-    
-    
-    
     public List<HotelDTA> getNotApproveHotel() {
         try {
             Connection con = DBUtils.getConnection();
@@ -109,10 +100,33 @@ public class HotelDAO {
         return 0;
     }
 
+    public HotelDTA getHotelByOwnerID(String PersonID) {
+        try {
+            Connection con = DBUtils.getConnection();
+            String sql = " select * from Hotel where PersonID = ? ";
+
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setString(1, PersonID);
+            ResultSet rs = stm.executeQuery();
+            String id = rs.getString("HotelID").trim();
+            String city = rs.getString("City");
+            String district = rs.getString("District");
+            String streets = rs.getString("Streets");
+            String nameHotel = rs.getString("NameHotel");
+            String rate = rs.getString("RateHotel");
+            double discount = rs.getDouble("Discount");
+            double price = rs.getDouble("Price");
+            HotelDTA ht = new HotelDTA(id, city, district, streets, nameHotel, rate, discount, price);
+            return ht;
+        } catch (Exception e) {
+            System.out.println("Load hotel by owner id fail "+ e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         HotelDAO d = new HotelDAO();
-
-       
 
         List<HotelDTA> list = d.getHotelDiscount();
         for (HotelDTA hotelDTA : list) {
@@ -121,4 +135,5 @@ public class HotelDAO {
         }
 
     }
+
 }

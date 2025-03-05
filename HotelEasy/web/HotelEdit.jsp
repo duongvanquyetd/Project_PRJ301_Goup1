@@ -1,3 +1,7 @@
+<%@page import="Object.HotelDTA"%>
+<%@page import="Object.RoomDTO"%>
+<%@page import="Object.HotelDAO"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="vi">
@@ -177,7 +181,10 @@
                 </a>
             </div>
             <!--End Choose-->
+            <%
+                HotelDTA hotel = (HotelDTA) request.getAttribute("hotel");
 
+            %>
             <div class="card">
                 <div class="image-container">
                     <img src="https://demoda.vn/wp-content/uploads/2022/01/hinh-anh-con-meo-ngo-nghinh.jpg" alt="">
@@ -190,11 +197,11 @@
                     <span class="price">899,000 VND</span>
                 </div>
                 <div class="buttons">
-                    <button class="edit">Edit Information</button>
-                    <button class="edit-room">Edit Room</button>
-                    <button class="delete">Delete</button>
+                    <a class="edit" href="HotelEditController?id=">Edit Information</a>
+                    <a class="edit-room">Edit Room</a>
+                    <a class="delete">Delete</a>
                 </div>
-                </d>
+                
             </div>
 
     </body>

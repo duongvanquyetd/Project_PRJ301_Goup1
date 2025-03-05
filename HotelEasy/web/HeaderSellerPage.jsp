@@ -86,8 +86,10 @@
                     <a href="">Register Hotel</a>
                 </div>
 
+                <% String name =(String) request.getAttribute("name");
+                   %>
                 <div class="header-account">
-                    <a href="">Hi Seller</a>
+                    <a href="">Seller ${name}></a>
                     <a href="">Logout</a>
                 </div>
             </div>

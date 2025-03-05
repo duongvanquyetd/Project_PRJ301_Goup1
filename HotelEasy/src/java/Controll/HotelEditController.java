@@ -5,10 +5,13 @@
  */
 package Controll;
 
-import Object.PersonDAO;
-import Object.PersonDTA;
+import Object.HotelDAO;
+import Object.HotelDTA;
+import Object.HotelImageDAO;
+import Object.HotelImageDTA;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,10 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Lenovo
+ * @author Truong
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "HotelEditController", urlPatterns = {"/HotelEditController"})
+public class HotelEditController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,27 +39,15 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String user = request.getParameter("user");
-            String pass = request.getParameter("password");
-            PersonDAO p = new PersonDAO();
-            PersonDTA pe = p.Login(user, pass);
-            if (pe != null) {
-
-                if (pe.getRoleName().equalsIgnoreCase("Admin")) {
-                    response.sendRedirect("AdminController");
-                } else if (pe.getRoleName().equalsIgnoreCase("owner")) {
-                    response.sendRedirect("HotelEditController");
-                } else if (pe.getRoleName().equalsIgnoreCase("user")) {
-                    response.sendRedirect("./MainPage_1.jsp");
-                } else {
-                    out.print("helllo " + pe.getRoleName() + "  " + pe.getName());
-                }
-
-            } else {
-                request.setAttribute("status", "false");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
-
+            String action = request.getParameter("action");
+            if(action == null || action.isEmpty()){
+            HotelDAO dao = new HotelDAO();
+            HotelDTA hotel = dao.getHotelByOwnerID("ownerID");
+            request.setAttribute("hotel", hotel);
+            HotelImageDAO imgdao = new HotelImageDAO();
+            List<String> img = imgdao.getImgByHotelID("ownerID");
+            request.getRequestDispatcher("HotelEdit.jsp");
+            } 
         }
     }
 

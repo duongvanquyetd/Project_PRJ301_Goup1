@@ -11,17 +11,16 @@ package Object;
  */
 public class RoomDTO {
 
-    private int HotelID;
-    private int RoomID;
+    private String HotelID;
+    private String RoomID;
     private int CapacityChild;
     private int CapacityAdult;
     private int Price;
-    private int Discount;
+    private String Discount;
     private String TypeRoom;
-    private int Status;
+    private String Status;
 
-    public RoomDTO(int HotelID, int RoomID, int CapacityChild, int CapacityAdult, int Price, int Discount, String TypeRoom, int Status) {
-
+    public RoomDTO(String HotelID, String RoomID, int CapacityChild, int CapacityAdult, int Price, String Discount, String TypeRoom, String Status) {
         this.HotelID = HotelID;
         this.RoomID = RoomID;
         this.CapacityChild = CapacityChild;
@@ -32,19 +31,19 @@ public class RoomDTO {
         this.Status = Status;
     }
 
-    public int getHotelID() {
+    public String getHotelID() {
         return HotelID;
     }
 
-    public void setHotelID(int HotelID) {
+    public void setHotelID(String HotelID) {
         this.HotelID = HotelID;
     }
 
-    public int getRoomID() {
+    public String getRoomID() {
         return RoomID;
     }
 
-    public void setRoomID(int RoomID) {
+    public void setRoomID(String RoomID) {
         this.RoomID = RoomID;
     }
 
@@ -72,11 +71,11 @@ public class RoomDTO {
         this.Price = Price;
     }
 
-    public int getDiscount() {
+    public String getDiscount() {
         return Discount;
     }
 
-    public void setDiscount(int Discount) {
+    public void setDiscount(String Discount) {
         this.Discount = Discount;
     }
 
@@ -88,11 +87,11 @@ public class RoomDTO {
         this.TypeRoom = TypeRoom;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return Status;
     }
 
-    public void setStatus(int Status) {
+    public void setStatus(String Status) {
         this.Status = Status;
     }
 
@@ -100,5 +99,5 @@ public class RoomDTO {
     public String toString() {
         return "RoomDTO{" + "HotelID=" + HotelID + ", RoomID=" + RoomID + ", CapacityChild=" + CapacityChild + ", CapacityAdult=" + CapacityAdult + ", Price=" + Price + ", Discount=" + Discount + ", TypeRoom=" + TypeRoom + ", Status=" + Status + '}';
     }
-
+    
 }

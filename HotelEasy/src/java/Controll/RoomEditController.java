@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Truong
  */
-public class RoomController extends HttpServlet {
+public class RoomEditController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,27 +34,22 @@ public class RoomController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         try {
             RoomDAO dao = new RoomDAO();
             List<RoomDTO> list = dao.load();
-
-            
             request.setAttribute("listRoom", list);
-
+          
             RoomImageDAO imgdao = new RoomImageDAO();
             List<RoomImageDTO> listRoomImg = imgdao.load();
-            
             request.setAttribute("roomImg", listRoomImg);
 
-            // Chuyển hướng đến JSP
-            request.getRequestDispatcher("../Room.jsp").forward(request, response);
+            request.getRequestDispatcher("RoomEdit.jsp").forward(request, response);
 
         } catch (Exception e) {
             System.out.println("Error in RoomController: " + e.getMessage());
             e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Server Error.");
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

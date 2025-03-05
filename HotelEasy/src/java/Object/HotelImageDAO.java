@@ -36,15 +36,14 @@ public class HotelImageDAO {
 
                     hotelid = rs.getString("hotelid").trim();
                     image.add(rs.getString("Path"));
-                    if(i!= 4)
-                    {
+                    if (i != 4) {
                         rs.next(); // tai sao can i != 4 thi moi rs.next vi khi = 4 nghia la chay duoc 5 lan roi nen khi rs.next no se xuong dong 6 xong len dieu kien while rs.next cai nua no se xuong dong so 7 va cai su se bi mat 1 anh 
                     }
 
                 }
 
                 list.add(new HotelImageDTA(hotelid, image));
-              
+
             }
             return list;
         } catch (Exception e) {
@@ -52,9 +51,8 @@ public class HotelImageDAO {
 
         return null;
     }
-    
-    
-     public List<HotelImageDTA> getAllImgHotel() {
+
+    public List<HotelImageDTA> getAllImgHotel() {
         try {
             Connection con = DBUtils.getConnection();
             String sql = " select HotelID, Path from ImageHotel where HotelID in(select HotelID from Hotel where Approved = 1) ";
@@ -72,15 +70,14 @@ public class HotelImageDAO {
 
                     hotelid = rs.getString("hotelid").trim();
                     image.add(rs.getString("Path"));
-                    if(i!= 4)
-                    {
+                    if (i != 4) {
                         rs.next(); // tai sao can i != 4 thi moi rs.next vi khi = 4 nghia la chay duoc 5 lan roi nen khi rs.next no se xuong dong 6 xong len dieu kien while rs.next cai nua no se xuong dong so 7 va cai su se bi mat 1 anh 
                     }
 
                 }
 
                 list.add(new HotelImageDTA(hotelid, image));
-              
+
             }
             return list;
         } catch (Exception e) {
@@ -89,11 +86,34 @@ public class HotelImageDAO {
         return null;
     }
 
+    public List<String> getImgByHotelID(String id) {
+        List<String> list = new ArrayList();
+        try {
+            Connection con = DBUtils.getConnection();
+            String sql = " select * from ImageHotel where HotelID = ? ";
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setString(1, id);
+            ResultSet rs = stm.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    String path = rs.getString("Path");
+                    
+                    list.add(path);
+                }
+            }
+            con.close();
+        } catch (Exception e) {
+            System.out.println("fail to load img by id " + e.getMessage());
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         HotelImageDAO j = new HotelImageDAO();
         List<HotelImageDTA> list = j.getNotApHotel();
         for (HotelImageDTA hotelImageDTA : list) {
-            System.out.println(hotelImageDTA.toString());   
+            System.out.println(hotelImageDTA.toString());
         }
     }
 

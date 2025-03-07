@@ -5,14 +5,15 @@
  */
 package Controll;
 
-import Object.RoomDAO;
-import Object.RoomDTO;
-import Object.RoomImageDAO;
-import Object.RoomImageDTO;
+import Object.HotelDAO;
+import Object.HotelDTA;
+import Object.HotelImageDAO;
+import Object.HotelImageDTA;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Truong
  */
-public class RoomEditController extends HttpServlet {
+@WebServlet(name = "SellerController", urlPatterns = {"/SellerController"})
+public class SellerController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,24 +35,31 @@ public class RoomEditController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            RoomDAO dao = new RoomDAO();
-            List<RoomDTO> list = dao.load();
-            request.setAttribute("listRoom", list);
-          
-            RoomImageDAO imgdao = new RoomImageDAO();
-            List<RoomImageDTO> listRoomImg = imgdao.load();
-            request.setAttribute("roomImg", listRoomImg);
+        throws ServletException, IOException {
+    response.setContentType("text/html;charset=UTF-8");
+    try (PrintWriter out = response.getWriter()) {
+        String action = request.getParameter("action");
+        if (action == null || action.isEmpty()) {
+            
+            String hotelID = request.getParameter("id");
+            HotelDAO hotelDAO = new HotelDAO();
+            HotelDTA hotel = hotelDAO.getHotelByOwnerID(hotelID);
 
-            request.getRequestDispatcher("RoomEdit.jsp").forward(request, response);
+            
+            HotelImageDAO hotelImageDAO = new HotelImageDAO();
+            List<String> images = hotelImageDAO.getImgByHotelID(hotelID);
 
-        } catch (Exception e) {
-            System.out.println("Error in RoomController: " + e.getMessage());
-            e.printStackTrace();
+           
+            request.setAttribute("hotel", hotel);
+            request.setAttribute("images", images);
+
+            
+            request.getRequestDispatcher("HotelEdit.jsp").forward(request, response);
+        } else {
+            
         }
-
     }
+}
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

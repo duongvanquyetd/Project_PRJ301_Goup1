@@ -41,6 +41,7 @@ public class HotelDAO {
                 HotelDTA ht = new HotelDTA(id, city, district, streets, nameHotel, rate, discount, price);
                 list.add(ht);
             }
+            con.close();
             return list;
         } catch (Exception e) {
         }
@@ -119,10 +120,78 @@ public class HotelDAO {
             HotelDTA ht = new HotelDTA(id, city, district, streets, nameHotel, rate, discount, price);
             return ht;
         } catch (Exception e) {
-            System.out.println("Load hotel by owner id fail "+ e.getMessage());
+            System.out.println("Load hotel by owner id fail " + e.getMessage());
             e.printStackTrace();
         }
         return null;
+    }
+
+    public HotelDTA getHotelByID() {
+        return null;
+    }
+
+    public void updateHotel(String hotelID, String city, String distric, String Strees, String nameHotel, String rateHotel) {
+        String sql = " update Hotel set City = ?, District = ?, Streets = ?, NameHotel = ?, RateHotel = ? where HotelID = ? ";
+        try {
+            Connection conn = DBUtils.getConnection();
+            PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setString(1, city);
+            stm.setString(2, distric);
+            stm.setString(3, Strees);
+            stm.setString(4, nameHotel);
+            stm.setString(5, rateHotel);
+            stm.setString(6, hotelID);
+
+            stm.executeUpdate();
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println("Update hotel fail " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void insertHotel(String hotelID, String personID, String city, String distric, String Strees, String nameHotel, String rateHotel) {
+        String sql = " insert into Hotel values(?, ?, ?, ?, ?, ?, ?, 0) ";
+        try {
+            Connection conn = DBUtils.getConnection();
+            PreparedStatement stm = conn.prepareStatement(sql);
+
+            stm.setString(1, hotelID);
+            stm.setString(2, personID);
+            stm.setString(3, city);
+            stm.setString(4, distric);
+            stm.setString(5, Strees);
+            stm.setString(6, nameHotel);
+            stm.setString(7, rateHotel);
+            
+            stm.executeQuery();
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println("Insert hotel fail " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    public void deleteHotel(String hotelID){
+        String sql = " delete from Hotel where HotelID = ? ";
+        try {
+            Connection conn= DBUtils.getConnection();
+            PreparedStatement stm = conn.prepareStatement(sql);
+            
+            stm.setString(1, hotelID);
+            
+            stm.executeUpdate();
+            
+            conn.close();
+            
+        } catch (Exception e) {
+            System.out.println("Delete hotel fail " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {

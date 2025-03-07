@@ -112,12 +112,12 @@
                 <h3>Booking Management</h3>
             </a>
             <a href="">
-                <h3>Hotel Information management</h3>
+                <h3>Hotel Register</h3>
             </a>
         </div>
         <!--End Choose-->
 
-        <h2>Change Hotel Information</h2>
+        <h2>Register Hotel Information</h2>
         <div class="form-container">
             <div class="form-group">
                 <span class="label">Hotel Image</span>

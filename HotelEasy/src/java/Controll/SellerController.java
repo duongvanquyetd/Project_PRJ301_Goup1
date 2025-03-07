@@ -55,7 +55,9 @@ public class SellerController extends HttpServlet {
 
             
             request.getRequestDispatcher("HotelEdit.jsp").forward(request, response);
-        } else {
+        } else if (action == "sdsf"){
+            
+        }else{
             
         }
     }

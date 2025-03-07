@@ -215,10 +215,10 @@
             <%@ include file="HeaderSellerPage.jsp" %>
 
 
-            
+
             <div class="card">
                 <div class="image-container">
-                   
+
                     <c:forEach var="image" items="${images}" varStatus="loop">
                         <img src="${image}" alt="Hotel Image" class="${loop.index == 0 ? 'active' : ''}">
                     </c:forEach>
@@ -239,6 +239,8 @@
                 </div>
             </div>
         </div>
+
+        <%@ include file="Footer.jsp" %>
 
     </body>
     <script>

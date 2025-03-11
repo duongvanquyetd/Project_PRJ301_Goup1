@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    <servlet>
-        <servlet-name>RoomEditController</servlet-name>
-        <servlet-class>Controll.RoomEditController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>RoomEditController</servlet-name>
-        <url-pattern>/RoomController</url-pattern>
-    </servlet-mapping>
+    
     
     <servlet>
         <servlet-name>AdminController</servlet-name>
@@ -47,12 +40,12 @@
     </servlet-mapping>
     
     <servlet>
-        <servlet-name>HotelEditController</servlet-name>
-        <servlet-class>Controll.HotelEditController</servlet-class>
+        <servlet-name>SellerController</servlet-name>
+        <servlet-class>Controll.SellerController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>HotelEditController</servlet-name>
-        <url-pattern>/HotelEditController</url-pattern>
+        <servlet-name>SellerController</servlet-name>
+        <url-pattern>/SellerController</url-pattern>
     </servlet-mapping>
     
     <session-config>
@@ -62,6 +55,6 @@
     </session-config>
     
     <welcome-file-list>
-        <welcome-file>login.jsp</welcome-file>
+        <welcome-file>MainPage_1.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

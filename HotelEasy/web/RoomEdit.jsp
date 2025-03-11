@@ -102,33 +102,24 @@
                 transition: transform 0.3s;
             }
 
-            .prev, .next {
-                cursor: pointer;
+            .arrow {
                 position: absolute;
                 top: 50%;
-                width: auto;
-                padding: 16px;
-                margin-top: -22px;
+                transform: translateY(-50%);
+                background-color: rgba(0, 0, 0, 0.5);
                 color: white;
-                font-weight: bold;
-                font-size: 18px;
-                transition: 0.6s ease;
-                border-radius: 0 3px 3px 0;
-                user-select: none;
+                border: none;
+                padding: 10px;
+                cursor: pointer;
+                border-radius: 50%;
             }
 
-            .next {
-                right: 0;
-                border-radius: 3px 0 0 3px;
+            .arrow.left {
+                left: 10px;
             }
 
-            .prev {
-                left: 0;
-                border-radius: 3px 0 0 3px;
-            }
-
-            .prev:hover, .next:hover {
-                background-color: rgba(0,0,0,0.8);
+            .arrow.right {
+                right: 10px;
             }
 
             .room-info {
@@ -245,11 +236,12 @@
                 <div class="room-title">${p.getRoomID()}</div>
                 <div class="room-info">
                     <div class="room-image">
-                        <button class="prev" onclick="changeImage(this, -1)">&#10094;</button>
+                        
                         <img src="https://th.bing.com/th/id/OIP.AVR3AuzRtJPYY-64o09TvwHaHa?rs=1&pid=ImgDetMain" alt="Room Image" class="room-img" style="display:block;">
                         <img src="https://www.timeoutdubai.com/cloud/timeoutdubai/2021/09/11/udHvbKwV-IMG-Dubai-UAE-1.jpg" alt="Room Image" class="room-img" style="display:none;">
                         <img src="https://th.bing.com/th/id/OIP.ToypZWqUfr06k1mrX5SIyQHaE8?rs=1&pid=ImgDetMain" class="room-img" style="display:none;">
-                        <button class="next" onclick="changeImage(this, 1)">&#10095;</button>
+                        <button class="arrow left" onclick="prevImage()">&#10094;</button>
+                    <button class="arrow right" onclick="nextImage()">&#10095;</button>
                     </div>
                     <div class="room-details">
                         <p>${p.getCapacityChild()}</p>

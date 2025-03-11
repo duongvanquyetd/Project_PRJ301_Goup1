@@ -67,11 +67,42 @@
 
             .image-container {
                 position: relative;
+                width: 100%;
+                overflow: hidden;
             }
 
             .image-container img {
                 width: 100%;
-                border-radius: 10px;
+                opacity: 0;
+                transition: opacity 0.5s ease;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+
+            .image-container img.active {
+                opacity: 1;
+                position: relative;
+            }
+
+            .arrow {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                background-color: rgba(0, 0, 0, 0.5);
+                color: white;
+                border: none;
+                padding: 10px;
+                cursor: pointer;
+                border-radius: 50%;
+            }
+
+            .arrow.left {
+                left: 10px;
+            }
+
+            .arrow.right {
+                right: 10px;
             }
 
             .stars {
@@ -181,29 +212,56 @@
                 </a>
             </div>
             <!--End Choose-->
-            <%
-                HotelDTA hotel = (HotelDTA) request.getAttribute("hotel");
+            <%@ include file="HeaderSellerPage.jsp" %>
 
-            %>
+
+
             <div class="card">
                 <div class="image-container">
-                    <img src="https://demoda.vn/wp-content/uploads/2022/01/hinh-anh-con-meo-ngo-nghinh.jpg" alt="">
+
+                    <c:forEach var="image" items="${images}" varStatus="loop">
+                        <img src="${image}" alt="Hotel Image" class="${loop.index == 0 ? 'active' : ''}">
+                    </c:forEach>
+                    <button class="arrow left" onclick="prevImage()">&#10094;</button>
+                    <button class="arrow right" onclick="nextImage()">&#10095;</button>
                 </div>
-                <div class="stars">âââââ</div>
-                <div class="hotel-name">Name</div>
-                <div class="location">location</div>
+                <div class="stars">★★★★★</div>
+                <div class="hotel-name">${hotel.nameHotel}</div>
+                <div class="location">${hotel.city}, ${hotel.district}, ${hotel.streets}</div>
                 <div>
                     <span class="old-price">1,498,000 VND</span>
                     <span class="price">899,000 VND</span>
                 </div>
                 <div class="buttons">
-                    <a class="edit" href="HotelEditController?id=">Edit Information</a>
+                    <a class="edit" href="HotelEditController?id=${hotel.hotelID}">Edit Information</a>
                     <a class="edit-room">Edit Room</a>
                     <a class="delete">Delete</a>
                 </div>
-                
             </div>
+        </div>
+
+        <%@ include file="Footer.jsp" %>
 
     </body>
+    <script>
+        let currentImageIndex = 0;
+        const images = document.querySelectorAll('.image-container img');
+
+        function showImage(index) {
+            images.forEach((img, i) => {
+                img.classList.toggle('active', i === index);
+            });
+        }
+
+        function prevImage() {
+            currentImageIndex = (currentImageIndex > 0) ? currentImageIndex - 1 : images.length - 1;
+            showImage(currentImageIndex);
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex < images.length - 1) ? currentImageIndex + 1 : 0;
+            showImage(currentImageIndex);
+        }
+    </script>
 
 </html>

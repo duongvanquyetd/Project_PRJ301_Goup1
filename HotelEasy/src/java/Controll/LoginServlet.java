@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -43,10 +44,16 @@ public class LoginServlet extends HttpServlet {
             if (pe != null) {
 
                 if (pe.getRoleName().equalsIgnoreCase("Admin")) {
+                    HttpSession session = request.getSession(true);
+                    session.setAttribute("adminsession", user);
                     response.sendRedirect("AdminController");
                 } else if (pe.getRoleName().equalsIgnoreCase("owner")) {
+                    HttpSession session = request.getSession(true);
+                    session.setAttribute("ownersession", user);
                     response.sendRedirect("HotelEditController");
                 } else if (pe.getRoleName().equalsIgnoreCase("user")) {
+                    HttpSession session = request.getSession(true);
+                    session.setAttribute("usersession", user);
                     response.sendRedirect("./MainPage_1.jsp");
                 } else {
                     out.print("helllo " + pe.getRoleName() + "  " + pe.getName());
@@ -56,6 +63,9 @@ public class LoginServlet extends HttpServlet {
                 request.setAttribute("status", "false");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
+            
+            
+            
 
         }
     }

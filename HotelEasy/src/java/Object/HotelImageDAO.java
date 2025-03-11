@@ -97,7 +97,7 @@ public class HotelImageDAO {
             if (rs != null) {
                 while (rs.next()) {
                     String path = rs.getString("Path");
-                    
+
                     list.add(path);
                 }
             }
@@ -107,6 +107,10 @@ public class HotelImageDAO {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public void updateHotelImg() {
+        
     }
 
     public static void main(String[] args) {

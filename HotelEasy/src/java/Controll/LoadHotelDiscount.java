@@ -38,18 +38,7 @@ public class LoadHotelDiscount extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-        HotelDAO h = new HotelDAO();
-            List<HotelDTA>list =h.getHotelDiscount();
-            HotelImageDAO img = new HotelImageDAO();
-            List<HotelImageDTA> b = img.getAllImgHotel();
-            
-            
-            request.setAttribute("Img", b);
-            request.setAttribute("List", list);
-            
-            
-            request.getRequestDispatcher("MainPage_1.jsp").forward(request, response);
-            
+
         }
     }
 

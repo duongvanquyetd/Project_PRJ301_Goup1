@@ -66,6 +66,72 @@ public class RoomDAO {
         return list;
     }
 
+    public void updateRoom(String hotelID, String roomID, int capacityAdult, int capacityChild, int price, int discount, String typeRoom) {
+        String sql = " update Room set CapacityAdult = ?, CapacityChild = ?, Price = ?, Discount = ?, TypeRoom = ?, Status= 0 where HotelID = ? and RoomID = ? ";
+        try {
+            Connection conn = DBUtils.getConnection();
+            PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setInt(1, capacityAdult);
+            stm.setInt(2, capacityChild);
+            stm.setInt(3, price);
+            stm.setInt(4, discount);
+            stm.setString(5, typeRoom);
+            stm.setString(6, hotelID);
+            stm.setString(7, roomID);
+
+            stm.executeUpdate();
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println("Update hotel fail " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void insertRoom(String hotelID, String roomID, int capacityAdult, int capacityChild, int price, int discount, String typeRoom) {
+        String sql = " insert into Room values(?, ?, ?, ?, ?, ?, ?, 0) ";
+        try {
+            Connection conn = DBUtils.getConnection();
+            PreparedStatement stm = conn.prepareStatement(sql);
+
+            stm.setString(1, hotelID);
+            stm.setString(2, roomID);
+            stm.setInt(3, capacityAdult);
+            stm.setInt(4, capacityChild);
+            stm.setInt(5, price);
+            stm.setInt(6, discount);
+            stm.setString(7, typeRoom);
+
+            stm.executeQuery();
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println("Insert hotel fail " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteRoom(String hotelID, String roomID) {
+        String sql = " delete from Room where HotelID = ? and RoomID = ? ";
+        try {
+            Connection conn = DBUtils.getConnection();
+            PreparedStatement stm = conn.prepareStatement(sql);
+
+            stm.setString(1, hotelID);
+            stm.setString(2, roomID);
+
+            stm.executeUpdate();
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println("Delete room fail " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         RoomDAO dao = new RoomDAO();
         List<RoomDTO> list = dao.load();

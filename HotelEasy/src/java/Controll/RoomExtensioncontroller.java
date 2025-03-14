@@ -5,10 +5,6 @@
  */
 package Controll;
 
-import Object.FeatureHotelDAO;
-import Object.FeatureHotelDTO;
-import Object.FeatureRoomDAO;
-import Object.FeatureRoomDTO;
 import Object.HotelImageDAO;
 import Object.HotelImageDTA;
 import Object.RoomImageDAO;
@@ -43,34 +39,6 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
         throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
     HotelImageDAO dao = new HotelImageDAO();
-    FeatureHotelDAO htdao = new FeatureHotelDAO() ; 
-    FeatureRoomDAO rdao = new FeatureRoomDAO() ;
-    String id = "H2" ;
-    List<String> list = dao.getImgByHotelID(id);
-    List<FeatureHotelDTO> featurehotel = htdao.getInfHotel(id) ;
-    List<FeatureRoomDTO> featureroom = rdao.getInfAllRoom( id) ;
-    
-    
-    
-    RoomImageDAO daoRoom = new RoomImageDAO() ;
-   List<RoomImageDTO> listImgRoom = daoRoom.load();
-   
-   request.setAttribute("ftroom", featureroom);
-    request.setAttribute("fthotel", featurehotel);
-    request.setAttribute("RoomImg", listImgRoom); // danh sách ảnh của room
-   request.setAttribute("HotelImg", list); // danh sách ảnh của Hotel
-
-   
-   
-    System.out.println("Room feature" + featureroom.size());
-   System.out.println("Hotel images: " + list.size());
-System.out.println("Hotel features: " + featurehotel.size());
-System.out.println("Room images: " + listImgRoom.size());
-
-    request.getRequestDispatcher("./image/room_page/Room.jsp").forward(request, response);
-}
-
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

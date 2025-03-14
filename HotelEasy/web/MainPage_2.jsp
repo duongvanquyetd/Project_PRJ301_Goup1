@@ -352,7 +352,7 @@ footer {
                 <a href="#" > <h5>Khách Sạn Đang Giảm Giá</h5></a>
                 <a href="#" style="background-color: #9FA1A5; border-radius: 20px;
                 padding: 0px 15px;border: 2px solid black"> <h5>Khách Sạn Đánh Giá Cao Nhất</h5></a>
-                <a href="#"> <h5>Khách Sạn Quan Tâm Nhất</h5></a>
+                <a href="#"> <h5>Địa Điểm Đáng Quan Tâm Nhất</h5></a>
              </b>
         </ul>
     </div>

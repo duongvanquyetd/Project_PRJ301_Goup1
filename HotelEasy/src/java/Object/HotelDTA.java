@@ -15,6 +15,15 @@ public class HotelDTA {
     private int approved;
     private  double  discount;
     private  double  price;
+    private int roomCount;
+
+    public HotelDTA(String city, int roomCount) {
+        this.city = city;
+        this.roomCount = roomCount;
+    }
+
+   
+    
     public double getDiscount() {
         return discount;
     }
@@ -68,12 +77,12 @@ public class HotelDTA {
         this.HotelID = HotelID;
     }
 
-    public String getPersonID() {
+    public String getPersonName() {
         return PersonName;
     }
 
-    public void setPersonID(String PersonID) {
-        this.PersonName = PersonID;
+    public void setPersonName(String PersonName) {
+        this.PersonName = PersonName;
     }
 
     public String getCity() {
@@ -124,10 +133,16 @@ public class HotelDTA {
         this.approved = approved;
     }
 
-    @Override
-    public String toString() {
-        return "HotelDTA{" + "HotelID=" + HotelID + ", PersonID=" + PersonName + ", city=" + city + ", district=" + district + ", Streets=" + Streets + ", NameHotel=" + NameHotel + ", RateHotel=" + RateHotel + ", approved=" + approved + '}';
+    public int getRoomCount() {
+        return roomCount;
     }
+
+    public void setRoomCount(int roomCount) {
+        this.roomCount = roomCount;
+    }
+    
+    
+
     
     
 }

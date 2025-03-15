@@ -1,4 +1,9 @@
 
+
+<%@page import="Object.HotelDTO"%>
+<%@page import="java.util.LinkedList"%>
+<%@page import="java.util.List"%>
+<%@page import="Object.BookingDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,277 +12,128 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Booking Management</title>
-        <style>body,
-            html {
-                margin: 0;
-                padding: 0;
+        <style>
+            body {
                 font-family: Arial, sans-serif;
                 background-color: #f4f4f4;
-                color: #333;
-                scroll-behavior: smooth;
+                margin: 0;
+                padding: 20px;
+                
             }
-
-            .choose {
-                display: flex;
-                gap: 10px; /* Reduced gap */
-                flex-wrap: wrap;
-                justify-content: space-evenly;
-                align-items: center;
-                margin: 10px; /* Reduced margin */
-            }
-
-            .choose a {
-                color: white;
-                background-color: #18375D;
+            a{
                 text-decoration: none;
-                width: 40%; /* Reduced width */
-                text-align: center;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
-                padding: 10px 0; /* Reduced padding */
-                transition: background-color 0.3s ease, transform 0.3s ease;
-                font-size: 14px; /* Reduced font size */
+                color: orange;
+                font-size: 25px;
             }
 
-            .choose a:hover {
-                background-color: #0056b3;
-                transform: scale(1.05);
+            .content-container {
+                flex: 1;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                justify-content: center;
             }
 
             .card {
-                display: flex;
-                align-items: center;
-                gap: 10px; /* Reduced gap */
-                background-color: white;
+                background: #fff;
                 border-radius: 10px;
-                margin: 10px; /* Reduced margin */
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Reduced shadow */
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
                 overflow: hidden;
-                transition: transform 0.3s ease;
+                width: 400px;
+                text-align: center;
+                padding: 20px;
             }
 
-            .card:hover {
-                transform: scale(1.02);
-            }
-
-            .card a {
-                color: white;
+            .room-info a {
                 text-decoration: none;
-            }
-
-            .card h3 {
-                color: black;
-                margin: 0;
-                font-size: 16px; /* Reduced font size */
-            }
-
-            .room-info {
-                padding: 10px; /* Reduced padding */
-                width: 45%; /* Reduced width */
+                font-size: 25px;
+                color: #333;
+                display: block;
+                margin-bottom: 10px;
             }
 
             .room-image {
-                width: 70%; /* Reduced width */
-            }
-
-            .room-image img {
                 width: 100%;
+                height: auto;
                 border-radius: 10px;
             }
 
-            .room-id {
-                width: 70%; /* Reduced width */
-                text-align: center;
-                font-weight: bold;
-                font-size: 16px; /* Reduced font size */
-                margin-top: 5px; /* Reduced margin */
-            }
-
-            .room-action {
-                display: flex;
-                width: 45%; /* Reduced width */
-                justify-content: space-around;
-                padding: 5px; /* Reduced padding */
-            }
-
-            .room-name {
-                width: 45%; /* Reduced width */
+            .room-detail div {
+                margin: 5px 0;
+                font-size: 14px;
+                color: #555;
             }
 
             .action {
-                width: 45%; /* Reduced width */
                 display: flex;
-                align-items: center;
-                justify-content: space-evenly;
+                justify-content: space-between;
+                margin-top: 10px;
             }
 
             .action a {
-                padding: 10px 20px; /* Reduced padding */
-                border-radius: 5px;
-                font-size: 14px; /* Reduced font size */
+                text-decoration: none;
                 color: white;
-                text-align: center;
-                transition: background-color 0.3s ease, transform 0.3s ease;
-            }
-
-            .action a:hover {
-                transform: scale(1.05);
+                padding: 8px 12px;
+                border-radius: 5px;
+                font-size: 14px;
             }
 
             .accept {
-                background-color: green;
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-                padding: 15px 25px; /* Increased padding */
-                font-size: 18px; /* Increased font size */
-                border-radius: 5px;
-                transition: background-color 0.3s ease, transform 0.3s ease;
-            }
-
-            .accept:hover {
-                background-color: darkgreen;
-                transform: scale(1.05);
+                background: #28a745;
             }
 
             .reject {
-                background-color: red;
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-                padding: 15px 25px; /* Increased padding */
-                font-size: 18px; /* Increased font size */
-                border-radius: 5px;
-                transition: background-color 0.3s ease, transform 0.3s ease;
+                background: #dc3545;
             }
-
-            .reject:hover {
-                background-color: darkred;
-                transform: scale(1.05);
-            }</style>
+        </style>
     </head>
 
     <body>
+
         <%@ include file="HeaderSellerPage.jsp" %>
+        <div class="content-container">
+            <%
+                List<BookingDTO> listBooking = (List<BookingDTO>) request.getAttribute("listBooking");
+                HotelDTO hotel = (HotelDTO) request.getAttribute("hotel");
+                pageContext.setAttribute("hotel", hotel);
+                if (!listBooking.isEmpty() && listBooking != null) {
+                    for (BookingDTO booking : listBooking) {
+                        pageContext.setAttribute("booking", booking);
 
-        <!--Choose-->
-        <div class="choose">
-            <a href="">
-                <h3>Booking Management</h3>
-            </a>
-            <a href="">
-                <h3>Hotel Information management</h3>
-            </a>
-        </div>
-        <!--End Choose-->
-
-        <!--Card Info-->
-        <div>
+            %>
             <div class="card">
                 <div class="room-info">
-                    <a href="">
-                        <img src="https://i.pinimg.com/originals/32/5a/d9/325ad9956bf99344a590a78ba40c5321.jpg" alt=""
-                             class="room-image">
-                        <h3 class="room-id">Room ID</h3>
+                    <a href="SellerController?action=editRoom&id=${booking.roomid}">
+                        <img src="https://th.bing.com/th/id/R.09d9bce822589c25113a33f2f625ecd4?rik=V3HDt8nAUeD9MQ&pid=ImgRaw&r=0"
+                             alt="" class="room-image">
+                        <h2 class="room-id">${hotel.namehotel}</h2>
+                        <h3 class="room-id">${booking.roomid}</h3>
                     </a>
                 </div>
 
-                <div class="room-action">
-                    <div class="room-name">
-                        <h2>Room Name</h2>
-                    </div>
+                <div class="room-detail">
+                    <a class="personid" href="">Person: ${booking.personname}</a>
+                    <div class="numberchild">Children: ${booking.numberchild}</div>
+                    <div class="numberadult">Adults: ${booking.numberadult}</div>
+                    <div class="depaturedate">Departure: ${booking.departuredate}</div>
+                    <div class="arrivedate">Arrival: ${booking.arrivedate}</div>
+                    <div class="timebooking">Booking Time: ${booking.timebooking}</div>
                     <div class="action">
-                        <a href="" class="accept">Accept</a>
-                        <a href="" class="reject">Reject</a>
+                        <a href="SellerController?action=acceptBooking&id=${booking.roomid}" class="accept">Accept</a>
+                        <a href="SellerController?action=rejectBooking&id=${booking.roomid}" class="reject">Reject</a>
                     </div>
                 </div>
             </div>
+            <%}
+            } else {%>
+            <h2>No Booking Available</h2>
+            <%}%>
+
         </div>
 
-        <div>
-            <div class="card">
-                <div class="room-info">
-                    <a href="">
-                        <img src="https://i.pinimg.com/originals/32/5a/d9/325ad9956bf99344a590a78ba40c5321.jpg" alt=""
-                             class="room-image">
-                        <h3 class="room-id">Room ID</h3>
-                    </a>
-                </div>
+        <%@ include file="Footer.jsp" %>
 
-                <div class="room-action">
-                    <div class="room-name">
-                        <h2>Room Name</h2>
-                    </div>
-                    <div class="action">
-                        <a href="" class="accept">Accept</a>
-                        <a href="" class="reject">Reject</a>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div>
-            <div class="card">
-                <div class="room-info">
-                    <a href="">
-                        <img src="https://i.pinimg.com/originals/32/5a/d9/325ad9956bf99344a590a78ba40c5321.jpg" alt=""
-                             class="room-image">
-                        <h3 class="room-id">Room ID</h3>
-                    </a>
-                </div>
-
-                <div class="room-action">
-                    <div class="room-name">
-                        <h2>Room Name</h2>
-                    </div>
-                    <div class="action">
-                        <a href="" class="accept">Accept</a>
-                        <a href="" class="reject">Reject</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div class="card">
-                <div class="room-info">
-                    <a href="">
-                        <img src="https://i.pinimg.com/originals/32/5a/d9/325ad9956bf99344a590a78ba40c5321.jpg" alt=""
-                             class="room-image">
-                        <h3 class="room-id">Room ID</h3>
-                    </a>
-                </div>
-
-                <div class="room-action">
-                    <div class="room-name">
-                        <h2>Room Name</h2>
-                    </div>
-                    <div class="action">
-                        <a href="" class="accept">Accept</a>
-                        <a href="" class="reject">Reject</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div class="card">
-                <div class="room-info">
-                    <a href="">
-                        <img src="https://i.pinimg.com/originals/32/5a/d9/325ad9956bf99344a590a78ba40c5321.jpg" alt=""
-                             class="room-image">
-                        <h3 class="room-id">Room ID</h3>
-                    </a>
-                </div>
-
-                <div class="room-action">
-                    <div class="room-name">
-                        <h2>Room Name</h2>
-                    </div>
-                    <div class="action">
-                        <a href="" class="accept">Accept</a>
-                        <a href="" class="reject">Reject</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--End Card Info-->
     </body>
 
 </html>

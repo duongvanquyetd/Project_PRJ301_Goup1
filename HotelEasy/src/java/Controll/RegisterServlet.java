@@ -6,7 +6,7 @@
 package Controll;
 
 import Object.PersonDAO;
-import Object.PersonDTA;
+import Object.PersonDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -101,7 +101,7 @@ public class RegisterServlet extends HttpServlet {
             }
             else{
             out.print(user + "///" + password + "//" + confirmpassword + "//" + name + "//" + phone + "//" + roleid + "//" + gender);
-               PersonDTA  pe = new PersonDTA(user, password, name, gender, phone, roleid);
+               PersonDTO  pe = new PersonDTO(user, password, name, gender, phone, roleid);
                
                p.RegisterPerson(pe);
             }

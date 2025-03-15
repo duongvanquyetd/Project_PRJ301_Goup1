@@ -1,3 +1,6 @@
+<%@page import="Object.RoomDAO"%>
+<%@page import="Object.HotelDTO"%>
+<%@page import="Object.RoomImageDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Collections"%>
 <%@page import="java.util.Enumeration"%>
@@ -20,40 +23,14 @@
                 scroll-behavior: smooth;
             }
 
-            .choose {
-                display: flex;
-                gap: 10px; /* Reduced gap */
-                flex-wrap: wrap;
-                justify-content: space-evenly;
-                align-items: center;
-                margin: 10px; /* Reduced margin */
-            }
-
-            .choose a {
-                color: white;
-                background-color: #18375D;
+            a{
                 text-decoration: none;
-                width: 40%; /* Reduced width */
-                text-align: center;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
-                padding: 10px 0; /* Reduced padding */
-                transition: background-color 0.3s ease, transform 0.3s ease;
-                font-size: 14px; /* Reduced font size */
             }
 
-            .choose a:hover {
-                background-color: #0056b3;
-                transform: scale(1.05);
-            }
-
-            .choose a:hover {
-                background-color: #18375D;
-                transform: scale(1.05);
-            }
 
             /* Container chứa các phòng */
             .rooms-container {
+                flex: 1;
                 display: flex;
                 flex-wrap: wrap; 
                 justify-content: center; 
@@ -171,19 +148,23 @@
             .add-more {
                 background-color: #1f4e78;
                 color: white;
-                padding: 10px 20px;
+                padding: 10px 20px; /* Reduced padding for a smaller button */
                 border: none;
                 border-radius: 5px;
-                font-size: 16px;
+                font-size: 16px; /* Reduced font size */
                 cursor: pointer;
                 transition: background-color 0.3s, transform 0.3s;
                 display: block;
-                margin: 20px auto;
+                margin: 20px auto; /* Center the button */
                 text-align: center;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+                width: fit-content; /* Adjust width to fit content */
             }
 
             .add-more:hover {
                 background-color: #163a57;
+                transform: translateY(-3px); /* Slightly lift the button on hover */
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
             }
 
             .checkmark {
@@ -203,69 +184,99 @@
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Increased shadow */
                 border: 1px solid #e74c3c; /* Border with the same color as the text */
             }
+
+            .room-details p {
+                margin: 5px 0; /* Adjust margin for better spacing */
+                font-size: 16px; /* Adjust font size */
+                color: #333; /* Text color */
+            }
+
+            .room-details p.room-price {
+                font-size: 22px; /* Slightly increased font size */
+                font-weight: bold;
+                color: #e74c3c; /* Red color for price */
+                margin-top: 15px; /* Increased margin */
+                text-align: center; /* Center align the price */
+                background-color: #fff3e0; /* Light orange background color */
+                padding: 15px; /* Increased padding */
+                border-radius: 10px; /* More rounded corners */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Increased shadow */
+                border: 1px solid #e74c3c; /* Border with the same color as the text */
+            }
         </style>
     </head>
 
     <body>
         <%@ include file="HeaderSellerPage.jsp" %>
 
-        <!--Choose-->
-        <div class="choose">
-            <a href="">
-                <h3>Booking Management</h3>
-            </a>
-            <a href="">
-                <h3>Hotel Information management</h3>
-            </a>
-        </div>
-        <!--End Choose-->
-
-        <button class="btn add-more">Add more room</button>
 
 
+        <a class="btn add-more" href="SellerController?action=createRoom">Add more room</a>
 
         <div class="rooms-container">
             <%
-
+                HotelDTO hotel = (HotelDTO) request.getAttribute("hotel");
+                pageContext.setAttribute("hotel", hotel);
+                List<RoomImageDTO> listRoomImg = (List<RoomImageDTO>) request.getAttribute("ListImgRoom");
                 List<RoomDTO> list = (List<RoomDTO>) request.getAttribute("listRoom");
-
-                for (RoomDTO p : list) {
-                    pageContext.setAttribute("p", p);
+                if (list != null) {
+                    for (RoomDTO room : list) {
+                        pageContext.setAttribute("room", room);
             %>
+
+
             <div class="room">
-                <div class="room-title">${p.getRoomID()}</div>
+                <div class="room-title"><%= room.getRoomid()%> - <%= room.getTyperoom()%></div>
                 <div class="room-info">
                     <div class="room-image">
-                        
-                        <img src="https://th.bing.com/th/id/OIP.AVR3AuzRtJPYY-64o09TvwHaHa?rs=1&pid=ImgDetMain" alt="Room Image" class="room-img" style="display:block;">
-                        <img src="https://www.timeoutdubai.com/cloud/timeoutdubai/2021/09/11/udHvbKwV-IMG-Dubai-UAE-1.jpg" alt="Room Image" class="room-img" style="display:none;">
-                        <img src="https://th.bing.com/th/id/OIP.ToypZWqUfr06k1mrX5SIyQHaE8?rs=1&pid=ImgDetMain" class="room-img" style="display:none;">
+                        <%
+                            for (RoomImageDTO roomImageDTO : listRoomImg) {
+                                if (roomImageDTO.getHotelid().equals(hotel.getHotelid()) && roomImageDTO.getRoomid().equalsIgnoreCase(room.getRoomid())) {
+                                    for (String string : roomImageDTO.getImage()) {
+
+                        %>
+                        <img src="${img.image}" alt="Room Image" class="room-img" style="display:block;">
+                        <%}
+                                }
+                            }%>
                         <button class="arrow left" onclick="prevImage()">&#10094;</button>
-                    <button class="arrow right" onclick="nextImage()">&#10095;</button>
+                        <button class="arrow right" onclick="nextImage()">&#10095;</button>
                     </div>
                     <div class="room-details">
-                        <p>${p.getCapacityChild()}</p>
-                        <p>${p.getCapacityAdult()}</p>   
-                        <p class="room-price">${p.getPrice()} VND</p> <!-- Added price information -->
+                        <p>Capacity Child: ${room.capacitychild}</p>
+                        <p>Capacity Adult: ${room.capacityadult}</p>
+                        <p>Area: ${room.area} m²</p> <!-- Added area information -->
+                        <p>Number of Beds: ${room.numberofbed}</p> <!-- Added number of beds information -->
+                        <p class="room-price">${room.price} VND</p> <!-- Added price information -->
                     </div>
                     <div class="features">
+
                         <h4>Ưu đãi trong phòng</h4>
                         <ul>
-                            <li><span class="checkmark">✔</span> Miễn phí bữa ăn sáng tại nhà hàng của khách sạn</li>
-                            <li><span class="checkmark">✔</span> Miễn phí trà, cà phê, nước suối</li>
-                            <li><span class="checkmark">✔</span> Miễn phí bữa ăn sáng cho trẻ em dưới 6 tuổi</li>
-                            <li><span class="checkmark">✔</span> Miễn phí Internet wifi, hồ bơi</li>
+                            <%
+                                RoomDAO roomDAO = new RoomDAO();
+                                List<String> feature = roomDAO.getRoomFeature(hotel.getHotelid(), room.getRoomid());
+                                for (String ft : feature) {
+                                    pageContext.setAttribute("ft", ft);
+                            %>
+                            <li><span class="checkmark">✔</span> ${ft}</li>
+                                <%}%>
                         </ul>
                     </div>
                 </div>
                 <div class="buttons">
-                    <button class="btn edit">Edit</button>
-                    <button class="btn delete">Delete</button>
+                    <a class="btn edit" href="SellerController?action=editRoomInfo&id=<%= room.getRoomid()%>">Edit</a>
+                    <a class="btn delete" href="SellerController?action=deleteRoom&id=<%= room.getRoomid()%>">Delete</a>
                 </div>
             </div>
+            <%}
+            } else {%>
+            <h3>No room available. <a href="" style="color: blue">Create Room?</a></h3>
             <%}%>
         </div>
 
+
+        <%@ include file="Footer.jsp" %>
         <script>
             function changeImage(button, direction) {
                 const roomImageDiv = button.parentElement;
@@ -283,6 +294,7 @@
                     img.style.display = 'none';
             });
         </script>
+
 
     </body>
 

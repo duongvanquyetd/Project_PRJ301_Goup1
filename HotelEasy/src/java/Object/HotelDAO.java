@@ -18,7 +18,7 @@ import ultilies.DBUtils;
  */
 public class HotelDAO {
 
-    public List<HotelDTA> getHotelDiscount() {
+    public List<HotelDTO> getHotelDiscount() {
         try {
             Connection con = DBUtils.getConnection();
             String sql = "SELECT TOP(5) H.HotelID,H.City,H.District,H.Streets,H.NameHotel,H.RateHotel,R.Discount,R.Price "
@@ -27,10 +27,11 @@ public class HotelDAO {
                     + "ORDER BY R.Discount  DESC";
             PreparedStatement stm = con.prepareStatement(sql);
 
-            List<HotelDTA> list = new ArrayList();
+            List<HotelDTO> list = new ArrayList();
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 String id = rs.getString("HotelID").trim();
+                String personname = rs.getString("PersonID").trim();
                 String city = rs.getString("City");
                 String district = rs.getString("District");
                 String streets = rs.getString("Streets");
@@ -38,7 +39,8 @@ public class HotelDAO {
                 String rate = rs.getString("RateHotel");
                 double discount = rs.getDouble("Discount");
                 double price = rs.getDouble("Price");
-                HotelDTA ht = new HotelDTA(id, city, district, streets, nameHotel, rate, discount, price);
+                int approve = rs.getInt("Approved");
+                HotelDTO ht = new HotelDTO(id, personname, city, district, streets, nameHotel, rate, discount, price, approve);
                 list.add(ht);
             }
             con.close();
@@ -49,19 +51,29 @@ public class HotelDAO {
 
     }
 
-    public List<HotelDTA> getNotApproveHotel() {
+    public List<HotelDTO> getNotApproveHotel() {
         try {
             Connection con = DBUtils.getConnection();
             String sql = "select HotelID,p.Name,City,District,Streets,NameHotel,RateHotel,Approved from hotel h, Person p\n"
                     + "where Approved = 0 and h.PersonID  =p.PersonID";
             PreparedStatement stm = con.prepareStatement(sql);
 
-            List<HotelDTA> list = new ArrayList();
+            List<HotelDTO> list = new ArrayList();
 
             ResultSet rs = stm.executeQuery();
 
             while (rs.next()) {
-                list.add(new HotelDTA(rs.getString("HotelID").trim(), rs.getString("Name"), rs.getString("City"), rs.getString("District"), rs.getString("Streets"), rs.getString("NameHotel"), rs.getString("RateHotel"), rs.getInt("Approved")));
+                String id = rs.getString("HotelID").trim();
+                String PersonID = rs.getString("PersonID");
+                String city = rs.getString("City");
+                String district = rs.getString("District");
+                String streets = rs.getString("Streets");
+                String nameHotel = rs.getString("NameHotel");
+                String rate = rs.getString("RateHotel");
+                double discount = rs.getDouble("Discount");
+                double price = rs.getDouble("Price");
+                HotelDTO ht = new HotelDTO(id, PersonID, city, district, streets, nameHotel, rate, price, discount, 0);
+                list.add(ht);
             }
             return list;
         } catch (Exception e) {
@@ -101,24 +113,26 @@ public class HotelDAO {
         return 0;
     }
 
-    public HotelDTA getHotelByOwnerID(String PersonID) {
+    public HotelDTO getHotelByOwnerID(String PersonID) {
         try {
             Connection con = DBUtils.getConnection();
-            String sql = " select * from Hotel where PersonID = ? ";
+            String sql = " select * from Hotel h, Room r where r.HotelID = h.HotelID and h.PersonID = ? ";
 
             PreparedStatement stm = con.prepareStatement(sql);
             stm.setString(1, PersonID);
             ResultSet rs = stm.executeQuery();
-            String id = rs.getString("HotelID").trim();
-            String city = rs.getString("City");
-            String district = rs.getString("District");
-            String streets = rs.getString("Streets");
-            String nameHotel = rs.getString("NameHotel");
-            String rate = rs.getString("RateHotel");
-            double discount = rs.getDouble("Discount");
-            double price = rs.getDouble("Price");
-            HotelDTA ht = new HotelDTA(id, city, district, streets, nameHotel, rate, discount, price);
-            return ht;
+            if (rs.next()) {
+                String id = rs.getString("HotelID").trim();
+                String city = rs.getString("City");
+                String district = rs.getString("District");
+                String streets = rs.getString("Streets");
+                String nameHotel = rs.getString("NameHotel");
+                String rate = rs.getString("RateHotel");
+                double discount = rs.getDouble("Discount");
+                double price = rs.getDouble("Price");
+                HotelDTO ht = new HotelDTO(id, PersonID, city, district, streets, nameHotel, rate, discount, price, 0);
+                return ht;
+            }
         } catch (Exception e) {
             System.out.println("Load hotel by owner id fail " + e.getMessage());
             e.printStackTrace();
@@ -126,7 +140,20 @@ public class HotelDAO {
         return null;
     }
 
-    public HotelDTA getHotelByID() {
+    public Integer getLowestPrice(String hotelID) {
+        try {
+            Connection con = DBUtils.getConnection();
+            String sql = "select top 1 Price from Room where HotelID = ? order by Price asc";
+
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setString(1, hotelID);
+            ResultSet rs = stm.executeQuery();
+            
+            if(rs.next()){
+                return Integer.parseInt(rs.getString("Price"));
+            }
+        } catch (Exception e) {
+        }
         return null;
     }
 
@@ -165,7 +192,7 @@ public class HotelDAO {
             stm.setString(5, Strees);
             stm.setString(6, nameHotel);
             stm.setString(7, rateHotel);
-            
+
             stm.executeQuery();
 
             conn.close();
@@ -175,19 +202,35 @@ public class HotelDAO {
             e.printStackTrace();
         }
     }
-    
-    public void deleteHotel(String hotelID){
-        String sql = " delete from Hotel where HotelID = ? ";
+
+    public void deleteHotel(String hotelID) {
+        String sql = "delete from Favorite where HotelID = ?\n"
+                + "delete from Comment where HotelID = ?\n"
+                + "delete from FeatureRoom where HotelID = ?\n"
+                + "delete from FeatureHotel where HotelID = ?\n"
+                + "delete from ImageRoom where HotelID = ?\n"
+                + "delete from ImageHotel where HotelID = ?\n"
+                + "delete from Booking where HotelID = ?\n"
+                + "delete from Room where HotelID = ?\n"
+                + "delete from Hotel where HotelID = ?";
         try {
-            Connection conn= DBUtils.getConnection();
+            Connection conn = DBUtils.getConnection();
             PreparedStatement stm = conn.prepareStatement(sql);
-            
+
             stm.setString(1, hotelID);
-            
+            stm.setString(2, hotelID);
+            stm.setString(3, hotelID);
+            stm.setString(4, hotelID);
+            stm.setString(5, hotelID);
+            stm.setString(6, hotelID);
+            stm.setString(7, hotelID);
+            stm.setString(8, hotelID);
+            stm.setString(9, hotelID);
+
             stm.executeUpdate();
-            
+
             conn.close();
-            
+
         } catch (Exception e) {
             System.out.println("Delete hotel fail " + e.getMessage());
             e.printStackTrace();
@@ -197,12 +240,7 @@ public class HotelDAO {
     public static void main(String[] args) {
         HotelDAO d = new HotelDAO();
 
-        List<HotelDTA> list = d.getHotelDiscount();
-        for (HotelDTA hotelDTA : list) {
-            System.out.println(hotelDTA);
-
-        }
-
+        d.deleteHotel("h5");
     }
 
 }

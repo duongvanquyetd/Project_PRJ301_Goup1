@@ -1,4 +1,5 @@
-<%@page import="Object.HotelDTA"%>
+<%@page import="Object.HotelDTO"%>
+
 <%@page import="Object.RoomDTO"%>
 <%@page import="Object.HotelDAO"%>
 <%@page import="java.util.List"%>
@@ -21,40 +22,18 @@
                 scroll-behavior: smooth;
             }
 
+            a {
+                text-decoration: none;
+            }
+
             .content-container{
+                flex: 1;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 flex-wrap: wrap;
             }
 
-            .choose {
-                display: flex;
-                gap: 10px;
-                flex-wrap: wrap;
-                justify-content: space-evenly;
-                align-items: center;
-                margin: 20px 0; /* Increased margin */
-                width: 100%; /* Full width */
-            }
-
-            .choose a {
-                color: white;
-                background-color: #18375D;
-                text-decoration: none;
-                width: 40%;
-                text-align: center;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
-                padding: 10px 0;
-                transition: background-color 0.3s ease, transform 0.3s ease;
-                font-size: 14px;
-            }
-
-            .choose a:hover {
-                background-color: #0056b3;
-                transform: scale(1.05);
-            }
 
             .card {
                 width: 350px;
@@ -202,43 +181,47 @@
 
 
         <div class="content-container">
-            <!--Choose-->
-            <div class="choose">
-                <a href="">
-                    <h3>Booking Management</h3>
-                </a>
-                <a href="">
-                    <h3>Hotel Information management</h3>
-                </a>
-            </div>
-            <!--End Choose-->
-            <%@ include file="HeaderSellerPage.jsp" %>
+            <%
+                HotelDTO hotel = (HotelDTO) request.getAttribute("hotel");
+                HotelDAO dao = new HotelDAO();
+                List<String> img = (List<String>) request.getAttribute("hotelimg");
+                pageContext.setAttribute("img", img);
 
-
+                if (hotel != null) {
+                    pageContext.setAttribute("hotel", hotel);
+            %>
 
             <div class="card">
                 <div class="image-container">
 
-                    <c:forEach var="image" items="${images}" varStatus="loop">
-                        <img src="${image}" alt="Hotel Image" class="${loop.index == 0 ? 'active' : ''}">
-                    </c:forEach>
+                    <%                        for (String hotelimg : img) {
+
+                    %>
+                    <img src="${hotelimg}" alt="Hotel Image">
+
+                    <%}%>
+
                     <button class="arrow left" onclick="prevImage()">&#10094;</button>
                     <button class="arrow right" onclick="nextImage()">&#10095;</button>
                 </div>
-                <div class="stars">★★★★★</div>
-                <div class="hotel-name">${hotel.nameHotel}</div>
+                <img class="stars" src="${hotel.ratehotel}">
+                <div class="hotel-name">${hotel.namehotel}</div>
                 <div class="location">${hotel.city}, ${hotel.district}, ${hotel.streets}</div>
                 <div>
-                    <span class="old-price">1,498,000 VND</span>
-                    <span class="price">899,000 VND</span>
+
+                    <span class="price"><%= dao.getLowestPrice(hotel.getHotelid())%></span>
                 </div>
                 <div class="buttons">
-                    <a class="edit" href="HotelEditController?id=${hotel.hotelID}">Edit Information</a>
-                    <a class="edit-room">Edit Room</a>
-                    <a class="delete">Delete</a>
+                    <a class="edit" href="SellerController?action=editHotel&id=${hotel.hotelid}">Edit Information</a>
+                    <a class="edit-room" href="SellerController?action=editRoom&id=${hotel.hotelid}">Manager Room</a>
+                    <a class="delete" href="SellerController?action=deleteHotel&id=${hotel.hotelid}">Delete</a>
                 </div>
             </div>
+            <%} else {%>
+            <h3>No hotel available. <a href="" style="color: blue">Register Hotel?</a></h3>
+            <%}%>
         </div>
+
 
         <%@ include file="Footer.jsp" %>
 

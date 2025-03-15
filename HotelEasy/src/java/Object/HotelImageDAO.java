@@ -18,13 +18,13 @@ import ultilies.DBUtils;
  */
 public class HotelImageDAO {
 
-    public List<HotelImageDTA> getNotApHotel() {
+    public List<HotelImageDTO> getNotApHotel() {
         try {
             Connection con = DBUtils.getConnection();
             String sql = " select HotelID, Path from ImageHotel where HotelID in(select HotelID from Hotel where Approved = 0) ";
             PreparedStatement stm = con.prepareStatement(sql);
 
-            List<HotelImageDTA> list = new ArrayList();
+            List<HotelImageDTO> list = new ArrayList();
 
             ResultSet rs = stm.executeQuery();
 
@@ -42,7 +42,7 @@ public class HotelImageDAO {
 
                 }
 
-                list.add(new HotelImageDTA(hotelid, image));
+                list.add(new HotelImageDTO(hotelid, image));
 
             }
             return list;
@@ -52,13 +52,13 @@ public class HotelImageDAO {
         return null;
     }
 
-    public List<HotelImageDTA> getAllImgHotel() {
+    public List<HotelImageDTO> getAllImgHotel() {
         try {
             Connection con = DBUtils.getConnection();
             String sql = " select HotelID, Path from ImageHotel where HotelID in(select HotelID from Hotel where Approved = 1) ";
             PreparedStatement stm = con.prepareStatement(sql);
 
-            List<HotelImageDTA> list = new ArrayList();
+            List<HotelImageDTO> list = new ArrayList();
 
             ResultSet rs = stm.executeQuery();
 
@@ -76,7 +76,7 @@ public class HotelImageDAO {
 
                 }
 
-                list.add(new HotelImageDTA(hotelid, image));
+                list.add(new HotelImageDTO(hotelid, image));
 
             }
             return list;
@@ -112,12 +112,14 @@ public class HotelImageDAO {
     public void updateHotelImg() {
         
     }
+    
+    
 
     public static void main(String[] args) {
         HotelImageDAO j = new HotelImageDAO();
-        List<HotelImageDTA> list = j.getNotApHotel();
-        for (HotelImageDTA hotelImageDTA : list) {
-            System.out.println(hotelImageDTA.toString());
+        List<String> list = j.getImgByHotelID("h5");
+        for (String string : list) {
+            System.out.println(string);
         }
     }
 

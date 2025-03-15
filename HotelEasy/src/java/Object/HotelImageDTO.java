@@ -6,29 +6,22 @@
 package Object;
 
 import java.util.List;
+import org.apache.catalina.tribes.util.Arrays;
 
 /**
  *
- * @author Truong
+ * @author Lenovo
  */
-public class RoomImageDTO {
-
-    private String roomid;
+public class HotelImageDTO {
     private String hotelid;
     private List<String> image;
 
-    public RoomImageDTO(String RoomID, String HotelID, List<String> Image) {
-        this.roomid = RoomID;
-        this.hotelid = HotelID;
-        this.image = Image;
+    public HotelImageDTO() {
     }
 
-    public String getRoomid() {
-        return roomid;
-    }
-
-    public void setRoomid(String roomid) {
-        this.roomid = roomid;
+    public HotelImageDTO(String hotelid, List<String> image) {
+        this.hotelid = hotelid;
+        this.image = image;
     }
 
     public String getHotelid() {
@@ -49,9 +42,9 @@ public class RoomImageDTO {
 
     @Override
     public String toString() {
-        return "RoomImageDTO{" + "roomid=" + roomid + ", hotelid=" + hotelid + ", image=" + image + '}';
+        return "HotelImageDTO{" + "hotelid=" + hotelid + ", image=" + image + '}';
     }
 
-   
+    
 
 }

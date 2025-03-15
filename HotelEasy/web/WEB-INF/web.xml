@@ -38,7 +38,7 @@
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <servlet-name>SellerController</servlet-name>
         <servlet-class>Controll.SellerController</servlet-class>

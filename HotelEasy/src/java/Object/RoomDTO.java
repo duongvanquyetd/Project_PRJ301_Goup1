@@ -11,93 +11,113 @@ package Object;
  */
 public class RoomDTO {
 
-    private String HotelID;
-    private String RoomID;
-    private int CapacityChild;
-    private int CapacityAdult;
-    private int Price;
-    private String Discount;
-    private String TypeRoom;
-    private String Status;
+    private String hotelid;
+    private String roomid;
+    private int capacitychild;
+    private int capacityadult;
+    private int price;
+    private double discount;
+    private String typeroom;
+    private int numberofbed;
+    private int area;
+    private String status;
 
-    public RoomDTO(String HotelID, String RoomID, int CapacityChild, int CapacityAdult, int Price, String Discount, String TypeRoom, String Status) {
-        this.HotelID = HotelID;
-        this.RoomID = RoomID;
-        this.CapacityChild = CapacityChild;
-        this.CapacityAdult = CapacityAdult;
-        this.Price = Price;
-        this.Discount = Discount;
-        this.TypeRoom = TypeRoom;
-        this.Status = Status;
+    public RoomDTO(String hotelid, String roomid, int capacitychild, int capacityadult, int price, double discount, String typeRoom, int numberofbed, int area, String status) {
+        this.hotelid = hotelid;
+        this.roomid = roomid;
+        this.capacitychild = capacitychild;
+        this.capacityadult = capacityadult;
+        this.price = price;
+        this.discount = discount;
+        this.typeroom = typeRoom;
+        this.numberofbed = numberofbed;
+        this.area = area;
+        this.status = status;
     }
 
-    public String getHotelID() {
-        return HotelID;
+    public String getHotelid() {
+        return hotelid;
     }
 
-    public void setHotelID(String HotelID) {
-        this.HotelID = HotelID;
+    public void setHotelid(String hotelid) {
+        this.hotelid = hotelid;
     }
 
-    public String getRoomID() {
-        return RoomID;
+    public String getRoomid() {
+        return roomid;
     }
 
-    public void setRoomID(String RoomID) {
-        this.RoomID = RoomID;
+    public void setRoomid(String roomid) {
+        this.roomid = roomid;
     }
 
-    public int getCapacityChild() {
-        return CapacityChild;
+    public int getCapacitychild() {
+        return capacitychild;
     }
 
-    public void setCapacityChild(int CapacityChild) {
-        this.CapacityChild = CapacityChild;
+    public void setCapacitychild(int capacitychild) {
+        this.capacitychild = capacitychild;
     }
 
-    public int getCapacityAdult() {
-        return CapacityAdult;
+    public int getCapacityadult() {
+        return capacityadult;
     }
 
-    public void setCapacityAdult(int CapacityAdult) {
-        this.CapacityAdult = CapacityAdult;
+    public void setCapacityadult(int capacityadult) {
+        this.capacityadult = capacityadult;
     }
 
     public int getPrice() {
-        return Price;
+        return price;
     }
 
-    public void setPrice(int Price) {
-        this.Price = Price;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
-    public String getDiscount() {
-        return Discount;
+    public double getDiscount() {
+        return discount;
     }
 
-    public void setDiscount(String Discount) {
-        this.Discount = Discount;
+    public void setDiscount(double discount) {
+        this.discount = discount;
     }
 
-    public String getTypeRoom() {
-        return TypeRoom;
+    public String getTyperoom() {
+        return typeroom;
     }
 
-    public void setTypeRoom(String TypeRoom) {
-        this.TypeRoom = TypeRoom;
+    public void setTyperoom(String typeRoom) {
+        this.typeroom = typeRoom;
+    }
+
+    public int getNumberofbed() {
+        return numberofbed;
+    }
+
+    public void setNumberofbed(int numberofbed) {
+        this.numberofbed = numberofbed;
+    }
+
+    public int getArea() {
+        return area;
+    }
+
+    public void setArea(int area) {
+        this.area = area;
     }
 
     public String getStatus() {
-        return Status;
+        return status;
     }
 
-    public void setStatus(String Status) {
-        this.Status = Status;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
     public String toString() {
-        return "RoomDTO{" + "HotelID=" + HotelID + ", RoomID=" + RoomID + ", CapacityChild=" + CapacityChild + ", CapacityAdult=" + CapacityAdult + ", Price=" + Price + ", Discount=" + Discount + ", TypeRoom=" + TypeRoom + ", Status=" + Status + '}';
+        return "RoomDTO{" + "hotelid=" + hotelid + ", roomid=" + roomid + ", capacitychild=" + capacitychild + ", capacityadult=" + capacityadult + ", price=" + price + ", discount=" + discount + ", typeroom=" + typeroom + ", numberofbed=" + numberofbed + ", area=" + area + ", status=" + status + '}';
     }
-    
+
 }

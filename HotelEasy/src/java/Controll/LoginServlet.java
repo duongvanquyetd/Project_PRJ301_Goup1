@@ -6,7 +6,7 @@
 package Controll;
 
 import Object.PersonDAO;
-import Object.PersonDTA;
+import Object.PersonDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -40,23 +40,23 @@ public class LoginServlet extends HttpServlet {
             String user = request.getParameter("user");
             String pass = request.getParameter("password");
             PersonDAO p = new PersonDAO();
-            PersonDTA pe = p.Login(user, pass);
+            PersonDTO pe = p.Login(user, pass);
             if (pe != null) {
 
-                if (pe.getRoleName().equalsIgnoreCase("Admin")) {
+                if (pe.getRolename().equalsIgnoreCase("Admin")) {
                     HttpSession session = request.getSession(true);
-                    session.setAttribute("adminsession", user);
+                    session.setAttribute("adminsession", pe);
                     response.sendRedirect("AdminController");
-                } else if (pe.getRoleName().equalsIgnoreCase("owner")) {
+                } else if (pe.getRolename().equalsIgnoreCase("owner")) {
                     HttpSession session = request.getSession(true);
-                    session.setAttribute("ownersession", user);
-                    response.sendRedirect("HotelEditController");
-                } else if (pe.getRoleName().equalsIgnoreCase("user")) {
+                    session.setAttribute("ownersession", pe);
+                    response.sendRedirect("SellerController");
+                } else if (pe.getRolename().equalsIgnoreCase("user")) {
                     HttpSession session = request.getSession(true);
-                    session.setAttribute("usersession", user);
+                    session.setAttribute("usersession", pe);
                     response.sendRedirect("./MainPage_1.jsp");
                 } else {
-                    out.print("helllo " + pe.getRoleName() + "  " + pe.getName());
+                    out.print("helllo " + pe.getRolename() + "  " + pe.getName());
                 }
 
             } else {

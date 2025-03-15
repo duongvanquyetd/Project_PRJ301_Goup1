@@ -6,9 +6,9 @@
 package Controll;
 
 import Object.HotelDAO;
-import Object.HotelDTA;
+import Object.HotelDTO;
 import Object.HotelImageDAO;
-import Object.HotelImageDTA;
+import Object.HotelImageDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;

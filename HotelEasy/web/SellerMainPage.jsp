@@ -18,9 +18,10 @@
             }
 
             .content-container {
+                flex: 1;
                 display: flex;
                 justify-content: space-between;
-                align-items: center;
+                align-items: flex-start;
                 text-align: center;
                 margin: 20px;
             }
@@ -114,6 +115,7 @@
                 <a href="">Revenue</a>
             </div>
         </div>
+        <%@ include file="Footer.jsp" %>
     </body>
 
 </html>

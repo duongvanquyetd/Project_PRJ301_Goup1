@@ -1,3 +1,4 @@
+<%@page import="Object.RoomDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="vi">
@@ -17,31 +18,8 @@
                 scroll-behavior: smooth;
             }
 
-            .choose {
-                display: flex;
-                gap: 10px; /* Reduced gap */
-                flex-wrap: wrap;
-                justify-content: space-evenly;
-                align-items: center;
-                margin: 10px; /* Reduced margin */
-            }
-
-            .choose a {
-                color: white;
-                background-color: #18375D;
+            a{
                 text-decoration: none;
-                width: 40%; /* Reduced width */
-                text-align: center;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
-                padding: 10px 0; /* Reduced padding */
-                transition: background-color 0.3s ease, transform 0.3s ease;
-                font-size: 14px; /* Reduced font size */
-            }
-
-            .choose a:hover {
-                background-color: #0056b3;
-                transform: scale(1.05);
             }
 
             h2 {
@@ -51,6 +29,7 @@
             }
 
             .form-container {
+                flex: 1;
                 width: 700px; /* Reduced width */
                 margin: 0 auto; /* Centered form */
                 padding: 30px; /* Reduced padding */
@@ -86,15 +65,19 @@
                 font-size: 16px; /* Reduced font size */
             }
 
+            .button-container {
+                text-align: center;
+                margin-top: 20px;
+            }
+
             .save-btn {
                 background-color: green;
                 color: white;
-                padding: 15px 30px; /* Reduced padding */
+                padding: 10px 20px; /* Adjusted padding */
                 border: none;
                 border-radius: 5px;
                 cursor: pointer;
-                display: block;
-                margin: 20px auto; /* Centered button and increased margin */
+                display: inline-block;
                 font-size: 16px; /* Reduced font size */
             }
 
@@ -108,49 +91,57 @@
 
         <%@ include file="HeaderSellerPage.jsp" %>
 
-        <!--Choose-->
-        <div class="choose">
-            <a href="">
-                <h3>Booking Management</h3>
-            </a>
-            <a href="">
-                <h3>Hotel Information management</h3>
-            </a>
-        </div>
-        <!--End Choose-->
+        <%
+            RoomDTO room = (RoomDTO) request.getAttribute("room");
+            pageContext.setAttribute("room", room);
+        %>
 
         <h2>Change Room Information</h2>
         <div class="form-container">
             <div class="form-group">
                 <span class="label">Room Image</span>
-                <input type="file" class="input-field" placeholder="Choose File" >
+                <input type="file"  class="input-field" name="roomImg" value="">
             </div>
+
             <div class="form-group">
-                <span class="label">Discount</span>
-                <input type="text" class="input-field" placeholder="Input Discount" >
+                <span class="label">Capacity Child</span>
+                <input type="text" class="input-field"  name="roomCapacityChild" value="${room.capacitychild}">
             </div>
+
+            <div class="form-group">
+                <span class="label">Capacity Adult</span>
+                <input type="text" class="input-field"  name="roomCapacityAdult" value="${room.capacityadult}">
+            </div>
+
+            <div class="form-group">
+                <span class="label">Type Room</span>
+                <input type="text" class="input-field"  name="roomType" value="${room.typeroom}">
+            </div>
+
+            <div class="form-group">
+                <span class="label">Area</span>
+                <input type="text" class="input-field"  name="roomArea" value="${room.area} m²" >
+            </div>
+
+            <div class="form-group">
+                <span class="label">Number Of Bed</span>
+                <input type="text" class="input-field"  name="numberOfBed" value="${room.numberofbed}">
+            </div>
+
             <div class="form-group">
                 <span class="label">Price</span>
-                <input type="text" class="input-field" placeholder="Input Price" >
+                <input type="text" class="input-field"  name="roomPrice" value="${room.price}">
             </div>
+
             <div class="form-group">
-                <span class="label">NameRoom</span>
-                <input type="text" class="input-field" placeholder="Input Room Name" >
+                <span class="label">Discount</span>
+                <input type="text" class="input-field"  name="roomDiscount" value="${room.discount}">
             </div>
-            <div class="form-group">
-                <span class="label">Utilities</span>
-                <input type="text" class="input-field" placeholder="Input Utilities" >
+            <div class="button-container">
+                <a class="save-btn" href="SellerController?action=updateRoom&idroom=${room.roomid}">Save</a>
             </div>
-            <div class="form-group">
-                <span class="label">Endow</span>
-                <input type="text" class="input-field" placeholder="Input Endow" >
-            </div>
-            <div class="form-group">
-                <span class="label">Type Of Room</span>
-                <input type="text" class="input-field" placeholder="Input Type" >
-            </div>
-        </div>
-        <button class="save-btn">Save</button>
+            
+            <%@ include file="Footer.jsp" %>
     </body>
 
 </html>

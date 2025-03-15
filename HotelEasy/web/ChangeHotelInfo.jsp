@@ -1,3 +1,5 @@
+<%@page import="Object.HotelDTO"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -16,6 +18,10 @@
                 background-color: #f4f4f4;
                 color: #333;
                 scroll-behavior: smooth;
+            }
+
+            a{
+                text-decoration: none;
             }
 
             .choose {
@@ -52,6 +58,7 @@
             }
 
             .form-container {
+                flex: 1;
                 width: 700px; /* Reduced width */
                 margin: 0 auto; /* Centered form */
                 padding: 30px; /* Reduced padding */
@@ -76,7 +83,7 @@
                 font-size: 16px; 
             }
 
-            .input-field {
+            .input-field, #star-rating {
                 flex: 1;
                 background-color: lightgray;
                 padding: 12px; 
@@ -88,19 +95,27 @@
             }
 
             .save-btn {
-                background-color: green;
+                background-color: #28a745; /* Changed to a lighter green */
                 color: white;
-                padding: 15px 30px; 
+                padding: 10px 20px; /* Reduced padding */
                 border: none;
                 border-radius: 5px;
                 cursor: pointer;
                 display: block;
-                margin: 20px auto; 
+                margin: 20px auto; /* Centered button */
                 font-size: 16px; 
+                transition: background-color 0.3s ease, transform 0.3s ease; /* Added transition */
+                width: fit-content; /* Adjust width to fit content */
             }
 
             .save-btn:hover {
-                background-color: darkgreen;
+                background-color: #218838; /* Changed to a darker green */
+                transform: scale(1.05); /* Added scale effect */
+            }
+
+            #star-rating option {
+                background-color: white;
+                color: black;
             }
         </style>
     </head>
@@ -110,35 +125,51 @@
 
 
 
-        <!--Choose-->
-        <div class="choose">
-            <a href="">
-                <h3>Booking Management</h3>
-            </a>
-            <a href="">
-                <h3>Hotel Information management</h3>
-            </a>
-        </div>
-        <!--End Choose-->
-
+        <%
+            HotelDTO hotel = (HotelDTO) request.getAttribute("hotel");
+            pageContext.setAttribute("hotel", hotel);
+        %>
         <h2>Change Hotel Information</h2>
         <div class="form-container">
             <div class="form-group">
                 <span class="label">Hotel Image</span>
-                <input type="file" class="input-field" placeholder="Choose File" >
+                <input type="file" class="input-field" value="Choose File" name="imghotel">
+
             </div>
             <div class="form-group">
                 <span class="label">Hotel Name</span>
-                <input type="text" class="input-field" placeholder="Input Name" >
+                <input type="text" class="input-field" value="${hotel.namehotel}" name="updatehotelname">
             </div>
+
             <div class="form-group">
-                <span class="label">Location</span>
-                <input type="text" class="input-field" placeholder="Input Location" >
+                <span class="label">Streets</span>
+                <input type="text" class="input-field" value="${hotel.streets}" name="updateStreet">
             </div>
 
+            <div class="form-group">
+                <span class="label">District</span>
+                <input type="text" class="input-field" value="${hotel.district}" name="updatedistrict">
+            </div>
 
+            <div class="form-group">
+                <span class="label">City</span>
+                <input type="text" class="input-field" value="${hotel.city}" name="updatecity">
+            </div>
+
+            <div class="form-group">
+                <span class="label">Choose Rate</span>
+                <select id="star-rating" name="star-rating">
+                    <option name="ratestar" value="image/Star/1sao.png">1 Star</option>
+                    <option name="ratestar" value="image/Star/2sao.png">2 Star</option>
+                    <option name="ratestar" value="image/Star/3sao.png">3 Star</option>
+                    <option name="ratestar" value="image/Star/4sao.png">4 Star</option>
+                    <option name="ratestar" value="image/Star/5sao.png">5 Star</option>
+                </select>
+
+            </div>
+            <a class="save-btn" href="SellerController?action=changeHotelInfo&id=${hotel.hotelid}">Save</a>
         </div>
-        <button class="save-btn">Save</button>
+        <%@ include file="Footer.jsp" %>
     </body>
 
 </html>

@@ -1,3 +1,6 @@
+<%@page import="Object.PersonDTO"%>
+
+<%@page import="Object.PersonDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -76,25 +79,28 @@
         <header>
             <div class="container-header">
                 <div class="header-logo">
-                    <a href=""><img src="https://i.pinimg.com/736x/bd/dd/40/bddd40355e08a41ae93bfbe21ae9ed1c--jouer-cream.jpg"
+                    <a href=""><img src="image/Logo/1.png"
                                     alt=""></a>
                 </div>
 
                 <div class="header-nav">
-                    <a href="">Report Revenue</a>
-                    <a href="">Manager Hotel</a>
-                    <a href="">Register Hotel</a>
+                    <a href="SellerMainPage.jsp">Report Revenue</a>
+                    <a href="SellerController?action=bookingManager">Booking Management</a>
+                    <a href="SellerController?action=hotelManager">Manager Hotel</a>
+                    <a href="SellerController?action=roomManager">Manager Room</a>
+                    <a href="RegisterHotel.jsp">Register Hotel</a>
                 </div>
 
-                <% String name =(String) request.getAttribute("name");
-                   %>
+
                 <div class="header-account">
-                    <a href="">Seller ${name}></a>
-                    <a href="">Logout</a>
+                    <a href="">Seller ${sessionScope.ownersession.name}</a>
+                    <a href="LoginServlet?action=logout">Logout</a>
                 </div>
             </div>
         </header>
         <!--End Header-->
+        
+        
     </body>
 
 </html>

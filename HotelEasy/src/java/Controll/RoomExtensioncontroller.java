@@ -39,19 +39,6 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
         throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
     HotelImageDAO dao = new HotelImageDAO();
-    List<HotelImageDTA> list = dao.getAllImgHotel();
- 
-//    HotelImageDTA 
-//    
-   request.setAttribute("RoomImg", list);
-//    
-    
-    
-    
-    // Chuyển đến JSP
-    request.getRequestDispatcher("Room.jsp").forward(request, response);
-}
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

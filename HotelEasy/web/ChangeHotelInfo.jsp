@@ -122,23 +122,28 @@
         <!--End Choose-->
 
         <h2>Change Hotel Information</h2>
-        <div class="form-container">
-            <div class="form-group">
-                <span class="label">Hotel Image</span>
-                <input type="file" class="input-field" placeholder="Choose File" >
-            </div>
-            <div class="form-group">
-                <span class="label">Hotel Name</span>
-                <input type="text" class="input-field" placeholder="Input Name" >
-            </div>
-            <div class="form-group">
-                <span class="label">Location</span>
-                <input type="text" class="input-field" placeholder="Input Location" >
-            </div>
+
+        <form action="test">
+
+            <div class="form-container">
+                <div class="form-group">
+                    <span class="label">Hotel Image</span>
+                    <input type="file"  placeholder="Choose File" name="name" >
+                </div>
+                <div class="form-group">
+                    <span class="label">Hotel Name</span>
+                    <input type="text" class="input-field" placeholder="Input Name" >
+                </div>
+                <div class="form-group">
+                    <span class="label">Location</span>
+                    <input type="text" class="input-field" placeholder="Input Location" >
+                </div>
 
 
-        </div>
-        <button class="save-btn">Save</button>
+            </div>
+        <input type="submit" value="dang">
+        </form>
+      
     </body>
-
+  
 </html>

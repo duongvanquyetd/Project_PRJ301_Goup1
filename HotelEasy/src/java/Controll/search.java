@@ -7,10 +7,9 @@ package Controll;
 
 import Object.HotelDAO;
 import Object.HotelDTO;
-import Object.HotelImageDAO;
-import Object.HotelImageDTA;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,10 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Truong
+ * @author Lenovo
  */
-@WebServlet(name = "SellerController", urlPatterns = {"/SellerController"})
-public class SellerController extends HttpServlet {
+@WebServlet(name = "search", urlPatterns = {"/search"})
+public class search extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,33 +34,46 @@ public class SellerController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    response.setContentType("text/html;charset=UTF-8");
-    try (PrintWriter out = response.getWriter()) {
-        String action = request.getParameter("action");
-        if (action == null || action.isEmpty()) {
-            
-            String hotelID = request.getParameter("id");
-            HotelDAO hotelDAO = new HotelDAO();
-            HotelDTO hotel = hotelDAO.getHotelByOwnerID(hotelID);
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
 
-            
-            HotelImageDAO hotelImageDAO = new HotelImageDAO();
-            List<String> images = hotelImageDAO.getImgByHotelID(hotelID);
+            String action = request.getParameter("action");
+            HotelDAO h = new HotelDAO();
+            String location = request.getParameter("location");
+            String Arriveddate = request.getParameter("Arriveddate");
+            String numberofperson = request.getParameter("numberofperson");
+            String sortCol = request.getParameter("sortCol");
+            String[] listlocation = request.getParameterValues("listlocation");
+            String star[] = request.getParameterValues("star");
 
-           
-            request.setAttribute("hotel", hotel);
-            request.setAttribute("images", images);
+            String feature[] = request.getParameterValues("feature");
 
-            
-            request.getRequestDispatcher("HotelEdit.jsp").forward(request, response);
-        } else if (action == "sdsf"){
-            
-        }else{
-            
+            if (action == null || action.isEmpty()) {
+                List<HotelDTO> list = h.getHotelBySearch(sortCol, numberofperson, sortCol);
+                request.setAttribute("List", list);
+                request.getRequestDispatcher("Search.jsp").forward(request, response);
+            } else {
+                
+
+                List<HotelDTO> list = h.searachAll(location, sortCol, Arriveddate, numberofperson, listlocation, star, feature);
+                request.setAttribute("List", list);
+                request.getRequestDispatcher("Search.jsp").forward(request, response);
+////for (String string : feature) {
+////                     out.println("<div>"+string+"</div>");
+////                }
+//out.print(location+"/"+numberofperson+"/"+Arriveddate+"/"+listlocation+"/"+star+"/"+feature+"/"+list+"/");
+////
+//                for (HotelDTO hotelDTO : list) {
+//                      out.println("<div>"+hotelDTO.toString()+"</div>");
+//                }
+////        
+
+            }
+
         }
     }
-}
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

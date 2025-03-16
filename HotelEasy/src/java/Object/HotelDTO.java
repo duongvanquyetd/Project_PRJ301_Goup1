@@ -5,11 +5,13 @@
  */
 package Object;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Lenovo
  */
-public class HotelDTA {
+public class HotelDTO  implements Serializable{
     private String HotelID, PersonName,city, district , Streets,NameHotel;
     private String RateHotel;
     private int approved;
@@ -23,7 +25,7 @@ public class HotelDTA {
         this.discount = discount;
     }
 
-    public HotelDTA(String HotelID, String city, String district, String Streets, String NameHotel, String RateHotel, double discount, double price) {
+    public HotelDTO(String HotelID, String city, String district, String Streets, String NameHotel, String RateHotel, double discount, double price) {
         this.HotelID = HotelID;
         this.city = city;
         this.district = district;
@@ -45,7 +47,7 @@ public class HotelDTA {
     
     
 
-    public HotelDTA(String HotelID, String PersonID, String city, String district, String Streets, String NameHotel, String RateHotel, int approved) {
+    public HotelDTO(String HotelID, String PersonID, String city, String district, String Streets, String NameHotel, String RateHotel, int approved) {
         this.HotelID = HotelID;
         this.PersonName = PersonID;
         this.city = city;
@@ -57,7 +59,7 @@ public class HotelDTA {
         
     }
 
-    public HotelDTA() {
+    public HotelDTO() {
     }
 
     public String getHotelID() {

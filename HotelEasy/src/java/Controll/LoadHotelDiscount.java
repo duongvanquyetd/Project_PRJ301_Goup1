@@ -6,7 +6,7 @@
 package Controll;
 
 import Object.HotelDAO;
-import Object.HotelDTA;
+import Object.HotelDTO;
 import Object.HotelImageDAO;
 import Object.HotelImageDTA;
 import java.io.IOException;

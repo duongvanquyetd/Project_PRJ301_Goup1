@@ -41,33 +41,45 @@ public class LoginServlet extends HttpServlet {
             String pass = request.getParameter("password");
             PersonDAO p = new PersonDAO();
             PersonDTA pe = p.Login(user, pass);
-            if (pe != null) {
 
-                if (pe.getRoleName().equalsIgnoreCase("Admin")) {
+            String url = "login.jsp";
+            String action = request.getParameter("action");
+
+            if (action == null || action.isEmpty()) {
+
+                if (pe != null) {
                     HttpSession session = request.getSession(true);
-                    session.setAttribute("adminsession", user);
-                    response.sendRedirect("AdminController");
-                } else if (pe.getRoleName().equalsIgnoreCase("owner")) {
-                    HttpSession session = request.getSession(true);
-                    session.setAttribute("ownersession", user);
-                    response.sendRedirect("HotelEditController");
-                } else if (pe.getRoleName().equalsIgnoreCase("user")) {
-                    HttpSession session = request.getSession(true);
-                    session.setAttribute("usersession", user);
-                    response.sendRedirect("./MainPage_1.jsp");
+                    if (pe.getRoleName().equalsIgnoreCase("Admin")) {
+
+                        session.setAttribute("adminsession", pe);
+                        url = "AdminController";
+                    } else if (pe.getRoleName().equalsIgnoreCase("owner")) {
+                        
+                        session.setAttribute("ownersession", pe);
+                        url = "HotelEditController";
+                    } else if (pe.getRoleName().equalsIgnoreCase("user")) {
+                   
+                        session.setAttribute("usersession", pe);
+                        url = "./MainPage_1.jsp";
+                    }
+
                 } else {
-                    out.print("helllo " + pe.getRoleName() + "  " + pe.getName());
+                    request.setAttribute("status", "false");
+                    url = "login.jsp";
                 }
+            } else if (action.equals("logout")) {
+                HttpSession session = request.getSession(false);
 
-            } else {
-                request.setAttribute("status", "false");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                if (session != null) {
+                    session.invalidate();
+                }
+                url = "login.jsp";
+
             }
-            
-            
-            
 
+            request.getRequestDispatcher(url).forward(request, response);
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

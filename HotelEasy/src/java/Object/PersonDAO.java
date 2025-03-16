@@ -161,7 +161,7 @@ public class PersonDAO {
     }
     public static void main(String[] args) {
         PersonDAO p = new PersonDAO();
-        System.out.println(p.NumberOfUser()+","+p.NumberOfHotelOwner());
+        System.out.println(p.Login("quyet", "quyet").getName());
                 
 
     }

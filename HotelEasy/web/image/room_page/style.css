@@ -1,4 +1,5 @@
-/* Reset CSS */
+
+        /* Reset CSS */
 body, html {
     margin: 0;
     padding: 0;
@@ -303,7 +304,100 @@ nav a:hover {
     background-color: #218838;
     transform: translateY(-2px); /* Hiệu ứng nổi lên khi hover */
 }
+/* style.css */
 
+
+.container_hotel {
+            max-width: 1200px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .hotel-card {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        .hotel-details {
+            flex: 1 1 60%;
+        }
+        .hotel-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .hotel-address, .hotel-rating {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 8px;
+        }
+        .hotel-features-section {
+            flex: 1 1 35%;
+            background-color: #f5f5f5;
+            padding: 16px;
+            border-radius: 10px;
+        }
+        .hotel-features-section strong {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .hotel-features {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        .hotel-features li::before {
+            content: "✔️ ";
+            margin-right: 6px;
+        }
+        .no-data {
+            font-size: 18px;
+            text-align: center;
+            color: #999;
+            margin-top: 30px;
+        }
+
+        
+        
+        /*  Phần css của room */
+        
+         .container { max-width: 1200px; margin: 30px auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .title { font-size: 28px; font-weight: bold; margin-bottom: 20px; }
+        .room-section { display: flex; gap: 20px; }
+        .room-image { flex: 1; }
+        .room-image img { width: 100%; border-radius: 12px; }
+        .room-details { flex: 2; }
+        .features { margin-top: 10px; font-size: 14px; }
+        .features span { display: block; margin-bottom: 4px; }
+        .options-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .options-table th, .options-table td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        .price { color: #d9534f; font-weight: bold; font-size: 18px; }
+        .old-price { text-decoration: line-through; color: #888; font-size: 14px; }
+        .good-location { color: #fff; background: #d9534f; border-radius: 5px; padding: 2px 6px; font-size: 12px; }
+        .choose-btn { background-color: #007bff; color: white; padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer; }
+        .left-room { color: red; font-size: 13px; }
+        .room-option-title { font-weight: bold; margin-top: 10px; }
+        .see-details { color: #007bff; text-decoration: underline; cursor: pointer; margin-top: 10px; display: inline-block; }
+        
+        
+        
+   
 /* Responsive Design */
 @media (max-width: 768px) {
     .img-inf {

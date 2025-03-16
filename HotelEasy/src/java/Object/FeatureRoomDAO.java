@@ -42,53 +42,71 @@ public class FeatureRoomDAO {
     }
 
     
-  public List<FeatureRoomDTO> getInfAllRoom(String idHotel) {
+  public List<FeatureRoomDTO> getInfAllRoom(String idHotel, int price_se, int numberbed, int numberpeople, int numberChild) {
     List<FeatureRoomDTO> list = new ArrayList<>();
     try {
         Connection con = DBUtils.getConnection();
 
         String sql = "SELECT " +
-    "r.RoomID, " +
-    "r.HotelID, " +
-    "r.NumberOfBed, " +
-    "r.Price, " +
-    "r.CapacityAdult, " +
-    "r.CapacityChild, " +
-    "r.Discount, " +
-    "r.TypeRoom, " +
-    "(SELECT STRING_AGG(Path, ',') FROM (SELECT DISTINCT Path FROM ImageRoom WHERE RoomID = r.RoomID AND HotelID = r.HotelID) AS img) AS Images, " +
-    "(SELECT STRING_AGG(Gift, ',') FROM (SELECT DISTINCT Gift FROM FeatureRoom WHERE RoomID = r.RoomID AND HotelID = r.HotelID) AS ft) AS Features " +
-    "FROM Room r " +
-    "WHERE r.HotelID = ?";
+                "r.RoomID, r.HotelID, r.NumberOfBed, r.Price, r.Area, r.CapacityAdult, r.CapacityChild, " +
+                "r.Discount, r.TypeRoom, " +
+                "(SELECT STRING_AGG(Path, ',') FROM (SELECT DISTINCT Path FROM ImageRoom WHERE RoomID = r.RoomID AND HotelID = r.HotelID) AS img) AS Images, " +
+                "(SELECT STRING_AGG(Gift, ',') FROM (SELECT DISTINCT Gift FROM FeatureRoom WHERE RoomID = r.RoomID AND HotelID = r.HotelID) AS ft) AS Features " +
+                "FROM Room r WHERE r.HotelID = ? ";
 
+        // Tạo các điều kiện lọc nếu có
+        List<Object> parameters = new ArrayList<>();
+        parameters.add(idHotel);
+
+        if (price_se > 0) {
+            sql += " AND r.Price <= ? ";
+            parameters.add(price_se);
+        }
+
+        if (numberbed > 0) {
+            sql += " AND r.NumberOfBed = ? ";
+            parameters.add(numberbed);
+        }
+
+        if (numberpeople > 0) {
+            sql += " AND r.CapacityAdult >= ? ";
+            parameters.add(numberpeople);
+        }
+
+        if (numberChild > 0) {
+            sql += " AND r.CapacityChild >= ? ";
+            parameters.add(numberChild);
+        }
 
         PreparedStatement stm = con.prepareStatement(sql);
-        stm.setString(1, idHotel);
+
+        // Thiết lập các tham số theo thứ tự
+        for (int i = 0; i < parameters.size(); i++) {
+            Object param = parameters.get(i);
+            if (param instanceof String) {
+                stm.setString(i + 1, (String) param);
+            } else if (param instanceof Integer) {
+                stm.setInt(i + 1, (Integer) param);
+            }
+        }
 
         ResultSet rs = stm.executeQuery();
         while (rs.next()) {
-            String roomid = rs.getString("RoomID");
-            String hotelid = rs.getString("HotelID");
-            int numberofbed = rs.getInt("NumberOfBed");
-            int price = rs.getInt("Price");
-            int capacityAdult = rs.getInt("CapacityAdult");
-            int capacityChild = rs.getInt("CapacityChild");
-            int discount = rs.getInt("Discount");
-            String typeroom = rs.getString("TypeRoom");
-            String features = rs.getString("Features");
-            String image = rs.getString("Images");
-
             FeatureRoomDTO room = new FeatureRoomDTO();
-            room.setRoomID(roomid);
-            room.setHotelID(hotelid);
-            room.setNumberOfBed(numberofbed);
-            room.setPrice(price);
-            room.setCapacityAdult(capacityAdult);
-            room.setCapacityChild(capacityChild);
-            room.setDiscount(discount);
-            room.setType(typeroom);
+            room.setRoomID(rs.getString("RoomID"));
+            room.setHotelID(rs.getString("HotelID"));
+            room.setNumberOfBed(rs.getInt("NumberOfBed"));
+            room.setPrice(rs.getInt("Price"));
+            room.setCapacityAdult(rs.getInt("CapacityAdult"));
+            room.setCapacityChild(rs.getInt("CapacityChild"));
+            room.setDiscount(rs.getInt("Discount"));
+            room.setType(rs.getString("TypeRoom"));
+            room.setArea(rs.getInt("Area"));
 
-            if (image != null && !image.isEmpty()) {
+            String image = rs.getString("Images");
+            String features = rs.getString("Features");
+
+            if (image != null && !image.trim().isEmpty()) {
                 room.setImage(Arrays.asList(image.split("\\s*,\\s*")));
             } else {
                 room.setImage(new ArrayList<>());
@@ -109,6 +127,7 @@ public class FeatureRoomDAO {
     }
     return list;
 }
+
 
 
 }

@@ -6,12 +6,11 @@
 
 <%@page import="Object.FeatureHotelDTO"%>
 <%@page import="Object.FeatureRoomDTO"%>
-<%@page import="sun.net.www.content.audio.x_aiff"%>
 <%@page import="Object.RoomImageDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="Object.HotelImageDTA"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -398,6 +397,129 @@ nav a:hover {
             margin-top: 30px;
         }
 
+        .content{
+            
+            display: flex ;
+             
+            
+        }
+        .filter{
+            background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    
+        margin: 20px 50px ;
+        
+        padding: 20px ;
+        }
+         .filter {
+        max-width: 700px;
+        margin: 30px auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+        font-family: 'Segoe UI', sans-serif;
+        color: #333;
+    }
+
+    .filter h1 {
+        font-size: 28px;
+        margin-bottom: 25px;
+        color: #2c3e50;
+        text-align: center;
+    }
+
+    .filter-section {
+        margin-bottom: 25px;
+    }
+
+    .filter-section h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #444;
+    }
+
+    .filter-section label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 8px;
+        color: #555;
+    }
+
+    select,
+    input[type="range"] {
+        width: 100%;
+        padding: 10px 12px;
+        font-size: 15px;
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        transition: border-color 0.3s ease;
+        background: #fdfdfd;
+    }
+
+    select:focus,
+    input[type="range"]:focus {
+        border-color: #3498db;
+        outline: none;
+    }
+
+    .price-slider-container {
+        position: relative;
+    }
+
+    .price-label {
+        display: inline-block;
+        font-size: 14px;
+        margin-top: 10px;
+        color: #666;
+    }
+
+    .min-price {
+        float: left;
+    }
+
+    .selected-price {
+        float: right;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+
+    .submit-button {
+        width: 100%;
+        background: linear-gradient(135deg, #6dd5ed, #2193b0);
+        color: white;
+        padding: 14px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+
+    .submit-button:hover {
+        background: linear-gradient(135deg, #2193b0, #6dd5ed);
+        transform: scale(1.02);
+    }
+
+    @media (max-width: 600px) {
+        .filter {
+            padding: 20px;
+        }
+
+        .filter h1 {
+            font-size: 22px;
+        }
+
+        .submit-button {
+            font-size: 15px;
+            padding: 12px 16px;
+        }
+    }
+        
+        
         
         
         /*  Phần css của room */
@@ -421,8 +543,173 @@ nav a:hover {
         .see-details { color: #007bff; text-decoration: underline; cursor: pointer; margin-top: 10px; display: inline-block; }
         
         
-        
-   
+        .price-slider-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.price-label {
+    font-weight: bold;
+    font-size: 14px;
+    white-space: nowrap;
+    min-width: 100px;
+    text-align: center;
+}
+
+#priceSlider {
+    flex: 1;
+    height: 6px;
+    -webkit-appearance: none;
+    background: #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+
+#priceSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #007bff;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#priceSlider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: #007bff;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* csss slider*/
+ .image-slider {
+    position: relative;
+    width: 100%;
+    max-height: 38%;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+.slider-img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    display: none;
+    transition: opacity 0.5s ease;
+}
+
+.slider-img.active {
+    display: block;
+    height: 100% ;
+    background-color: #333 ;
+}
+
+.prev-btn, .next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.4);
+    color: white;
+    font-size: 24px;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.prev-btn:hover, .next-btn:hover {
+    background-color: rgba(0,0,0,0.7);
+}
+
+.prev-btn {
+    left: 10px;
+}
+
+.next-btn {
+    right: 10px;
+}
+/*
+comment css*/
+   .container-comment {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.comment-title h3 {
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.comment-title h3::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 3px;
+  background-color: #4caf50;
+  margin: 10px auto 0;
+  border-radius: 5px;
+}
+
+.comment-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.comment-box:hover {
+  transform: translateY(-3px);
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #4caf50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.comment-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+  margin: 0;
+}
+
+.comment-body p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555;
+  margin: 0;
+}
 /* Responsive Design */
 @media (max-width: 768px) {
     .img-inf {
@@ -455,6 +742,8 @@ nav a:hover {
 </head>
 
 <body>
+    
+    
     <header>
         <div class="container_header">
             <a href="#"><img src="img_room/logo.png" alt="hint error"></a>
@@ -470,6 +759,7 @@ nav a:hover {
         </div>
     </header>
 
+    
     <div class="search-bar">
         <div class="search-container">
             <input class="search-input" placeholder="Location or hotel name" type="text" id="location">
@@ -483,7 +773,69 @@ nav a:hover {
         </div>
         <button id="search-btn">Search</button>
     </div>
+    <div class="content">
+        <div class="filter">
+        <h1>🎯 Điều chỉnh thông tin phù hợp</h1>
 
+        <form action="RoomExtensioncontroller" method="GET">
+    <!-- Lọc theo giá -->
+    <div class="filter-section">
+        <h3>Lọc theo giá</h3>
+        <div class="price-slider-container">
+            <span class="price-label min-price">0 VNĐ</span>
+            <input type="range" id="priceSlider" name="price" min="0" max="5000000" step="50000" value="0">
+            <span class="price-label selected-price" id="selectedPrice">1.000.000 VNĐ</span>
+        </div>
+    </div>
+
+    <!-- Lọc theo số giường -->
+    <div class="filter-section">
+        <label for="bedCount">🛏️ Số giường:</label>
+        <select id="bedCount" name="bedCount">
+            <option value="">--Chọn--</option>
+            <option value="1">1 giường</option>
+            <option value="2">2 giường</option>
+            <option value="3">3 giường</option>
+            <option value="4">4 giường</option>
+        </select>
+    </div>
+
+    <!-- Lọc theo số người lớn -->
+    <div class="filter-section">
+        <label for="guestCountAdult">👤 Số người lớn:</label>
+        <select id="guestCountAdult" name="guestCountAdult">
+            <option value="">--Chọn--</option>
+            <option value="1">1 người</option>
+            <option value="2">2 người</option>
+            <option value="3">3 người</option>
+            <option value="4">4 người</option>
+            <option value="5">5 người</option>
+        </select>
+    </div>
+
+    <!-- Lọc theo số trẻ em -->
+    <div class="filter-section">
+        <label for="guestCountChild">👶 Số trẻ em:</label>
+        <select id="guestCountChild" name="guestCountChild">
+            <option value="">--Chọn--</option>
+            <option value="1">1 người</option>
+            <option value="2">2 người</option>
+            <option value="3">3 người</option>
+            <option value="4">4 người</option>
+            <option value="5">5 người</option>
+        </select>
+    </div>
+
+    <!-- Hidden input để truyền action -->
+    <input type="hidden" name="action" value="search">
+
+    <div class="filter-section">
+        <button type="submit" class="submit-button">🔍 Lọc kết quả</button>
+    </div>
+</form>
+
+    </div>
+    <div class="infomationhotel">
     <div id="result-container">
 <%
     List<String> list = (List<String>) request.getAttribute("HotelImg");
@@ -520,7 +872,7 @@ nav a:hover {
 
    <div class="container_hotel">
         <div class="title">Thông tin khách sạn</div>
-
+        
         <c:if test="${not empty fthotel}">
             <c:forEach var="ht" items="${fthotel}">
                 <div class="hotel-card">
@@ -548,25 +900,37 @@ nav a:hover {
         </c:if>
     </div>
 
-
+    <c:forEach var="rt" items="${ftroom}">
+        <div class="container">
+             <c:if test="${not empty noroom}">
+    <div class="alert alert-warning" role="alert">
+        ${noroom}
+    </div>
+</c:if>
         
-        <c:forEach var="rt" items="${ftroom}">
-            <div class="container">
+            
+            
+
    <div class="title">${rt.type}</div>
    <div class="room-section">
        <div class="room-image">
-           <c:forEach var="ir" items="${rt.image}">
-               <img src="${ir}" alt="Room Image">
-           </c:forEach>
-           
-           <div class="features">
-               <span>📐 35.5 m²</span>
-               <span>🚭 Non-smoking</span>
-                    <span>🛁 Separate shower and bathtub</span>
-                    <span>🧊 Refrigerator</span>
-                    <span class="see-details">See Room Details</span>
-           </div>
-       </div>
+    <div class="image-slider">
+        <c:forEach var="ir" items="${rt.image}" varStatus="loop">
+             <img src="${ir}" class="slider-img ${loop.index == 0 ? 'active' : ''}" alt="Room Image">
+        </c:forEach>
+        <button class="prev-btn" onclick="prevSlide(this)">❮</button>
+        <button class="next-btn" onclick="nextSlide(this)">❯</button>
+    </div>
+
+    <div class="features">
+        <span>📐 ${rt.area} m²</span>
+        <span>🚭 Non-smoking</span>
+        <span>🛁 Separate shower and bathtub</span>
+        <span>🧊 Refrigerator</span>
+        <span class="see-details">See Room Details</span>
+    </div>
+</div>
+
        <div class="room-details">
                 <table class="options-table">
                     <thead>
@@ -594,11 +958,15 @@ nav a:hover {
                             </td>
                             <td>
                                 <div class="good-location">Good location</div>
-                                <div class="old-price">Boor sung data gias cux</div>
-                                <div class="price">${rt.price}</div>
+                                <div class="old-price"><fmt:formatNumber value="${rt.price}"/> VNĐ </div>
+                                <c:set var="finalPrice" value="${rt.price - (rt.price * rt.discount / 100)}"/>
+                                <div class="price">
+                                    <fmt:formatNumber value="${finalPrice}"/> VNĐ
+                                </div>
+
                                 <div style="font-size: 12px;">Exclude taxes & fees</div>
-                                <button class="choose-btn">Choose</button>
-                                <div class="left-room">2 room(s) left!</div>
+                                <button class="choose-btn" >Choose</button>
+<!--                                <div class="left-room">2 room(s) left!</div>-->
                             </td>
                         </tr>
                         
@@ -611,20 +979,65 @@ nav a:hover {
 
       
     </div> 
+
+    
     </div>
-   
-       
+  
+ <div class="container-comment">
+  <div class="comment-title">
+    <h3>Đánh giá của khách hàng cho khách sạn</h3>
+  </div>
+  <c:forEach var="vr" items="${cmt}">
+    <div class="comment-box">
+      <div class="comment-header">
+        <div class="avatar">
+          <span>${vr.name.charAt(0)}</span>
+        </div>
+        <h4 class="comment-name">${vr.name}</h4>
+      </div>
+      <div class="comment-body">
+        <p>${vr.desciption}</p>
+      </div>
+    </div>
+  </c:forEach>
+</div>
+
         
         
 
       
     <script>
+         const priceSlider = document.getElementById("priceSlider");
+        const selectedPrice = document.getElementById("selectedPrice");
+
+        priceSlider.addEventListener("input", () => {
+            selectedPrice.textContent = Number(priceSlider.value).toLocaleString('vi-VN') + " VNĐ";
+        })
         let today = new Date().toISOString().split('T')[0];
         document.getElementById("check-in").setAttribute("min", today);
         document.getElementById("check-in").addEventListener("change", function () {
             let checkInDate = document.getElementById("check-in").value;
             document.getElementById("check-out").setAttribute("min", checkInDate);
         });
+        function nextSlide(button) {
+    const slider = button.closest('.image-slider');
+    const images = slider.querySelectorAll('.slider-img');
+    let current = Array.from(images).findIndex(img => img.classList.contains('active'));
+    
+    images[current].classList.remove('active');
+    current = (current + 1) % images.length;
+    images[current].classList.add('active');
+}
+
+function prevSlide(button) {
+    const slider = button.closest('.image-slider');
+    const images = slider.querySelectorAll('.slider-img');
+    let current = Array.from(images).findIndex(img => img.classList.contains('active'));
+    
+    images[current].classList.remove('active');
+    current = (current - 1 + images.length) % images.length;
+    images[current].classList.add('active');
+}
     </script>
 </body>
 

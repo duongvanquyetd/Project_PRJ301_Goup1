@@ -67,38 +67,42 @@ public class SellerController extends HttpServlet {
             url = "SellerMainPage.jsp";
         } else if (action.equalsIgnoreCase("bookingManager")) {
             List<BookingDTO> listBooking = new ArrayList<BookingDTO>();
-            if(hotel != null && hotel.getHotelid() != null && hotel.getHotelid().isEmpty()){
+            if (hotel != null && hotel.getHotelid() != null && !hotel.getHotelid().isEmpty()) {
                 listBooking = bookingDAO.loadAllBookingByHotel(hotel.getHotelid());
             }
             request.setAttribute("listBooking", listBooking);
             request.setAttribute("hotel", hotel);
 
             url = "BookingManagement.jsp";
+            /////////////////////////////////////////////////////////////////////////////
         } else if (action.equalsIgnoreCase("acceptBooking")) {
             String id = request.getParameter("id");
             bookingDAO.accept(hotel.getHotelid(), id);
 
             url = "SellerController?action=bookingManager";
+            /////////////////////////////////////////////////////////////////////////////
         } else if (action.equalsIgnoreCase("rejectBooking")) {
             String id = request.getParameter("id");
             bookingDAO.reject(hotel.getHotelid(), id);
 
             url = "SellerController?action=bookingManager";
+            /////////////////////////////////////////////////////////////////////////////
         } else if (action.equalsIgnoreCase("hotelManager")) {
             List<String> hotelimg = new ArrayList<>();
-            if (hotel != null && hotel.getHotelid() != null && hotel.getHotelid().isEmpty()) {
+            if (hotel != null && hotel.getHotelid() != null && !hotel.getHotelid().isEmpty()) {
                 hotelimg = hotelImgDAO.getImgByHotelID(hotel.getHotelid());
             }
             request.setAttribute("hotel", hotel);
             request.setAttribute("hotelimg", hotelimg);
 
             url = "HotelEdit.jsp";
+            /////////////////////////////////////////////////////////////////////////////
         } else if (action.equalsIgnoreCase("editHotel")) {
-            HotelDAO dao = new HotelDAO();
-            request.setAttribute("price", dao.getLowestPrice(hotel.getHotelid()));
+            request.setAttribute("price", hotelDAO.getLowestPrice(hotel.getHotelid()));
             request.setAttribute("hotel", hotel);
 
             url = "ChangeHotelInfo.jsp";
+            /////////////////////////////////////////////////////////////////////////////
         } else if (action.equalsIgnoreCase("changeHotelInfo")) {
             String id = request.getParameter("id");
             String name = request.getParameter("updatehotelname");
@@ -106,18 +110,19 @@ public class SellerController extends HttpServlet {
             String district = request.getParameter("updatehotelname");
             String city = request.getParameter("updatehotelname");
             String rate = request.getParameter("updatehotelname");
-            HotelDAO dao = new HotelDAO();
-            dao.updateHotel(id, city, district, street, name, rate);
+            hotelDAO.updateHotel(id, city, district, street, name, rate);
 
             url = "SellerController?action=hotelManager";
+            /////////////////////////////////////////////////////////////////////////////
         } else if (action.equalsIgnoreCase("deleteHotel")) {
             String id = request.getParameter("id");
             hotelDAO.deleteHotel(hotel.getHotelid());
 
             url = "SellerController?action=hotelManager";
+            /////////////////////////////////////////////////////////////////////////////
         } else if (action.equalsIgnoreCase("roomManager")) {
             List<RoomDTO> listRoom = new ArrayList<RoomDTO>();
-            if(hotel != null && hotel.getHotelid() != null && hotel.getHotelid().isEmpty()){
+            if (hotel != null && hotel.getHotelid() != null && !hotel.getHotelid().isEmpty()) {
                 listRoom = roomDAO.loadRoomByHotelID(hotel.getHotelid());
             }
             List<RoomImageDTO> listRoomImg = roomImgDAO.load();
@@ -126,6 +131,7 @@ public class SellerController extends HttpServlet {
             request.setAttribute("ListImgRoom", listRoomImg);
 
             url = "RoomEdit.jsp";
+            /////////////////////////////////////////////////////////////////////////////
         } else if (action.equalsIgnoreCase("createRoom")) {
 
             url = "RegisterRoom.jsp";
@@ -137,18 +143,20 @@ public class SellerController extends HttpServlet {
             price = Integer.parseInt(request.getParameter("roomPrice"));
             area = Integer.parseInt(request.getParameter("roomArea"));
             numBerOfBed = Integer.parseInt(request.getParameter("numBerOfBed"));
-            String discount = request.getParameter("roomDiscount");
+            double discount = Double.parseDouble(request.getParameter("roomDiscount"));
             String typeRoom = request.getParameter("roomType");
             String status = request.getParameter("roomStatus");
-            roomDAO.insertRoom(hotel.getHotelid(), roomID, capacityAdult, capacityChild, price, discount, area, numBerOfBed, typeRoom);;
+            roomDAO.insertRoom(hotel.getHotelid(), roomID, capacityAdult, capacityChild, price, discount, area, numBerOfBed, typeRoom);
 
             url = "SellerController?action=roomManager";
+            /////////////////////////////////////////////////////////////////////////////
         } else if (action.equalsIgnoreCase("editRoomInfo")) {
             String id = request.getParameter("id");
             RoomDTO room = roomDAO.getRoomById(hotel.getHotelid(), id);
             request.setAttribute("room", room);
 
             url = "ChangeRoomInfo.jsp";
+            /////////////////////////////////////////////////////////////////////////////
         } else if (action.equalsIgnoreCase("updateRoom")) {
             String roomID = request.getParameter("idroom");
             int capacityChild = Integer.parseInt(request.getParameter("roomCapacityChild"));
@@ -162,6 +170,7 @@ public class SellerController extends HttpServlet {
             roomDAO.updateRoom(hotel.getHotelid(), roomID, capacityAdult, capacityChild, price, discount, typeRoom);
 
             url = "SellerController?action=roomManager";
+            /////////////////////////////////////////////////////////////////////////////
         } else if (action.equalsIgnoreCase("deleteRoom")) {
             String roomID = request.getParameter("id");
             roomDAO.deleteRoom(hotel.getHotelid(), roomID);
@@ -170,7 +179,6 @@ public class SellerController extends HttpServlet {
         }
 
         request.getRequestDispatcher(url).forward(request, response);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

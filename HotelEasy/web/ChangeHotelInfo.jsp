@@ -133,7 +133,7 @@
         <div class="form-container">
             <div class="form-group">
                 <span class="label">Hotel Image</span>
-                <input type="file" class="input-field" value="Choose File" name="imghotel">
+                <input type="file" class="input-field" value="Choose File" name="imghotel" multiple>
 
             </div>
             <div class="form-group">

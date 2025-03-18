@@ -240,7 +240,8 @@ public class HotelDAO {
     public static void main(String[] args) {
         HotelDAO d = new HotelDAO();
 
-        d.deleteHotel("h5");
+        d.getHotelByOwnerID("thihanh");
+        System.out.println(d.toString());
     }
 
 }

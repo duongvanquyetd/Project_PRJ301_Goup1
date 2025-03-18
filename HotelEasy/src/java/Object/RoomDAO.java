@@ -92,7 +92,7 @@ public class RoomDAO {
         }
     }
 
-    public void insertRoom(String hotelID, String roomID, int capacityAdult, int capacityChild, int price, String discount, int area, int numofbed, String typeRoom) {
+    public void insertRoom(String hotelID, String roomID, int capacityAdult, int capacityChild, int price, double discount, int area, int numofbed, String typeRoom) {
         String sql = " insert into Room values (?, 'r6',1,2,1231414,'1242','sdvasf',1,13,7) ";
         try {
             Connection conn = DBUtils.getConnection();
@@ -103,7 +103,7 @@ public class RoomDAO {
             stm.setInt(3, capacityChild);
             stm.setInt(4, capacityAdult);
             stm.setInt(5, price);
-            stm.setString(6, discount);
+            stm.setDouble(6, discount);
             stm.setString(7, typeRoom);
             stm.setInt(8, 0);
             stm.setInt(9, area);
@@ -233,7 +233,10 @@ public class RoomDAO {
 
     public static void main(String[] args) {
         RoomDAO dao = new RoomDAO();
-        dao.deleteRoom("h15", "r2");
+        List<RoomDTO> room = dao.loadRoomByHotelID("h2");
+        for (RoomDTO r : room) {
+            System.out.println(r);
+        }
 
     }
 }

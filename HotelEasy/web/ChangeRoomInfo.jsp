@@ -100,7 +100,7 @@
         <div class="form-container">
             <div class="form-group">
                 <span class="label">Room Image</span>
-                <input type="file"  class="input-field" name="roomImg" value="">
+                <input type="file"  class="input-field" name="roomImg" value="" multiple>
             </div>
 
             <div class="form-group">

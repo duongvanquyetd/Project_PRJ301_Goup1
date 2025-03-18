@@ -24,6 +24,7 @@
 
             a {
                 text-decoration: none;
+                text-align: center;
             }
 
             .content-container{
@@ -183,12 +184,13 @@
         <div class="content-container">
             <%
                 HotelDTO hotel = (HotelDTO) request.getAttribute("hotel");
+                pageContext.setAttribute("hotel", hotel);
                 HotelDAO dao = new HotelDAO();
                 List<String> img = (List<String>) request.getAttribute("hotelimg");
                 pageContext.setAttribute("img", img);
 
                 if (hotel != null) {
-                    pageContext.setAttribute("hotel", hotel);
+
             %>
 
             <div class="card">
@@ -213,7 +215,7 @@
                 </div>
                 <div class="buttons">
                     <a class="edit" href="SellerController?action=editHotel&id=${hotel.hotelid}">Edit Information</a>
-                    <a class="edit-room" href="SellerController?action=editRoom&id=${hotel.hotelid}">Manager Room</a>
+                    <a class="edit-room" href="SellerController?action=roomManager&id=${hotel.hotelid}">Manager Room</a>
                     <a class="delete" href="SellerController?action=deleteHotel&id=${hotel.hotelid}">Delete</a>
                 </div>
             </div>

@@ -30,31 +30,56 @@
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
+                margin: 20px 0;
             }
 
-            .fillter div {
+            .fillter select {
                 padding: 12px 20px;
+                font-size: 16px;
                 color: white;
-                text-align: center;
+                background-color: #0d2b4d;
+                border: none;
                 border-radius: 5px;
                 cursor: pointer;
-                font-size: 16px;
-                background-color: #0d2b4d;
                 transition: background-color 0.3s, transform 0.3s;
             }
 
-            .fillter div:hover {
-                background-color: #0a1f36;
-                transform: scale(1.05);
+           
+
+            .fillter select option {
+                color: #333;
+                background-color: white;
+            }
+
+            .getdate {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                margin: 20px 0;
+            }
+
+            .getdate div {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .getdate label {
+                font-size: 16px;
+                font-weight: bold;
+                color: #333;
+                flex: 1;
             }
 
             .getdate input {
-                padding: 12px;
+                padding: 10px;
                 font-size: 16px;
                 border: 1px solid #ccc;
                 border-radius: 5px;
                 width: 100%;
                 max-width: 250px;
+                flex: 1;
                 transition: border-color 0.3s;
             }
 
@@ -99,13 +124,22 @@
 
         <div class="content-container">
             <div class="fillter">
-                <div>Follow by day</div>
-                <div>Follow by month</div>
-                <div>Follow by year</div>
+                <select>
+                    <option value="day">Follow by day</option>
+                    <option value="month">Follow by month</option>
+                    <option value="year">Follow by year</option>
+                </select>
             </div>
 
             <div class="getdate">
-                <input type="date" name="date" id="date">
+                <div>
+                    <label for="fromDate">From date:</label>
+                    <input type="date" name="fromDate" id="fromDate">
+                </div>
+                <div>
+                    <label for="toDate">To date:</label>
+                    <input type="date" name="toDate" id="toDate">
+                </div>
             </div>
 
             <div class="choose">

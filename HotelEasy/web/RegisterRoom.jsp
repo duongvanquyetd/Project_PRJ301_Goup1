@@ -88,12 +88,15 @@
         <%@ include file="HeaderSellerPage.jsp" %>
 
 
-
+        <form action="SellerController">
+            
+            
+       
         <h2>Change Room Information</h2>
         <div class="form-container">
             <div class="form-group">
                 <span class="label">Room Image</span>
-                <input type="file" class="input-field" placeholder="Choose File" name="roomImg">
+                <input type="file" class="input-field" placeholder="Choose File" name="roomImg" multiple>
             </div>
 
             <div class="form-group">
@@ -131,9 +134,10 @@
                 <input type="text" class="input-field" placeholder="Input Discount" name="roomDiscount">
             </div>
             <div class="button-container">
-                <a class="save-btn" href="SellerController?action=insertRoom">Register</a>
+                <input class="save-btn" type="submit" value="Register"> 
             </div>
         </div>
+        </form>
         
         <%@ include file="Footer.jsp" %>
     </body>

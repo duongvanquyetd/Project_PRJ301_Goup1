@@ -219,7 +219,7 @@
                 pageContext.setAttribute("hotel", hotel);
                 List<RoomImageDTO> listRoomImg = (List<RoomImageDTO>) request.getAttribute("ListImgRoom");
                 List<RoomDTO> list = (List<RoomDTO>) request.getAttribute("listRoom");
-                if (list != null) {
+                if (list != null && !list.isEmpty()) {
                     for (RoomDTO room : list) {
                         pageContext.setAttribute("room", room);
             %>

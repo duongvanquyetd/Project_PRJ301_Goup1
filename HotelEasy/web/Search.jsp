@@ -209,7 +209,7 @@
 
                     <div>
                         <div style="color: white;font-weight: bolder">Số người</div>
-                        <input type="text" oninput="find(this)" class="search-input" name="numberofperson" placeholder="số người" value="${requestScope.numberofperson}">
+                        <input type="text" oninput="find2(this)" class="search-input" name="numberofperson" placeholder="số người" value="${requestScope.numberofperson}">
                     </div>    
 
                 </div>
@@ -238,17 +238,17 @@
                         <div class="location">Địa chỉ </div>
 
                         <% for (HotelDTO h : list) {%>
-                        <div>  <input type="checkbox" oninput="find2(this)" value="<%= h.getStreets() + "," + h.getDistrict()%>" name="listlocation" > <%= h.getStreets() + "," + h.getDistrict()%></div>     <%  //nếu có thời gian sẽ làm sau mỗi cái tìm kiêm này sẽ là số lượng sẽ tìm kiếm được nếu ấn vào%>
+                        <div>  <input type="checkbox" oninput="find3(this)" value="<%= h.getStreets() + "," + h.getDistrict()%>" name="listlocation" > <%= h.getStreets() + "," + h.getDistrict()%></div>     <%  //nếu có thời gian sẽ làm sau mỗi cái tìm kiêm này sẽ là số lượng sẽ tìm kiếm được nếu ấn vào%>
                             <% } %>
 
                     </div>
                     <div class="sub-left">
                         <div class="star">  Lọc theo số sao  </div>
-                        <div>  <input type="checkbox" value="image/Star/1sao.png" name="star">  <img src="image/Star/1sao.png">  </div>
-                        <div>  <input type="checkbox" value="image/Star/2sao.png" name="star">    <img src="image/Star/2sao.png"> </div>
-                        <div>  <input type="checkbox" value="image/Star/3sao.png" name="star">    <img src="image/Star/3sao.png"></div>
-                        <div>  <input type="checkbox" value="image/Star/4sao.png" name="star">    <img src="image/Star/4sao.png"> </div>
-                        <div>  <input type="checkbox" value="image/Star/5sao.png" name="star">   <img src="image/Star/5sao.png">  </div>
+                        <div>  <input oninput="find4(this)" type="checkbox" value="image/Star/1sao.png" name="star">  <img src="image/Star/1sao.png">  </div>
+                        <div>  <input oninput="find4(this)" type="checkbox" value="image/Star/2sao.png" name="star">    <img src="image/Star/2sao.png"> </div>
+                        <div>  <input oninput="find4(this)" type="checkbox" value="image/Star/3sao.png" name="star">    <img src="image/Star/3sao.png"></div>
+                        <div>  <input  oninput="find4(this)"type="checkbox" value="image/Star/4sao.png" name="star">    <img src="image/Star/4sao.png"> </div>
+                        <div>  <input oninput="find4(this)" type="checkbox" value="image/Star/5sao.png" name="star">   <img src="image/Star/5sao.png">  </div>
 
                     </div>
                     <div class="sub-left">
@@ -262,7 +262,7 @@
                             List<String> fe = f.getFeatureHotelByHotelID(list);
                             for (String ft : fe) {%>
 
-                        <div>  <input type="checkbox" value="<%= ft%>" name="feature">  <%= ft%> </div>
+                        <div>  <input type="checkbox" value="<%= ft%>" name="feature" oninput="find5(this)">  <%= ft%> </div>
                             <%
                                 }
                             %> 
@@ -384,10 +384,52 @@
             });
         }
 
-function find2(param) {
+        function find2(param) {
             var v = param.value;
             $.ajax({
-                url: "UserController?action=more",
+                url: "UserController?action=NumberOfPerson",
+                type: "get",
+                data: {txt: v}, // Sửa lại cú pháp ở đây
+                success: function (data) {
+                    r.innerHTML = data;
+                },
+                error: function (err) {
+                    console.error("Lỗi khi gửi yêu cầu AJAX:", err);
+                }
+            });
+        }
+        function find3(param) {
+            var v = param.value;
+            $.ajax({
+                url: "UserController?action=Steets",
+                type: "get",
+                data: {txt: v}, // Sửa lại cú pháp ở đây
+                success: function (data) {
+                    r.innerHTML = data;
+                },
+                error: function (err) {
+                    console.error("Lỗi khi gửi yêu cầu AJAX:", err);
+                }
+            });
+        }
+        function find4(param) {
+            var v = param.value;
+            $.ajax({
+                url: "UserController?action=star",
+                type: "get",
+                data: {txt: v}, // Sửa lại cú pháp ở đây
+                success: function (data) {
+                    r.innerHTML = data;
+                },
+                error: function (err) {
+                    console.error("Lỗi khi gửi yêu cầu AJAX:", err);
+                }
+            });
+        }
+        function find5(param) {
+            var v = param.value;
+            $.ajax({
+                url: "UserController?action=feature",
                 type: "get",
                 data: {txt: v}, // Sửa lại cú pháp ở đây
                 success: function (data) {

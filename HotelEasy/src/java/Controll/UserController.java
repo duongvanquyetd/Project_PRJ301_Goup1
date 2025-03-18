@@ -49,10 +49,31 @@ public class UserController extends HttpServlet {
                 String s = request.getParameter("txt");
                 list = h.getHotelBySearch(s, null, null);
             }
-            else {
+            else if (action.equals("Steets")){
                 String s[] = request.getParameterValues("txt");
                 list = h.searachAll(null, null, null, null, s, null, null);
             }
+            else if (action.equals("NumberOfPerson")){
+                String s = request.getParameter("txt");
+                int i =  0 ; 
+                try {
+                    i = Integer.parseInt(s);
+                } catch (Exception e) {
+                    s = null;
+                }
+                list = h.searachAll(null, null, null, s, null, null, null);
+                
+            }
+             else if (action.equals("star")){
+                String s[] = request.getParameterValues("txt");
+                list = h.searachAll(null, null, null, null,null , s, null);
+            }
+             else if (action.equals("feature")){
+                String s[] = request.getParameterValues("txt");
+                list = h.searachAll(null, null, null, null,null , null, s);
+            }
+                         
+
 //            request.setAttribute("List", list);
 //            request.getRequestDispatcher("Search.jsp").forward(request, response);
 

@@ -49,26 +49,20 @@ public class search extends HttpServlet {
             String star[] = request.getParameterValues("star");
 
             String feature[] = request.getParameterValues("feature");
-
+            try {
+                Integer.parseInt(numberofperson);
+            } catch (Exception e) {
+                numberofperson = null;
+            }
             if (action == null || action.isEmpty()) {
-                List<HotelDTO> list = h.getHotelBySearch(sortCol, numberofperson, sortCol);
+                List<HotelDTO> list = h.getHotelBySearch(location, numberofperson, sortCol);
                 request.setAttribute("List", list);
                 request.getRequestDispatcher("Search.jsp").forward(request, response);
             } else {
-                
 
                 List<HotelDTO> list = h.searachAll(location, sortCol, Arriveddate, numberofperson, listlocation, star, feature);
                 request.setAttribute("List", list);
                 request.getRequestDispatcher("Search.jsp").forward(request, response);
-////for (String string : feature) {
-////                     out.println("<div>"+string+"</div>");
-////                }
-//out.print(location+"/"+numberofperson+"/"+Arriveddate+"/"+listlocation+"/"+star+"/"+feature+"/"+list+"/");
-////
-//                for (HotelDTO hotelDTO : list) {
-//                      out.println("<div>"+hotelDTO.toString()+"</div>");
-//                }
-////        
 
             }
 

@@ -70,9 +70,14 @@ public class RoomExtensioncontroller extends HttpServlet {
             if (action != null && "search".equals(action)) {
 
                 String strPrice = request.getParameter("price");
+                
+                request.setAttribute("price", strPrice);
                 String strBedCount = request.getParameter("bedCount");
+                request.setAttribute("bed", strBedCount);
                 String strGuestAdult = request.getParameter("guestCountAdult");
+                request.setAttribute("adult", strGuestAdult);
                 String strGuestChild = request.getParameter("guestCountChild");
+                request.setAttribute("child", strGuestChild);
 
 // Gán giá trị mặc định nếu chuỗi null hoặc rỗng
                 int price1 = (strPrice == null || strPrice.trim().isEmpty()) ? 0 : Integer.parseInt(strPrice);
@@ -91,7 +96,7 @@ public class RoomExtensioncontroller extends HttpServlet {
                 request.setAttribute("fthotel", featurehotel);
                 request.setAttribute("HotelImg", list);
                 request.setAttribute("ftroom", search);
-                if (search.size() == 0) {
+                if (search.isEmpty()) {
                     request.setAttribute("noroom", "Không có phòng như bạn tìm kiếm.");
                 }
                 request.getRequestDispatcher("./image/room_page/Room.jsp").forward(request, response);
@@ -103,17 +108,16 @@ public class RoomExtensioncontroller extends HttpServlet {
             e.printStackTrace();
         }
 
-        
         request.setAttribute("cmt", cmtroom);
         request.setAttribute("ftroom", featureroom);
         request.setAttribute("fthotel", featurehotel);
         request.setAttribute("RoomImg", listImgRoom); // danh sách ảnh của room
         request.setAttribute("HotelImg", list); // danh sách ảnh của Hotel
-        
+
         System.out.println("Comment room:" + cmtroom.size() + cmtroom);
         System.out.println("Room feature" + featureroom.size());
         System.out.println("Hotel images: " + list.size());
-        System.out.println("Hotel features: " + featurehotel.size());
+        System.out.println("Hotel features: " + featurehotel.size() + featurehotel);
         System.out.println("Room images: " + listImgRoom.size());
 
         request.getRequestDispatcher("./image/room_page/Room.jsp").forward(request, response);

@@ -21,7 +21,7 @@ public class HotelDAO {
     public List<HotelDTA> getHotelDiscount() {
         try {
             Connection con = DBUtils.getConnection();
-            String sql = "SELECT TOP(5) H.HotelID,H.City,H.District,H.Streets,H.NameHotel,H.RateHotel,R.Discount,R.Price "
+            String sql = "SELECT H.HotelID,H.City,H.District,H.Streets,H.NameHotel,H.RateHotel,R.Discount,R.Price "
                     + "FROM Hotel H,Room R\n"
                     + "WHERE H.HotelID =R.HotelID AND Approved != 0\n"
                     + "ORDER BY R.Discount  DESC";

@@ -49,24 +49,34 @@ public class RoomExtensioncontroller extends HttpServlet {
         FeatureHotelDAO htdao = new FeatureHotelDAO();
         FeatureRoomDAO rdao = new FeatureRoomDAO();
         commentDAO cdao = new commentDAO();
-        String id = "H1";
-
+        
+        String id = request.getParameter("hotelid");
+        System.out.println("" +id);
         HttpSession session = request.getSession();
-        if (id != null && !id.isEmpty()) {
-            session.setAttribute("hotelId", id);
-        }
+       
+        
+        if (id == null || id.isEmpty()) {
+    id = (String) session.getAttribute("hotelid");
+} else {
+    session.setAttribute("hotelid", id);
+}
+
+         System.out.println("HotelID" + id );
         int price = 0;
         int numberbed = 0;
         int numberAdult = 0;
         int numberChild = 0;
+        String hotelid = id ;
         List<String> list = dao.getImgByHotelID(id);
         List<FeatureHotelDTO> featurehotel = htdao.getInfHotel(id);
-        List<FeatureRoomDTO> featureroom = rdao.getInfAllRoom(id, price, numberbed, numberAdult, numberChild);
+        List<FeatureRoomDTO> featureroom = rdao.getInfAllRoom(hotelid, price, numberbed, numberAdult, numberChild);
         List<commentDTO> cmtroom = cdao.getcomment(id);
         RoomImageDAO daoRoom = new RoomImageDAO();
         List<RoomImageDTO> listImgRoom = daoRoom.load();
         try {
-            String action = request.getParameter("action");
+            
+           
+                 String action = request.getParameter("action");
             if (action != null && "search".equals(action)) {
 
                 String strPrice = request.getParameter("price");
@@ -102,10 +112,13 @@ public class RoomExtensioncontroller extends HttpServlet {
                 request.getRequestDispatcher("./image/room_page/Room.jsp").forward(request, response);
                 return; // ← Important to prevent double forwarding
             }
+                
+            
+           
         } catch (NumberFormatException e) {
             System.out.println("Lỗi định dạng số: " + e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException | ServletException e) {
+            System.out.println("e"  + e.getMessage());
         }
 
         request.setAttribute("cmt", cmtroom);
@@ -113,13 +126,13 @@ public class RoomExtensioncontroller extends HttpServlet {
         request.setAttribute("fthotel", featurehotel);
         request.setAttribute("RoomImg", listImgRoom); // danh sách ảnh của room
         request.setAttribute("HotelImg", list); // danh sách ảnh của Hotel
-
+        System.out.println("hotel ID: " + id );
         System.out.println("Comment room:" + cmtroom.size() + cmtroom);
         System.out.println("Room feature" + featureroom.size());
         System.out.println("Hotel images: " + list.size());
         System.out.println("Hotel features: " + featurehotel.size() + featurehotel);
         System.out.println("Room images: " + listImgRoom.size());
-
+        System.out.println("////////");
         request.getRequestDispatcher("./image/room_page/Room.jsp").forward(request, response);
     }
 

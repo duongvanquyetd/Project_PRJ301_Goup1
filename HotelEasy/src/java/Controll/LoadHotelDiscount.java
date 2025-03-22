@@ -37,13 +37,27 @@ public class LoadHotelDiscount extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String nump = request.getParameter("index");
         try (PrintWriter out = response.getWriter()) {
-
+            
+             if (nump == null) {
+                    nump = "1" ;
+                     }
+            int  index = Integer.parseInt(nump);
+       System.out.println("" + index);
+            
         HotelDAO h = new HotelDAO();
-            List<HotelDTA>list = h.getHotelDiscount();
+            List<HotelDTA>list = h.getHotelDiscount(index);
             HotelImageDAO img = new HotelImageDAO();
             List<HotelImageDTA> b = img.getAllImgHotel();
-            
+            HotelDAO dao = new HotelDAO();
+            int count = dao.getCountHotel()/10 ;
+            if(count != 0){
+                count++ ;
+            }
+            System.out.println(count);
+            System.out.println(list.size());
+            request.setAttribute("numberp", count);
             
             request.setAttribute("Img", b);
             request.setAttribute("List", list);

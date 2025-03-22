@@ -9,6 +9,7 @@ import static java.rmi.server.LogStream.log;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import ultilies.DBUtils;
@@ -20,7 +21,7 @@ import ultilies.DBUtils;
  */
 public class commentDAO {
     public List<commentDTO> getcomment(String hotelID){
-        List<commentDTO> list = new ArrayList<commentDTO>();
+        List<commentDTO> list = new ArrayList<>();
         try {
             Connection con = DBUtils.getConnection();
             String sql = "SELECT c.HotelID, c.PersonID, c.Desciption, p.Name , c.Star\n" +
@@ -49,7 +50,7 @@ public class commentDAO {
                 
                 list.add(cmt);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Lỗi ở commentDAO" + e.getLocalizedMessage());
             
         }

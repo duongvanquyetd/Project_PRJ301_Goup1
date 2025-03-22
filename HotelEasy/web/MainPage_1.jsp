@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="Object.HotelImageDTA"%>
 <%@page import="Object.HotelDTA"%>
 <%@page import="Object.HotelDAO"%>
@@ -261,7 +262,36 @@
             color: #ff7e00;
             font-size: 18px;
         }
+         .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        padding: 15px;
+        background-color: #e8f5e9; /* xanh nhạt */
+        border-radius: 10px;
+    }
 
+    .pagination a {
+        padding: 8px 16px;
+        background-color: #a5d6a7;
+        color: #000;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .pagination a:hover {
+        background-color: #66bb6a;
+        color: white;
+    }
+
+    .pagination a.active {
+        background-color: #388e3c;
+        color: white;
+        pointer-events: none;
+    }
 
         /* Footer */
         /* Style chung cho footer */
@@ -353,8 +383,9 @@
                 <b>
                     <a href="#" style="background-color: #9FA1A5; border-radius: 20px;
                        padding: 0px 15px;border: 2px solid black"> <h5>Khách Sạn Đang Giảm Giá</h5></a>
-                    <a href="#"> <h5>Khách Sạn Đánh Giá Cao Nhất</h5></a>
-                    <a href="#"> <h5>Địa Điểm Đáng Quan Tâm Nhất</h5></a>
+                    <a href="MainPage_2.jsp"> <h5>Khách Sạn Đánh Giá Cao Nhất</h5></a>
+                    <a href="MainPage_3.jsp"> <h5>Địa Điểm Đáng Quan Tâm Nhất</h5></a>
+                    <a href="#"><h5>Your favorite</h5></a>
                 </b>
             </ul>
         </div>
@@ -370,6 +401,9 @@
 
 
             %>
+            
+
+            <a href="${pageContext.request.contextPath}/RoomExtensioncontroller?hotelid=<%=h.getHotelID()%>"> 
             <div class="card">
                 <div class="card-img-container">
                     <%      for (HotelImageDTA b : i) {
@@ -397,12 +431,20 @@
                     </p>
                 </div>
             </div>
+</a>
 
             <% }%>
 
-
         </div>
 
+           <div class="pagination">
+    <c:forEach begin="1" end="${numberp}" var="i">
+        <a href="${pageContext.request.contextPath}/LoadHotelDiscount?index=${i}"
+           class="${i == currentPage ? 'active' : ''}">
+            ${i}
+        </a>
+    </c:forEach>
+</div>
 
 
 

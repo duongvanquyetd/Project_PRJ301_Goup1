@@ -731,15 +731,17 @@
         </div>
         <div class="content">
             <div class="filter">
-                <h1>🎯 Điều chỉnh thông tin phù hợp</h1>
+                <h1>🎯 Điều chỉnh thông tin phù hợp </h1>
 
                 <form action="RoomExtensioncontroller" method="GET">
                     <!-- Lọc theo giá -->
                     <div class="filter-section">
+                         <input type="hidden" name="hotelid" value="${sessionScope.hotelid}">
                         <h3>Lọc theo giá</h3>
+                       
                         <div class="price-slider-container">
                             <span class="price-label min-price">0 VNĐ</span>
-                            <input type="range" id="priceSlider" name="price" min="0" max="5000000" step="50000" value="${requestScope.price}">
+                            <input type="range" id="priceSlider" name="price" min="0" max="9999999" step="50000" value="${requestScope.price}">
                             <span class="price-label selected-price" id="selectedPrice">${requestScope.price} VNĐ</span>
                         </div>
                     </div>
@@ -858,7 +860,7 @@
                                 <div class="hotel-details">
                                     <div class="hotel-name">Tên khách sạn: ${ht.nameHotel}</div>
                                     <div class="hotel-address">Địa chỉ: ${ht.streets}, ${ht.districts}, ${ht.city}</div>
-                                    <div class="hotel-rating">Đánh giá: <img src="${ht.rateHotel}" > ${ht.rateHotel}</div>
+                                    <div class="hotel-rating">Đánh giá: <img src="${ht.rateHotel}" > </div>
                                 </div>
                                 <c:if test="${not empty ht.featureList}">
                                     <div class="hotel-features-section">

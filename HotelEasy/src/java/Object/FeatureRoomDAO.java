@@ -81,7 +81,7 @@ public class FeatureRoomDAO {
         PreparedStatement stm = con.prepareStatement(sql);
 
         // Thiết lập các tham số theo thứ tự
-        for (int i = 0; i < parameters.size(); i++) {
+        for (int i = 0   ; i < parameters.size(); i++) {
             Object param = parameters.get(i);
             if (param instanceof String) {
                 stm.setString(i + 1, (String) param);

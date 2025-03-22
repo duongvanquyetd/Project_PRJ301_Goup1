@@ -4,8 +4,9 @@
     Author     : Lenovo
 --%>
 
+<%@page import="Object.PersonDTO"%>
 <%@page import="java.util.List"%>
-<%@page import="Object.PersonDTA"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -65,9 +66,9 @@
                 </tr>
             <%
 
-                List<PersonDTA> list = (List<PersonDTA>) request.getAttribute("list");
+             List<PersonDTO> list = (List<PersonDTO>) request.getAttribute("list");
                 int i = 1 ; 
-                for (PersonDTA p : list) {
+                for (PersonDTO p : list) {
 
 
             %>
@@ -79,15 +80,15 @@
                 
                 <td>
                     <div>
-                        <%= p.getPersonID()%>
+                        <%= p.getPersonid() %>
                     </div>
                 </td>
                 <td>
-                    <%= p.getPhone()%>
+                    <%= p.getPhone() %>
                 </td>
                 <td>
 
-                    <%= p.getName()%>
+                    <%= p.getName()  %>
 
                 </td> 
 
@@ -106,11 +107,11 @@
                     <%}%>
                 </td>
                 <td>
-                    <%= p.getGender()%>
+                    <%= p.getGender() %>
                 </td>
                 <td>
 
-                    <a  href="AdminManagerAcount?userid=<%=p.getPersonID()%>"><img style="width:40px"  src="image/delete.jpg"></a>
+                    <a  href="AdminController?action=ManagerAccount&userid=<%=p.getPersonid()  %>"><img style="width:40px"  src="image/delete.jpg"></a>
                 </td>
 
             </tr>

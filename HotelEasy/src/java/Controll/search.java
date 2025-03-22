@@ -42,12 +42,21 @@ public class search extends HttpServlet {
             String action = request.getParameter("action");
             HotelDAO h = new HotelDAO();
             String location = request.getParameter("location");
+            String DepatureDay = request.getParameter("DepatureDay");
             String Arriveddate = request.getParameter("Arriveddate");
             String numberofperson = request.getParameter("numberofperson");
             String sortCol = request.getParameter("sortCol");
             String[] listlocation = request.getParameterValues("listlocation");
             String star[] = request.getParameterValues("star");
-
+            request.setAttribute("location", location);
+            request.setAttribute("numberofperson", numberofperson);
+            request.setAttribute("arrivedate", Arriveddate);
+            request.setAttribute("depaturedate", DepatureDay);
+            
+            
+            
+            
+            
             String feature[] = request.getParameterValues("feature");
             try {
                 Integer.parseInt(numberofperson);
@@ -60,7 +69,7 @@ public class search extends HttpServlet {
                 request.getRequestDispatcher("Search.jsp").forward(request, response);
             } else {
 
-                List<HotelDTO> list = h.searachAll(location, sortCol, Arriveddate, numberofperson, listlocation, star, feature);
+                List<HotelDTO> list = h.searachAll(location, sortCol, DepatureDay,Arriveddate, numberofperson, listlocation, star, feature);
                 request.setAttribute("List", list);
                 request.getRequestDispatcher("Search.jsp").forward(request, response);
 

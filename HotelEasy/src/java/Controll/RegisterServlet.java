@@ -6,7 +6,7 @@
 package Controll;
 
 import Object.PersonDAO;
-import Object.PersonDTA;
+import Object.PersonDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -47,65 +47,55 @@ public class RegisterServlet extends HttpServlet {
             String roleid = request.getParameter("role");
             String gender = request.getParameter("gender");
             PersonDAO p = new PersonDAO();
-            
 
-            
             int cout = 0;
             if (user.isEmpty()) {
                 request.setAttribute("username", "empty");
-               cout++;
-               
-            } else  if (p.CheckUserName(user)) {
-                  cout++;
-                request.setAttribute("username", "same");
-                
-            }  
-            
-            if (password.isEmpty()) {
-                  cout++;
-                request.setAttribute("password", "empty");
-                
-            } else if (!p.checkPassword(password)) {
-                  cout++;
-                request.setAttribute("password", "notsuitable");
-                
+                cout++;
 
-            }  
-            
-            
-            
+            } else if (p.CheckUserName(user)) {
+                cout++;
+                request.setAttribute("username", "same");
+
+            }
+
+            if (password.isEmpty()) {
+                cout++;
+                request.setAttribute("password", "empty");
+
+            } else if (!p.checkPassword(password)) {
+                cout++;
+                request.setAttribute("password", "notsuitable");
+
+            }
+
             if (confirmpassword.isEmpty()) {
-                  cout++;
+                cout++;
                 request.setAttribute("confirmpassword", "empty");
-                
-            }  else if (!password.equals(confirmpassword)) {
+
+            } else if (!password.equals(confirmpassword)) {
                 request.setAttribute("confirmpassword", "notmatch");
-                
-            } 
-            if(name.isEmpty()){
-                  cout++;
+
+            }
+            if (name.isEmpty()) {
+                cout++;
                 request.setAttribute("name", "empty");
-                
+
             }
-            
-            
-            
+
             if (phone.isEmpty()) {
-                  cout++;
+                cout++;
                 request.setAttribute("phone", "empty");
-                
-            } 
-            if (cout > 0 )
-            {
+
+            }
+            if (cout > 0) {
                 request.getRequestDispatcher("register.jsp").forward(request, response);
+            } else {
+              
+                PersonDTO pe = new PersonDTO(user, password, name, gender, phone, roleid);
+                p.RegisterPerson(pe);
+                response.sendRedirect("login.jsp");
             }
-            else{
-            out.print(user + "///" + password + "//" + confirmpassword + "//" + name + "//" + phone + "//" + roleid + "//" + gender);
-               PersonDTA  pe = new PersonDTA(user, password, name, gender, phone, roleid);
-               
-               p.RegisterPerson(pe);
-            }
-            
 
         }
     }

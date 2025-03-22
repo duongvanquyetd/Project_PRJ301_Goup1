@@ -4,9 +4,10 @@
     Author     : Lenovo
 --%>
 
+<%@page import="Object.HotelDTO"%>
 <%@page import="Object.HotelImageDTA"%>
 <%@page import="Object.HotelImageDAO"%>
-<%@page import="Object.HotelDTA"%>
+
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -67,9 +68,10 @@
                 </tr>
             <%
 
-                List<HotelDTA> listA = (List<HotelDTA>) request.getAttribute("listA");
-                List<HotelImageDTA> listB = (List<HotelImageDTA>) request.getAttribute("listB");
-                for (HotelDTA h : listA) {
+                List<HotelDTO> listA = (List<HotelDTO>) request.getAttribute("listA");
+                HotelImageDAO d = new HotelImageDAO();
+                
+                for (HotelDTO h : listA) {
 
 
             %>
@@ -78,24 +80,17 @@
                     <div style="display:flex;padding: 5px;box-sizing: border-box">
                         <div style="width:40%" class ="anh">
 
-                            <%                                for (HotelImageDTA hi : listB) {
-                                    if (h.getHotelID().equals(hi.getHotelID())) {
-                            %>
-                            <img style="width:250px;height:150px "  src="<%= hi.getImage().get(0)%>">
-                            <%
-                                    }
-                                }
-
-                            %>
-
+                          
+                            <img style="width:250px;height:150px "  src="<%= d.getImgByHotelID(h.getHotelID()).get(0)  %>">
+                           
                         </div> 
                         <div style="width:60%;text-align: start;margin-left: 40px" class="conten">
                             <h1 style="font-size: 20px">
-                                <%= h.getNameHotel()%>
+                                <%= h.getNameHotel() %>
                             </h1>
                             <div>
-                                <img style="width:120px" src="<%= h.getRateHotel() %>">
-                           
+                                <img style="width:120px" src="<%= h.getRateHotel()%>">
+
                             </div>
                             <div  style="margin-top:20px;color: grey">
                                 <%= h.getStreets() + ", " + h.getDistrict() + ", " + h.getCity()%>
@@ -117,7 +112,7 @@
                 <td >
                     <div style="display:flex;justify-content: center;gap:40px;align-items: center;">
 
-                        <a  href="adminmanagerhotel?hotelid=<%= h.getHotelID() %>"><img style="width:40px"  src="image/appove.jpg"></a>
+                        <a  href="AdminController?action=ManagerHotel&hotelid=<%= h.getHotelID()%>"><img style="width:40px"  src="image/appove.jpg"></a>
                         <a  href="#"><img style="width:40px"  src="image/rejec.png"></a> 
                     </div>
 

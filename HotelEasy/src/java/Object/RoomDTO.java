@@ -31,6 +31,9 @@ public class RoomDTO {
         this.Status = Status;
     }
 
+    public RoomDTO() {
+    }
+
     public String getHotelID() {
         return HotelID;
     }

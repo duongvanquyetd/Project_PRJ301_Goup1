@@ -11,7 +11,7 @@ import Object.HotelDTO;
 import Object.HotelImageDAO;
 import Object.HotelImageDTA;
 import Object.PersonDAO;
-import Object.PersonDTA;
+import Object.PersonDTO;
 import Object.RoomDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -76,7 +76,7 @@ public class AdminController extends HttpServlet {
                         p.deletebyUserid(userid);
                     }
 
-                    List<PersonDTA> list = p.getAllPerson();
+                    List<PersonDTO> list = p.getAllPerson();
 
                     request.setAttribute("list", list);
                     url="Admin_ManagerAcount.jsp";

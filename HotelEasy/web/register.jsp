@@ -100,7 +100,7 @@
             </div> 
             <div class='form_login'>
                 <h1>Register</h1>
-                <form action='RegisterServlet' method='get'accept-charset="UTF-8">
+                <form action='MainController' method='get'accept-charset="UTF-8">
                     <div class='form_input'><div class='form_input_image'><img src='image/User.jpg'></div> <div><input type="text" name ="user" placeholder="Nhập tên tài khoản" ></div></div>
 
 
@@ -217,6 +217,7 @@
                         <div class='' style='margin-left: 50px;'><img style="width:40px" src='image/female.jpg'></div>  <div><input type ="radio" name ='gender' value="F"></div>
 
                     </div>
+                     <input type="hidden" name ="action" value='register' >
                     <div class ="button">
                         <input type='submit' value='Register'> </div>
 

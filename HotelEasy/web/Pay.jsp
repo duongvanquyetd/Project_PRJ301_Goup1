@@ -87,7 +87,7 @@
 <div class="progress-container">
     <div class="step active" data-text="Xác nhận">✔</div>
     <div class="step active" data-text="Thanh toán">✔</div>
-    <div class="step " data-text="Thành công">✔</div>
+    <div class="step " data-text="Đợi xác nhận">✔</div>
 </div>
  
    
@@ -98,8 +98,22 @@
      <div class="conten">
         
         
-        Nội dung chuyển khoản : mã phòng + mã khách sạn
+         Nội dung chuyển khoản :Mã  Khách sạn:  ${requestScope.hotelid},Mã phòng : ${requestScope.roomid},Name: ${requestScope.person.name},Phone: ${requestScope.person.phone}
+    
+         
+         
+        
     </div>
+         <div style="margin:0px auto;text-align: center;font-size: xx-large;color:#e74c3c ">    Tổng số tiền: ${requestScope.price} VND </div>
+        <div style="margin:0px auto;text-align: center;font-size: larger;color:#e74c3c ">     Vui lòng Nhập kiểm ta lại thông tin trước khi chuyển khoản </div>
+        
+        
+        
+        
+         <div style="background-color: orangered;color:white;border-radius: 15px;padding:10px 20px;margin:0px auto;width: fit-content">
+             
+             <a  style="text-decoration: none ;color:white"   href="chuyen toi trang lich su booking"> Đã chuyển khoản</a>
+         </div>
     
 </body>
 </html>

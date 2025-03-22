@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Lenovo
  */
-@WebServlet(name = "UserController", urlPatterns = {"/UserController"})
-public class UserController extends HttpServlet {
+@WebServlet(name = "UserController", urlPatterns = {"/Ajax"})
+public class Ajax extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -51,7 +51,7 @@ public class UserController extends HttpServlet {
             }
             else if (action.equals("Steets")){
                 String s[] = request.getParameterValues("txt");
-                list = h.searachAll(null, null, null, null, s, null, null);
+                list = h.searachAll(null, null, null,null, null, s, null, null);
             }
             else if (action.equals("NumberOfPerson")){
                 String s = request.getParameter("txt");
@@ -61,16 +61,16 @@ public class UserController extends HttpServlet {
                 } catch (Exception e) {
                     s = null;
                 }
-                list = h.searachAll(null, null, null, s, null, null, null);
+                list = h.searachAll(null, null, null,null, s, null, null, null);
                 
             }
              else if (action.equals("star")){
                 String s[] = request.getParameterValues("txt");
-                list = h.searachAll(null, null, null, null,null , s, null);
+                list = h.searachAll(null, null, null,null, null,null , s, null);
             }
              else if (action.equals("feature")){
                 String s[] = request.getParameterValues("txt");
-                list = h.searachAll(null, null, null, null,null , null, s);
+                list = h.searachAll(null, null, null,null, null,null , null, s);
             }
                          
 

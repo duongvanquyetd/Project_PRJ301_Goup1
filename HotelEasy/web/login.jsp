@@ -101,7 +101,7 @@
             </div> 
             <div class='form_login'>
                 <h1>Login</h1>
-                <form action='LoginServlet' method='post'>
+                <form action='MainController' method='post'>
                     <div  style="margin-bottom: 20px" class='form_input'><div class='form_input_image'><img src='image/User.jpg'></div> <div><input type="text" name ="user" placeholder="Nhập tên tài khoản" ></div></div>
                     <div class="form_input"><div class='form_input_image'><img src='image/pass.jpg'></div>  <div><input type ="password" name ='password' placeholder="Nhập mật khẩu" ></div>  </div>
 
@@ -128,10 +128,11 @@
 
 
                     <div class ="button">
+                        <input type="hidden" name ="action" value='login' >
                         <input type='submit' value='Login'>              
                     </div>
-                    <div style='margin-top: 20px;color: rgb(26,188,156)'> 
-                        Don't have a account? <a href="#">SignUp Now</a>
+                    <div style='margin-top: 20px;color:burlywood'> 
+                        Don't have a account? <a href="register.jsp">SignUp Now</a>
                     </div>
 
 

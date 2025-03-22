@@ -26,57 +26,6 @@
         }
 
         /* Search Bar */
-        .search-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 25px;
-            justify-content: center;
-            padding: 30px 0px;
-
-            background-color: #fff;
-            background-image: url('image/hotel/KhachSanPageMain/Banner.png');
-            border-radius: 8px;
-            margin: 25px auto;
-            max-width: 1200px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-
-        }
-
-        .search-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .search-input, #room-type, #check-in, #check-out {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            outline: none;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .search-input:focus, #room-type:focus, #check-in:focus, #check-out:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        }
-
-        #search-btn {
-            margin-top: 20px;
-            padding:10px 30px;
-            background-color: #007bff;
-            color: #fff;
-
-            border-radius: 5px;
-
-        }
-
-        #search-btn:hover {
-            background-color: #0056b3;
-            transform: translateY(-2px); /* Hiệu ứng nổi lên khi hover */
-        }
-
 
         /* left-serch Bar */
 
@@ -178,191 +127,152 @@
 
         <jsp:include page="header_mainpage.jsp"></jsp:include>
 
-            <form action = "search" method="get">
+        <jsp:include page="Header_Search.jsp"></jsp:include>
 
 
 
-                <div class="search-bar">
+        <%
+            List<HotelDTO> list = (List<HotelDTO>) request.getAttribute("List");
+            HotelImageDAO d = new HotelImageDAO();
 
-                    <div class="search-container">
+        %>
 
-                        <div>
-                            <div style="color: white;font-weight: bolder">Tên dịa diểm hoặc khách sạn</div>
-                            <input oninput="find(this)"   class="search-input" placeholder="Location or hotel name" type="text" name="location" value="${requestScope.location}">
-                    </div>
 
-                </div>
-                <div class="search-container">
+        <div class="alll-search">
 
-                    <div>
-                        <div style="color: white;font-weight: bolder">Ngày Nhận Phòng</div>
-                        <input type="date" class="search-input" name="Arriveddate" value="${requestScope.Arriveddate}">
-                    </div>
-                    <div>
-                        <div style="color: white;font-weight: bolder">Ngày trả Phòng</div>
-                        <input type="date" class="search-input"  name="check-out">
-                    </div>
+            <div class="left-search">
+                <div class="content"> Tìm kiếm theo : </div>
+                <div class="sub-left">
 
+
+                    <div class="location">Địa chỉ </div>
+
+                    <% for (HotelDTO h : list) {%>
+                    <div>  <input type="checkbox" oninput="find3(this)" value="<%= h.getStreets() + "," + h.getDistrict()%>" name="listlocation" > <%= h.getStreets() + "," + h.getDistrict()%></div>     <%  //nếu có thời gian sẽ làm sau mỗi cái tìm kiêm này sẽ là số lượng sẽ tìm kiếm được nếu ấn vào%>
+                        <% } %>
 
                 </div>
-                <div class="search-container">
-
-                    <div>
-                        <div style="color: white;font-weight: bolder">Số người</div>
-                        <input type="text" oninput="find2(this)" class="search-input" name="numberofperson" placeholder="số người" value="${requestScope.numberofperson}">
-                    </div>    
+                <div class="sub-left">
+                    <div class="star">  Lọc theo số sao  </div>
+                    <div>  <input oninput="find4(this)" type="checkbox" value="image/Star/1sao.png" name="star">  <img src="image/Star/1sao.png">  </div>
+                    <div>  <input oninput="find4(this)" type="checkbox" value="image/Star/2sao.png" name="star">    <img src="image/Star/2sao.png"> </div>
+                    <div>  <input oninput="find4(this)" type="checkbox" value="image/Star/3sao.png" name="star">    <img src="image/Star/3sao.png"></div>
+                    <div>  <input  oninput="find4(this)"type="checkbox" value="image/Star/4sao.png" name="star">    <img src="image/Star/4sao.png"> </div>
+                    <div>  <input oninput="find4(this)" type="checkbox" value="image/Star/5sao.png" name="star">   <img src="image/Star/5sao.png">  </div>
 
                 </div>
-                <div>
-                    <input id="search-btn"  type="submit" value="Search"> 
+                <div class="sub-left">
+                    <div class="feature">Tiện ich Khách sạn  </div>
+
+
+
+                    <% 
+                        FeatureHotelDAO f = new FeatureHotelDAO();
+
+                        List<String> fe = f.getFeatureHotelByHotelID(list);
+                        for (String ft : fe) {%>
+
+                    <div>  <input type="checkbox" value="<%= ft%>" name="feature" oninput="find5(this)">  <%= ft%> </div>
+                        <%
+                            }
+                        %> 
+
+
+
+
+
+
                 </div>
+
 
             </div>
 
+            <input type="hidden" value="moresearch" name="action">
+            </form> 
 
 
-            <%
-                List<HotelDTO> list = (List<HotelDTO>) request.getAttribute("List");
-                HotelImageDAO d = new HotelImageDAO();
-
-            %>
+            <div class="right-search">
 
 
-            <div class="alll-search">
-
-                <div class="left-search">
-                    <div class="content"> Tìm kiếm theo : </div>
-                    <div class="sub-left">
-
-
-                        <div class="location">Địa chỉ </div>
-
-                        <% for (HotelDTO h : list) {%>
-                        <div>  <input type="checkbox" oninput="find3(this)" value="<%= h.getStreets() + "," + h.getDistrict()%>" name="listlocation" > <%= h.getStreets() + "," + h.getDistrict()%></div>     <%  //nếu có thời gian sẽ làm sau mỗi cái tìm kiêm này sẽ là số lượng sẽ tìm kiếm được nếu ấn vào%>
-                            <% } %>
-
-                    </div>
-                    <div class="sub-left">
-                        <div class="star">  Lọc theo số sao  </div>
-                        <div>  <input oninput="find4(this)" type="checkbox" value="image/Star/1sao.png" name="star">  <img src="image/Star/1sao.png">  </div>
-                        <div>  <input oninput="find4(this)" type="checkbox" value="image/Star/2sao.png" name="star">    <img src="image/Star/2sao.png"> </div>
-                        <div>  <input oninput="find4(this)" type="checkbox" value="image/Star/3sao.png" name="star">    <img src="image/Star/3sao.png"></div>
-                        <div>  <input  oninput="find4(this)"type="checkbox" value="image/Star/4sao.png" name="star">    <img src="image/Star/4sao.png"> </div>
-                        <div>  <input oninput="find4(this)" type="checkbox" value="image/Star/5sao.png" name="star">   <img src="image/Star/5sao.png">  </div>
-
-                    </div>
-                    <div class="sub-left">
-                        <div class="feature">Tiện ich Khách sạn  </div>
-
-
-
-                        <% 
-                            FeatureHotelDAO f = new FeatureHotelDAO();
-
-                            List<String> fe = f.getFeatureHotelByHotelID(list);
-                            for (String ft : fe) {%>
-
-                        <div>  <input type="checkbox" value="<%= ft%>" name="feature" oninput="find5(this)">  <%= ft%> </div>
-                            <%
-                                }
-                            %> 
+                <h2 style="color:green;margin-top: 0px ;padding-top:0px;">Khach san</h2> 
+                <div>  <a href="search?action=moresearch&sortCol=price">Sắp Xếp theo giá tiền </a></div>
+                <div id="result">
 
 
 
 
 
 
-                    </div>
+                    <%
+                        for (HotelDTO ho : list) {
 
+                    %>
 
-                </div>
-
-                <input type="hidden" value="moresearch" name="action">
-                </form> 
-
-
-                <div class="right-search">
-
-
-                    <h2 style="color:green;margin-top: 0px ;padding-top:0px;">Khach san</h2> 
-                    <div>  <a href="search?action=moresearch&sortCol=price">Sắp Xếp theo giá tiền </a></div>
-                    <div id="result">
+                    <div class="sub-right-search" >
 
 
 
 
 
+                        <div class="anh">
 
-                        <%
-                            for (HotelDTO ho : list) {
+                            <img src="<%= d.getImgByHotelID(ho.getHotelID()).get(0)%>">
 
-                        %>
-
-                        <div class="sub-right-search" >
-
-
-
-
-
-                            <div class="anh">
-
-                                <img src="<%= d.getImgByHotelID(ho.getHotelID()).get(0)%>">
-
-                                <div  class="discoutn"> Tiết Kiệm <%= ho.getDiscount()%></div>
-
-                            </div>
-
-                            <div class="sub-content-rights-search">
-
-                                <div class="sosao">
-                                    <img src="<%= ho.getRateHotel()%>">
-
-                                </div> 
-                                <div class="nameks">
-
-                                    <%= ho.getNameHotel()%>
-
-                                </div>
-                                <div class="diachi">
-
-                                    <%= ho.getStreets() + "," + ho.getDistrict() + "," + ho.getCity()%>
-                                </div>
-
-                                <div  class="giatien">
-
-                                    <%= ho.getPrice()%>/Mỗi Đêm
-
-
-                                </div>
-
-
-                            </div>  
-
-
+                            <div  class="discoutn"> Tiết Kiệm <%= ho.getDiscount()%></div>
 
                         </div>
 
-                        <%}%>
+                        <div class="sub-content-rights-search">
+
+                            <div class="sosao">
+                                <img src="<%= ho.getRateHotel()%>">
+
+                            </div> 
+                            <div class="nameks">
+
+                                <%= ho.getNameHotel()%>
+
+                            </div>
+                            <div class="diachi">
+
+                                <%= ho.getStreets() + "," + ho.getDistrict() + "," + ho.getCity()%>
+                            </div>
+
+                            <div  class="giatien">
+
+                                <%= ho.getPrice()%>/Mỗi Đêm
+
+
+                            </div>
+
+
+                        </div>  
+
+
+
                     </div>
 
-
-
-                    <div class="buton">
-
-                        LoadMore
-
-                    </div> 
-
-
+                    <%}%>
                 </div>
 
 
 
+                <div class="buton">
 
+                    LoadMore
 
+                </div> 
 
 
             </div>
+
+
+
+
+
+
+
+        </div>
 
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -372,7 +282,7 @@
         function find(param) {
             var v = param.value;
             $.ajax({
-                url: "UserController",
+                url: "Ajax",
                 type: "get",
                 data: {txt: v}, // Sửa lại cú pháp ở đây
                 success: function (data) {
@@ -387,7 +297,7 @@
         function find2(param) {
             var v = param.value;
             $.ajax({
-                url: "UserController?action=NumberOfPerson",
+                url: "Ajax?action=NumberOfPerson",
                 type: "get",
                 data: {txt: v}, // Sửa lại cú pháp ở đây
                 success: function (data) {
@@ -401,7 +311,7 @@
         function find3(param) {
             var v = param.value;
             $.ajax({
-                url: "UserController?action=Steets",
+                url: "Ajax?action=Steets",
                 type: "get",
                 data: {txt: v}, // Sửa lại cú pháp ở đây
                 success: function (data) {
@@ -415,7 +325,7 @@
         function find4(param) {
             var v = param.value;
             $.ajax({
-                url: "UserController?action=star",
+                url: "Ajax?action=star",
                 type: "get",
                 data: {txt: v}, // Sửa lại cú pháp ở đây
                 success: function (data) {
@@ -429,7 +339,7 @@
         function find5(param) {
             var v = param.value;
             $.ajax({
-                url: "UserController?action=feature",
+                url: "Ajax?action=feature",
                 type: "get",
                 data: {txt: v}, // Sửa lại cú pháp ở đây
                 success: function (data) {
@@ -440,7 +350,6 @@
                 }
             });
         }
-
 
 
     </script>

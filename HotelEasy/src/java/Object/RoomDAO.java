@@ -132,12 +132,99 @@ public class RoomDAO {
         }
     }
 
-    public static void main(String[] args) {
-        RoomDAO dao = new RoomDAO();
-        List<RoomDTO> list = dao.load();
-        for (RoomDTO arg : list) {
-            System.out.println(arg);
-        }
+    public int getStatusOfRoom(String roomID, String hotelId) {
+        try {
+            Connection conn = DBUtils.getConnection();
+            String sql = "select r.Status   from Room r  where r.RoomID = ? and r.HotelID = ? ";
+            PreparedStatement stm = conn.prepareStatement(sql);
 
+            stm.setString(1, roomID);
+            stm.setString(2, hotelId);
+
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("Status");
+            }
+
+            conn.close();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+        return -2;
+    }
+
+    public RoomDTO GetCapacityPerson(String roomID, String hotelId) {
+        try {
+            Connection conn = DBUtils.getConnection();
+            String sql = "select  r.CapacityAdult,r.CapacityChild from Room r  where r.RoomID = ? and r.HotelID = ?";
+            PreparedStatement stm = conn.prepareStatement(sql);
+
+            stm.setString(1, roomID);
+            stm.setString(2, hotelId);
+
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                RoomDTO r = new RoomDTO();
+                r.setCapacityAdult(rs.getInt("CapacityAdult"));
+                r.setCapacityChild(rs.getInt("CapacityChild"));
+
+                return r;
+            }
+
+            conn.close();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public RoomDTO getRoomByID(String RoomID, String HotelID) {
+          
+
+        
+        try {
+            String sql = " select HotelID,RoomID,CapacityChild,CapacityAdult,Price,Discount,TypeRoom,Status from Room where HotelID =? and RoomID = ? ";
+            Connection conn = DBUtils.getConnection();
+            PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setString(1, HotelID);
+            stm.setString(2, RoomID);
+            ResultSet rs = stm.executeQuery();
+
+                if (rs.next()) {
+                    
+                    String hid = rs.getString("HotelID").trim();
+                    String rid = rs.getString("RoomID").trim();
+                    int CapacityChild = rs.getInt("CapacityChild");
+                    int CapacityAdult = rs.getInt("CapacityAdult");
+                    int Price = rs.getInt("Price");
+                    String Discount = rs.getString("Discount").trim();
+                    String TypeRoom = rs.getString("TypeRoom").trim();
+                    String Status = rs.getString("Status").trim();
+                    RoomDTO room = new RoomDTO(HotelID, RoomID, CapacityChild, CapacityAdult, Price, Discount, TypeRoom, Status);
+                   return room;
+                }
+            
+            conn.close();
+        } catch (Exception e) {
+            System.out.println("Load Room Data fail " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    
+}
+
+public static void main(String[] args) {
+        RoomDAO dao = new RoomDAO();
+//        List<RoomDTO> list = dao.load();
+//        for (RoomDTO arg : list) {
+//            System.out.println(arg);
+
+        System.out.println(dao.getRoomByID("R1", "H1"));
+//        }
+//
     }
 }

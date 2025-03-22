@@ -1,5 +1,6 @@
+<%@page import="Object.HotelDTO"%>
 <%@page import="Object.HotelImageDTA"%>
-<%@page import="Object.HotelDTA"%>
+
 <%@page import="Object.HotelDAO"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -312,10 +313,10 @@ footer {
     <!-- Phần hiển thị các phòng -->
     <div class="Main_page">
         <% 
-            List<HotelDTA>list = (List<HotelDTA>)request.getAttribute("List");
+            List<HotelDTO>list = (List<HotelDTO>)request.getAttribute("List");
             List<HotelImageDTA> i = (List<HotelImageDTA>)request.getAttribute("Img");
             
-            for (HotelDTA h : list) {
+            for (HotelDTO h : list) {
                     
                 
         %>

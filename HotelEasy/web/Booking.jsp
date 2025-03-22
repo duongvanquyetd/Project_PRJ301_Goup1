@@ -4,6 +4,10 @@
     Author     : Lenovo
 --%>
 
+<%@page import="Object.RoomImageDAO"%>
+<%@page import="Object.HotelImageDAO"%>
+<%@page import="Object.RoomDTO"%>
+<%@page import="Object.HotelDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -82,7 +86,7 @@
         }
         .room-image
         {
-            width:425px;
+            width:480px;
             height:200px;
             margin:0px 20px;
             box-shadow: 0px 0px 5px;
@@ -135,6 +139,7 @@
             color: black;
             white-space: nowrap;
         }
+
     </style>
     <body>
 
@@ -144,34 +149,49 @@
         <div class="progress-container">
             <div class="step active" data-text="Xác nhận">✔</div>
             <div class="step " data-text="Thanh toán">✔</div>
-            <div class="step " data-text="Chấp nhận">✔</div>
+            <div class="step " data-text="Đợi xác nhận">✔</div>
         </div>
 
 
         <div class="conten">
 
 
-            <form action="">
+            <form action="Booking">
                 <div class="all-form">
+                    
+                   
                     <div class="form-left" style="width:50%">  
+                       
 
+                        <%
+                            String action = request.getParameter("type");
+
+                        
+                            if (action != null && action.equals("datho")) {
+
+                        %>
+                        
+                        <input  type="hidden" value="datho" name="type">
                         <div style="box-shadow: 0px 0px 5px black;padding: 20px;border-radius: 15px">
+                             <h3> Thông tin người đặt</h3>
                             <div class="form-left-sub" >
                                 <div>Name: </div>
-                                <input type="text" name="name">
+                                <input type="text" name="name" value="${requestScope.name}">
                             </div>
 
-                            <div class="form-left-sub">
-                                <div>Email:</div>
-                                <input type="text" name="Email">
 
-                            </div>
                             <div class="form-left-sub">
                                 <div>Phone:</div>
-                                <input type="number" name="phone">
+                                <input type="number" name="phone" value="${requestScope.phone}">
+
+                            </div>
+                            <div style="color:red">      
+
+                                ${requestScope.loi}
 
                             </div>
                         </div>
+                        <%}%>
 
 
 
@@ -198,22 +218,29 @@
 
 
                     </div>
-
+                    <%
+                        HotelDTO h = (HotelDTO) request.getAttribute("hotel");
+                        RoomDTO r = (RoomDTO) request.getAttribute("room");
+                        HotelImageDAO hi = new HotelImageDAO();
+                        RoomImageDAO ri = new RoomImageDAO();
+                    %>
+                    <input  type="hidden" value="<%= r.getHotelID()%>" name="hotelid">
+                    <input  type="hidden" value="<%= r.getRoomID()%>" name="roomid">
                     <div class="form-right">
                         <h3 style="text-align: center;margin-top: 5px;color: #0056b3">Thông tin phòng</h3>
                         <div class="header-room">
-                            <h2 style="margin:0px;color: #0a1f36">Name khach san</h2>
-                            <div>   <img style="width:100px;" src="image/Star/5sao.png"></div>
+                            <h2 style="margin:0px;color: #0a1f36"><%= h.getNameHotel()%></h2>
+                            <div>   <img style="width:100px;" src="<%= h.getRateHotel()%>"></div>
 
 
                         </div>
                         <div style="margin-left:20px">
-                            <h5 style="margin:5px">địa chỉ khách sạn , sdfdsf,sfsdf</h5>
+                            <h5 style="margin:5px;color:grey"><%= h.getStreets() + "," + h.getDistrict() + "," + h.getCity()%></h5>
 
                         </div>
 
                         <div> 
-                            <img class="room-image" src="image/Hotel10/R1/1.jpg">
+                            <img class="room-image" src="<%= ri.getImageRoom(r.getHotelID(), r.getRoomID()).get(0)%>">
                         </div>
 
                         <div class="detail-room">
@@ -221,43 +248,73 @@
 
                             <div class="conten-room">
                                 <div>
-                                    Kiểu phòng:
+                                    Kiểu phòng: <%= r.getTypeRoom()%>
 
                                 </div>
                                 <div>
                                     Số lượng người lớn:
 
 
+                                    <select name ="numberofadult">
+                                        <%for (int i = 1; i <= r.getCapacityAdult(); i++) {%>
+                                        <option value="<%=i%>"> <%=i%> </option>
+                                        <%}%>
+
+                                    </select>  
+
+
+
                                 </div>
 
                                 <div>
-                                    Số lượng trẻ em:
+
+                                    Số lượng trẻ em: 
+                                    <select name ="numberofchildren">
+                                        <%for (int i = 1; i <= r.getCapacityChild(); i++) {%>
+                                        <option value="<%=i%>"> <%=i%> </option>
+                                        <%}%>
+
+
+
+                                    </select>  
 
                                 </div>
+                                <div> Gia tiền Thuê;      <input style="border: none;font-size: large;width: 100px" type="number" value ="<%= r.getPrice()%>" id ="price" readonly >VND/Mỗi Đêm</div>
 
                             </div>
 
                             <div class="time">
 
                                 <div>
-                                    Ngày Nhận Phòng :  
-
+                                    Ngày Nhận Phòng
+                                    <input type="date" class="search-input" name="DepatureDay"  id="startDate">
                                 </div>
                                 <div>
-
-                                    Ngày trả Phòng:
+                                    Ngày trả Phòng
+                                    <input type="date" class="search-input"  name="Arriveddate" id ="endDate">
                                 </div>
                             </div>
+
+                            <div style="color:red;margin-left: 20px">      
+
+                                ${requestScope.mess}
+
+                            </div>
+
 
                         </div>
 
 
 
                         <div class="footer-room">
+                            Tổng Tiền:
+                            <span id="totalPrice">
+
+                            </span>     VND
+                            
+                           <div> <input type="hidden" name="price" value="" id="pricehidden"></div>
                             <div>
-                                Tổng Tiền: 54678789789897789
-                            </div>
-                            <div>
+                                <input  type="hidden" value="book" name="action">
                                 <input style="background-color: orangered;color:white;border-radius: 10px;padding: 8px 20px" type="submit" value="Thanh Toán">
 
                             </div>
@@ -278,4 +335,55 @@
 
         </div>
     </body> 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let today = new Date().toISOString().split('T')[0]; // Lấy ngày hôm nay theo định dạng YYYY-MM-DD
+            let startDateInput = document.getElementById("startDate");
+            let endDateInput = document.getElementById("endDate");
+
+            // Đặt giá trị min cho startDate (chỉ cho phép chọn từ hôm nay trở đi)
+            startDateInput.min = today;
+
+            startDateInput.addEventListener("change", function () {
+                let startDate = new Date(this.value);
+                if (isNaN(startDate))
+                    return; // Nếu ngày không hợp lệ, thoát
+
+                let maxEndDate = new Date(startDate);
+                maxEndDate.setDate(maxEndDate.getDate() + 15); // Ngày tối đa là 15 ngày sau
+
+                // Gán min/max cho endDate
+                endDateInput.min = this.value;
+                endDateInput.max = maxEndDate.toISOString().split('T')[0];
+
+                // Reset endDate nếu đã chọn trước đó mà không hợp lệ
+                if (endDateInput.value < endDateInput.min || endDateInput.value > endDateInput.max) {
+                    endDateInput.value = "";
+                }
+            });
+        });
+
+
+        function calculateTotal() {
+            let startDate = new Date(document.getElementById("startDate").value);
+            let endDate = new Date(document.getElementById("endDate").value);
+            let pricePerDay = parseFloat(document.getElementById("price").value) || 0;
+
+            if (isNaN(startDate) || isNaN(endDate) || endDate < startDate) {
+                document.getElementById("totalPrice").textContent = "0";
+                return;
+            }
+
+            let days = (endDate - startDate) / (1000 * 60 * 60 * 24); // Tính số ngày
+            let total = days * pricePerDay;
+
+            document.getElementById("totalPrice").textContent = total.toLocaleString(); // Hiển thị số có dấu phân tách
+            document.getElementById("pricehidden").value =total;
+        }
+
+        document.getElementById("startDate").addEventListener("change", calculateTotal);
+        document.getElementById("endDate").addEventListener("change", calculateTotal);
+        document.getElementById("price").addEventListener("input", calculateTotal);
+    </script>
+
 </html>

@@ -196,7 +196,7 @@ public class HotelDAO {
         }
     }
 
-    public List<HotelDTO> getHotelBySearch(String search, String numberOfPerson,String sortcol) {
+    public List<HotelDTO> getHotelBySearch(String search, String numberOfPerson, String sortcol) {
         try {
             Connection con = DBUtils.getConnection();
             List<HotelDTO> list = new ArrayList<>();;
@@ -211,11 +211,9 @@ public class HotelDAO {
             } else if (numberOfPerson != null && !numberOfPerson.isEmpty()) {
                 sql += "and h.hotelid in (select hotelid from room where CapacityAdult+CapacityChild >= ?)";
             }
-            
-            
-            if(sortcol != null && !sortcol.isEmpty())
-            {
-                sql+=" order by "+sortcol+" asc";
+
+            if (sortcol != null && !sortcol.isEmpty()) {
+                sql += " order by " + sortcol + " asc";
             }
             PreparedStatement stm = con.prepareStatement(sql);
 
@@ -300,11 +298,11 @@ public class HotelDAO {
             Connection con = DBUtils.getConnection();
             List<HotelDTO> list = new ArrayList<>();;
             String sql = "select h.HotelID,PersonID,City,District,Streets,NameHotel,RateHotel,r.Discount,r.Price  \n"
-                        + "from Hotel h, (select Min(price)'price' ,Max(Discount)'discount',HotelID  from room r group by HotelID )r\n"
-                        + "\n"
-                        + "where  h.HotelID = r.HotelID and  Approved = 1 ";
+                    + "from Hotel h, (select Min(price)'price' ,Max(Discount)'discount',HotelID  from room r group by HotelID )r\n"
+                    + "\n"
+                    + "where  h.HotelID = r.HotelID and  Approved = 1 ";
             if (location != null && location.length != 0) {
-                sql   += " and  h.Streets+','+h.District in (" + ChangeListTostrignN(location) + ")  ";
+                sql += " and  h.Streets+','+h.District in (" + ChangeListTostrignN(location) + ")  ";
 
             }
             PreparedStatement stm = con.prepareStatement(sql);
@@ -342,11 +340,11 @@ public class HotelDAO {
             Connection con = DBUtils.getConnection();
             List<HotelDTO> list = new ArrayList<>();;
             String sql = "select h.HotelID,PersonID,City,District,Streets,NameHotel,RateHotel,r.Discount,r.Price  \n"
-                        + "from Hotel h, (select Min(price)'price' ,Max(Discount)'discount',HotelID  from room r group by HotelID )r\n"
-                        + "\n"
-                        + "where  h.HotelID = r.HotelID and  Approved = 1 ";
+                    + "from Hotel h, (select Min(price)'price' ,Max(Discount)'discount',HotelID  from room r group by HotelID )r\n"
+                    + "\n"
+                    + "where  h.HotelID = r.HotelID and  Approved = 1 ";
             if (sosao != null && sosao.length != 0) {
-                sql +="  and h.RateHotel in(" + ChangeListTostrign(sosao) + ")    ";
+                sql += "  and h.RateHotel in(" + ChangeListTostrign(sosao) + ")    ";
 
             }
             PreparedStatement stm = con.prepareStatement(sql);
@@ -384,11 +382,11 @@ public class HotelDAO {
             Connection con = DBUtils.getConnection();
             List<HotelDTO> list = new ArrayList<>();;
             String sql = "select h.HotelID,PersonID,City,District,Streets,NameHotel,RateHotel,r.Discount,r.Price  \n"
-                        + "from Hotel h, (select Min(price)'price' ,Max(Discount)'discount',HotelID  from room r group by HotelID )r\n"
-                        + "\n"
-                        + "where  h.HotelID = r.HotelID and  Approved = 1 ";
+                    + "from Hotel h, (select Min(price)'price' ,Max(Discount)'discount',HotelID  from room r group by HotelID )r\n"
+                    + "\n"
+                    + "where  h.HotelID = r.HotelID and  Approved = 1 ";
             if (feature != null && feature.length != 0) {
-                sql+= " and h.hotelID in ( select HotelID from FeatureHotel where Feature in(" + ChangeListTostrignN(feature) + "))   ";
+                sql += " and h.hotelID in ( select HotelID from FeatureHotel where Feature in(" + ChangeListTostrignN(feature) + "))   ";
 
             }
             PreparedStatement stm = con.prepareStatement(sql);
@@ -420,23 +418,37 @@ public class HotelDAO {
         return null;
     }
 
-    public List<HotelDTO> getHotelBySearchDay(String dateArrive) {
+    public List<HotelDTO> getHotelBySearchDay(String DepatureDate, String ArriveDate) {//,String depatureDate
         try {
             Connection con = DBUtils.getConnection();
             List<HotelDTO> list = new ArrayList<>();
             String sql = "select h.HotelID,PersonID,City,District,Streets,NameHotel,RateHotel,r.Discount,r.Price  \n"
-                        + "from Hotel h, (select Min(price)'price' ,Max(Discount)'discount',HotelID  from room r group by HotelID )r\n"
-                        + "\n"
-                        + "where  h.HotelID = r.HotelID and  Approved = 1 ";
-            if (dateArrive != null && !dateArrive.isEmpty()) {
-                sql += " and h.hotelid in  (select r.HotelID from Room r, Booking b where r.HotelID= b.HotelID and r.RoomID = b.RoomID \n"
-                        + "and (ArriveDate < ? or  r.Status = 0 ))";
+                    + "from Hotel h, (select Min(price)'price' ,Max(Discount)'discount',HotelID  from room r group by HotelID )r\n"
+                    + "\n"
+                    + "where  h.HotelID = r.HotelID and  Approved = 1 ";
+            if (DepatureDate != null && !DepatureDate.isEmpty() && ArriveDate != null && !ArriveDate.isEmpty()) {
+                sql += " and h.hotelid in   (	  select hotelid from Booking b where ? < b.DepatureDate or ? > b.ArriveDate)\n"
+                      ;
+            } else if (DepatureDate != null && !DepatureDate.isEmpty()) {
+                sql += " and h.hotelid in   (select b.hotelid from Booking b where  ? < b.DepatureDate or ? > b.ArriveDate)";
+
+            } else if (ArriveDate != null && !ArriveDate.isEmpty()) {
+                sql += " and h.hotelid in   (select b.hotelid from Booking b where  ? < b.DepatureDate or ? > b.ArriveDate)";
             }
             PreparedStatement stm = con.prepareStatement(sql);
-            if (dateArrive != null && !dateArrive.isEmpty()) {
+            if (DepatureDate != null && !DepatureDate.isEmpty() && ArriveDate != null && !ArriveDate.isEmpty()) {
 
-           
-                stm.setDate(1, Date.valueOf(dateArrive));
+              
+                stm.setDate(1, Date.valueOf(ArriveDate));
+                stm.setDate(2, Date.valueOf(DepatureDate));
+                
+            } else if (DepatureDate != null && !DepatureDate.isEmpty()) {
+                stm.setDate(1, Date.valueOf(DepatureDate));
+                stm.setDate(2, Date.valueOf(DepatureDate));
+            }
+            else if (DepatureDate != null && !DepatureDate.isEmpty()) {
+                stm.setDate(1, Date.valueOf(ArriveDate));
+                stm.setDate(2, Date.valueOf(ArriveDate));
             }
             ResultSet rs = stm.executeQuery();
 
@@ -466,75 +478,96 @@ public class HotelDAO {
         return null;
     }
 
-    public List<HotelDTO> searachAll(String nameLoca, String sorcol,String ArriveDate, String NumberOfPerson, String[] location, String[] sosao, String[] feature) {
+    public List<HotelDTO> searachAll(String nameLoca, String sorcol, String depatureDate,String ArriveDate, String NumberOfPerson, String[] location, String[] sosao, String[] feature) {
 
         List<HotelDTO> list = new ArrayList<>();
 
         /////////////LIst search by number of person and name hotel or location 
-        List<HotelDTO> namelocaAnNumber = getHotelBySearch(nameLoca, NumberOfPerson,sorcol);
+        List<HotelDTO> namelocaAnNumber = getHotelBySearch(nameLoca, NumberOfPerson, sorcol);
         List<HotelDTO> searlocation = getHotelbyListLocation(location);
         List<HotelDTO> searchSosa = getHotelbyListsosao(sosao);
         List<HotelDTO> serachFeature = getHotelbyListFeature(feature);
-        List<HotelDTO> searchBydate = getHotelBySearchDay(ArriveDate);
-        
+        List<HotelDTO> searchBydate = getHotelBySearchDay(depatureDate,ArriveDate);
+
         for (HotelDTO hotelDTO : namelocaAnNumber) {
-            
-            int cout = 0 ;
-             for (HotelDTO hotelDTO1 : searlocation) {
-                if(hotelDTO1.getHotelID().equals(hotelDTO.getHotelID()))
-                {
-                    
+
+            int cout = 0;
+            for (HotelDTO hotelDTO1 : searlocation) {
+                if (hotelDTO1.getHotelID().equals(hotelDTO.getHotelID())) {
+
                     cout++;
                 }
             }
-            
-          
-             for (HotelDTO hotelDTO1 : searchSosa) {
-                if(hotelDTO1.getHotelID().equals(hotelDTO.getHotelID()))
-                {
-                    
+
+            for (HotelDTO hotelDTO1 : searchSosa) {
+                if (hotelDTO1.getHotelID().equals(hotelDTO.getHotelID())) {
+
                     cout++;
                 }
             }
-              for (HotelDTO hotelDTO1 : serachFeature) {
-                if(hotelDTO1.getHotelID().equals(hotelDTO.getHotelID()))
-                {
-                   
-                    cout++;
-                }
-            } for (HotelDTO hotelDTO1 : searchBydate) {
-                if(hotelDTO1.getHotelID().equals(hotelDTO.getHotelID()))
-                {
-                  
+            for (HotelDTO hotelDTO1 : serachFeature) {
+                if (hotelDTO1.getHotelID().equals(hotelDTO.getHotelID())) {
+
                     cout++;
                 }
             }
-            if(cout==4)
-            {
+            for (HotelDTO hotelDTO1 : searchBydate) {
+                if (hotelDTO1.getHotelID().equals(hotelDTO.getHotelID())) {
+
+                    cout++;
+                }
+            }
+            if (cout == 4) {
                 list.add(hotelDTO);
             }
-            
-            
+
         }
-        
-        
-        
+
         return list;
+    }
+
+    public HotelDTO getHotelByID(String HotelID) {
+
+        try {
+            Connection con = DBUtils.getConnection();
+            String sql = "select HotelID,p.Name,City,District,Streets,NameHotel,RateHotel,Approved from hotel h, Person p\n"
+                    + "where HotelID = ? ";
+            PreparedStatement stm = con.prepareStatement(sql);
+
+            stm.setString(1, HotelID);
+
+            ResultSet rs = stm.executeQuery();
+
+            if (rs.next()) {
+                HotelDTO h = new HotelDTO(rs.getString("HotelID").trim(), rs.getString("Name"), rs.getString("City"), rs.getString("District"), rs.getString("Streets"), rs.getString("NameHotel"), rs.getString("RateHotel"), rs.getInt("Approved"));
+
+                return h;
+            }
+
+        } catch (Exception e) {
+        }
+
+        return null;
     }
 
     public static void main(String[] args) {
         HotelDAO d = new HotelDAO();
-        String[] location = {"12 Lý Tự Trọng,Quận 1","11 Nguyễn Văn Cừ,Quận Gò Vấp","19 Võ Thị Sáu,Quận 6"};
-        String [] sosao = {"image/Star/5sao.png","image/Star/1sao.png"};
-        
-        
-        String [] feature ={"Dịch vụ giặt là","Karaoke","Bể bơi"};
-        //2025-04-05
-        //searachAll(null,null, null,null ,null, feature);
-       List<HotelDTO> list = d.searachAll(null,"price",null,null,null,null,null);
+//        String[] location = {"12 Lý Tự Trọng,Quận 1","11 Nguyễn Văn Cừ,Quận Gò Vấp","19 Võ Thị Sáu,Quận 6"};
+//        String [] sosao = {"image/Star/5sao.png","image/Star/1sao.png"};
+//        
+//        
+//        String [] feature ={"Dịch vụ giặt là","Karaoke","Bể bơi"};
+//        //2025-04-05
+//        //searachAll(null,null, null,null ,null, feature);
+//       List<HotelDTO> list = d.searachAll(null,"price",null,null,null,null,null);
+//
+//
+//System.out.println(list.size());
 
-
-System.out.println(list.size());
+       for(HotelDTO h : d.getHotelBySearchDay("2024-02-22", "2024-02-28"))
+       {
+           System.out.println(h.getHotelID());
+       }
 
     }
 

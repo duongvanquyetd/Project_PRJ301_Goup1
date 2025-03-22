@@ -18,15 +18,15 @@ import ultilies.DBUtils;
  */
 public class HotelDAO {
 
-    public List<HotelDTA> getHotelDiscount() {
+    public List<HotelDTA> getHotelDiscount(int index) {
         try {
             Connection con = DBUtils.getConnection();
-            String sql = "SELECT TOP(5) H.HotelID,H.City,H.District,H.Streets,H.NameHotel,H.RateHotel,R.Discount,R.Price "
-                    + "FROM Hotel H,Room R\n"
-                    + "WHERE H.HotelID =R.HotelID AND Approved != 0\n"
-                    + "ORDER BY R.Discount  DESC";
+            String sql = " SELECT H.HotelID,H.City,H.District,H.Streets,H.NameHotel,H.RateHotel,R.Discount,R.Price\n"
+                    + "FROM Hotel H, Room R where H.HotelID = R.HotelID and R.RoomID = 'R1' and Approved != 0\n"
+                    + "ORDER BY CAST(SUBSTRING(H.HotelID, 2, LEN(H.HotelID)) AS INT)\n"
+                    + "OFFSET ? ROWS FETCH NEXT 10 ROWS ONLY;";
             PreparedStatement stm = con.prepareStatement(sql);
-
+            stm.setInt(1, (index-1)*10);
             List<HotelDTA> list = new ArrayList();
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
@@ -193,16 +193,36 @@ public class HotelDAO {
             e.printStackTrace();
         }
     }
+    
+    
+     public int  getCountHotel(){
+        String sql = "select count(*) from Hotel where Approved != 0 " ;
+        try {
+            Connection con = DBUtils.getConnection();
+            PreparedStatement stm = con.prepareStatement(sql);
+            ResultSet st = stm.executeQuery();
+            while(st.next()){
+                return st.getInt(1) ;
+            }
+            
+        } catch (Exception e) {
+        }
+        return 0;
+    }
 
     public static void main(String[] args) {
         HotelDAO d = new HotelDAO();
 
-        List<HotelDTA> list = d.getHotelDiscount();
+        List<HotelDTA> list = d.getHotelDiscount(1);
         for (HotelDTA hotelDTA : list) {
-            System.out.println(hotelDTA);
-
+            System.out.println(hotelDTA.getHotelID());
+            
         }
+HotelDAO dao = new HotelDAO();
+            int count = dao.getCountHotel();
+            System.out.println("" + count);
 
     }
+   
 
 }

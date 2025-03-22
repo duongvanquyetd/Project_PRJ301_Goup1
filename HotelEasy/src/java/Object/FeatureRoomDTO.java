@@ -22,6 +22,7 @@ public class FeatureRoomDTO {
     public int discount ;
     public String type ;
     public int numberOfBed ;
+    public int area ;
     public List<String> image = new ArrayList<>();
 
     public List<String> getImage() {
@@ -30,6 +31,14 @@ public class FeatureRoomDTO {
 
     public void setImage(List<String> image) {
         this.image = image;
+    }
+
+    public int getArea() {
+        return area;
+    }
+
+    public void setArea(int area) {
+        this.area = area;
     }
 
 

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="Object.HotelImageDTA"%>
 <%@page import="Object.HotelDTA"%>
 <%@page import="Object.HotelDAO"%>
@@ -5,169 +6,169 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
 
-<style> 
-    /* Reset CSS */
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: 'Merriweather', serif;
-    background-color: #f4f4f4;
-    color: #333;
-    scroll-behavior: smooth; /* Cuộn mượt */
-}
+    <style> 
+        /* Reset CSS */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Merriweather', serif;
+            background-color: #f4f4f4;
+            color: #333;
+            scroll-behavior: smooth; /* Cuộn mượt */
+        }
 
-/* Header */
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 2px 0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+        /* Header */
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 2px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
 
-.container_header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-
-
-header img {
-    height: 50px;
-    width: 50px;/* Điều chỉnh kích thước logo */
-    border-radius: 50%;
-    transition: transform 0.3s ease;
-    margin-right: 430px;
-
-}
-header img:hover {
-    transform: scale(1.1); /* Hiệu ứng phóng to khi hover */
-}
-
-
-nav {
-    display: flex;
-}
-
-nav a {
-    color: #fff;
-    text-decoration: none;
-    margin-left:30px;
-    font-size: 16px;
-    font-family: 'Merriweather', serif;
-    transition: color 0.3s ease, transform 0.3s ease;
-    
-}
-
-nav a:hover {
-    color: #007bff; 
-    transform: translateY(-3px); 
-}
+        .container_header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
 
 
+        header img {
+            height: 50px;
+            width: 50px;/* Điều chỉnh kích thước logo */
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            margin-right: 430px;
 
-/* Search Bar */
-.search-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px;
-    justify-content: center;
-    padding: 30px 0px;
-    
-    background-color: #fff;
-    background-image: url('image/hotel/KhachSanPageMain/Banner.png');
-    border-radius: 8px;
-    margin: 25px auto;
-    max-width: 1200px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    
-}
-
-.search-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.search-input, #room-type, #check-in, #check-out {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.search-input:focus, #room-type:focus, #check-in:focus, #check-out:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-#search-btn {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-#search-btn:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px); /* Hiệu ứng nổi lên khi hover */
-}
+        }
+        header img:hover {
+            transform: scale(1.1); /* Hiệu ứng phóng to khi hover */
+        }
 
 
+        nav {
+            display: flex;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left:30px;
+            font-size: 16px;
+            font-family: 'Merriweather', serif;
+            transition: color 0.3s ease, transform 0.3s ease;
+
+        }
+
+        nav a:hover {
+            color: #007bff; 
+            transform: translateY(-3px); 
+        }
+
+
+
+
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            padding: 30px 0px;
+
+            background-color: #fff;
+            background-image: url('image/hotel/KhachSanPageMain/Banner.png');
+            border-radius: 8px;
+            margin: 25px auto;
+            max-width: 1200px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-input, #room-type, #check-in, #check-out {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .search-input:focus, #room-type:focus, #check-in:focus, #check-out:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        #search-btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        #search-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px); /* Hiệu ứng nổi lên khi hover */
+        }
 
 
 
 
 
 
-/* Phần tìm kiếm theo lựa chọn*/
-.option_user {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.option_user ul b {
-    list-style: none; 
-
-    display: flex;
-    justify-content: space-evenly; 
-    gap: 50px;
-    font-family: 'Merriweather', serif;
-}
-
-.option_user a {
-    text-decoration: none; /* Xóa gạch chân */
-    color: #333; /* Màu chữ */
-    font-size: 22px;
-    font-weight: bold;
-    transition: color 0.3s ease, transform 0.3s ease; 
-}
-
-.option_user a:hover {
-    color: #007bff;
-    transform: translateY(-3px); 
-}
 
 
-/* Phần hiển thị phòng */
+        /* Phần tìm kiếm theo lựa chọn*/
+        .option_user {
+            text-align: center;
+            margin-top: 20px;
+        }
 
- .Main_page {
+        .option_user ul b {
+            list-style: none; 
+
+            display: flex;
+            justify-content: space-evenly; 
+            gap: 50px;
+            font-family: 'Merriweather', serif;
+        }
+
+        .option_user a {
+            text-decoration: none; /* Xóa gạch chân */
+            color: #333; /* Màu chữ */
+            font-size: 22px;
+            font-weight: bold;
+            transition: color 0.3s ease, transform 0.3s ease; 
+        }
+
+        .option_user a:hover {
+            color: #007bff;
+            transform: translateY(-3px); 
+        }
+
+
+        /* Phần hiển thị phòng */
+
+        .Main_page {
             display: flex;
             justify-content: space-evenly;
             flex-wrap: wrap;
@@ -261,169 +262,208 @@ nav a:hover {
             color: #ff7e00;
             font-size: 18px;
         }
-
-
-/* Footer */
-/* Style chung cho footer */
-footer {
-    background-color: #333;
-    color: #fff;
-    padding: 40px 0;
-    text-align: center;
-}
-
-
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .img-inf {
-        flex-direction: column;
-    }
-
-    .img-div {
-        flex: 1 1 100%;
-    }
-
-    .room-details {
-        flex-direction: column;
+         .pagination {
+        display: flex;
+        justify-content: center;
         align-items: center;
+        gap: 10px;
+        padding: 15px;
+        background-color: #e8f5e9; /* xanh nhạt */
+        border-radius: 10px;
     }
 
-    .room-details img {
-        width: 100%;
+    .pagination a {
+        padding: 8px 16px;
+        background-color: #a5d6a7;
+        color: #000;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
     }
 
-    .amenities-list {
-        flex-direction: column;
+    .pagination a:hover {
+        background-color: #66bb6a;
+        color: white;
     }
 
-    .booking-form {
-        width: 100%;
+    .pagination a.active {
+        background-color: #388e3c;
+        color: white;
+        pointer-events: none;
     }
-}
-    
-    
-    
-    
-</style>
 
-<body>
+        /* Footer */
+        /* Style chung cho footer */
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 40px 0;
+            text-align: center;
+        }
 
-    <!-- Header logo và các nút home-->
-    <header>
-        <div class="container_header">
-            <a href="#"><img src="image/hotel/KhachSanPageMain/Logo.png" alt="hint error"></a>
-            <nav>
-                <div class="Menu">
-                    <a  style="background-color: dimgrey;padding: 10px 15px; border-radius: 20px; border: 1px solid white;"href="#">Home</a>
-                    <a style="margin-right: 550px;" href="#">Favourite</a>
-                    <a href="#">Login</a>
-                    <a href="#">Register</a>
-                </div>
 
-            </nav>
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .img-inf {
+                flex-direction: column;
+            }
+
+            .img-div {
+                flex: 1 1 100%;
+            }
+
+            .room-details {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .room-details img {
+                width: 100%;
+            }
+
+            .amenities-list {
+                flex-direction: column;
+            }
+
+            .booking-form {
+                width: 100%;
+            }
+        }
+
+
+
+
+    </style>
+
+    <body>
+
+        <!-- Header logo và các nút home-->
+        <header>
+            <div class="container_header">
+                <a href="#"><img src="image/hotel/KhachSanPageMain/Logo.png" alt="hint error"></a>
+                <nav>
+                    <div class="Menu">
+                        <a  style="background-color: dimgrey;padding: 10px 15px; border-radius: 20px; border: 1px solid white;"href="#">Home</a>
+                        <a style="margin-right: 550px;" href="#">Favourite</a>
+                        <a href="#">Login</a>
+                        <a href="#">Register</a>
+                    </div>
+
+                </nav>
+            </div>
+        </header>
+
+
+
+        <div class="search-bar">
+
+            <div class="search-container">
+                <input class="search-input" placeholder="Location or hotel name" type="text" id="location">
+            </div>
+            <div class="search-container">
+                <input type="date" id="check-in">
+                <input type="date" id="check-out">
+            </div>
+            <div class="search-container">
+                <input type="text" id="room-type" placeholder="room-type">
+            </div>
+            <button id="search-btn">Search</button>
         </div>
-    </header>
 
 
 
-    <div class="search-bar">
-        
-        <div class="search-container">
-            <input class="search-input" placeholder="Location or hotel name" type="text" id="location">
+
+
+
+        <!-- Phần tìm kiếm theo lựa chọn -->
+        <div class="option_user">
+            <ul> 
+                <b>
+                    <a href="#" style="background-color: #9FA1A5; border-radius: 20px;
+                       padding: 0px 15px;border: 2px solid black"> <h5>Khách Sạn Đang Giảm Giá</h5></a>
+                    <a href="MainPage_2.jsp"> <h5>Khách Sạn Đánh Giá Cao Nhất</h5></a>
+                    <a href="MainPage_3.jsp"> <h5>Địa Điểm Đáng Quan Tâm Nhất</h5></a>
+                    <a href="#"><h5>Your favorite</h5></a>
+                </b>
+            </ul>
         </div>
-        <div class="search-container">
-            <input type="date" id="check-in">
-            <input type="date" id="check-out">
-        </div>
-        <div class="search-container">
-            <input type="text" id="room-type" placeholder="room-type">
-        </div>
-        <button id="search-btn">Search</button>
-    </div>
 
 
+        <!-- Phần hiển thị các phòng -->
+        <div class="Main_page">
+            <%
+                List<HotelDTA> list = (List<HotelDTA>) request.getAttribute("List");
+                List<HotelImageDTA> i = (List<HotelImageDTA>) request.getAttribute("Img");
+
+                for (HotelDTA h : list) {
 
 
-
-
-    <!-- Phần tìm kiếm theo lựa chọn -->
-    <div class="option_user">
-        <ul> 
-             <b>
-                <a href="#" style="background-color: #9FA1A5; border-radius: 20px;
-                padding: 0px 15px;border: 2px solid black"> <h5>Khách Sạn Đang Giảm Giá</h5></a>
-                <a href="#"> <h5>Khách Sạn Đánh Giá Cao Nhất</h5></a>
-                <a href="#"> <h5>Khách Sạn Quan Tâm Nhất</h5></a>
-             </b>
-        </ul>
-    </div>
-
-
-    <!-- Phần hiển thị các phòng -->
-    <div class="Main_page">
-        <% 
-            List<HotelDTA>list = (List<HotelDTA>)request.getAttribute("List");
-            List<HotelImageDTA> i = (List<HotelImageDTA>)request.getAttribute("Img");
+            %>
             
-            for (HotelDTA h : list) {
-                    
-                
-        %>
-        <div class="card">
-            <div class="card-img-container">
-                <% 
-                    for (HotelImageDTA b : i) {
-                        if(h.getHotelID().equals(b.getHotelID())){
-                            
-                        
-                       
+
+            <a href="${pageContext.request.contextPath}/RoomExtensioncontroller?hotelid=<%=h.getHotelID()%>"> 
+            <div class="card">
+                <div class="card-img-container">
+                    <%      for (HotelImageDTA b : i) {
+                            if (h.getHotelID().equals(b.getHotelID())) {
+
+
                     %>
-                    <img style="border-radius: 10px"; src="<%=b.getImage().get(0) %>" class="card-img-top" alt="Hotel">
-                <% }
-                }
-                %>
-                <span class="discount-badge">Tiết kiệm <%=h.getDiscount()%>% </span>
-                <span class="start"> <img style="margin-left:75px;" src="<%=h.getRateHotel() %>" ></span>
+                    <img style="border-radius: 10px"; src="<%=b.getImage().get(0)%>" class="card-img-top" alt="Hotel">
+                    <% }
+                        }
+                    %>
+                    <span class="discount-badge">Tiết kiệm <%=h.getDiscount()%>% </span>
+                    <span class="start"> <img style="margin-left:75px;" src="<%=h.getRateHotel()%>" ></span>
+                </div>
+                <div class="card-body">
+                    <h5><%=h.getNameHotel()%></h5>
+                    <p class="location">
+                        <a href="https://www.google.com/maps?q=<%=h.getStreets() + "+" + h.getDistrict() + "+" + h.getCity()%>" target="_blank">
+                            <%=h.getStreets() + "," + h.getDistrict() + "," + h.getCity()%>
+                        </a>
+                    </p>
+                    <p class="price">
+                        <del> <%=h.getPrice()%> VND </del> <!-- del dùng để gạch ngang-->
+                        <strong><%=h.getPrice() * (1 - (h.getDiscount() / 100))%> VND</strong>
+                    </p>
+                </div>
             </div>
-            <div class="card-body">
-                <h5><%=h.getNameHotel()%></h5>
-                <p class="location">
-                    <a href="https://www.google.com/maps?q=<%=h.getStreets()+"+"+ h.getDistrict()+"+"+h.getCity() %>" target="_blank">
-                        <%=h.getStreets()+","+ h.getDistrict()+","+h.getCity() %>
-                    </a>
-                </p>
-                <p class="price">
-                    <del><%=h.getPrice()  %>VND</del> <!-- del dùng để gạch ngang-->
-                    <strong><%=h.getPrice() -(h.getDiscount()* h.getPrice()) %>VND</strong>
-                </p>
-            </div>
+</a>
+
+            <% }%>
+
         </div>
-        
-        <% }%>
-        
 
-    </div>
-
-
-    
-    
-    
-    <script>
-        let today = new Date().toISOString().split('T')[0];
-        document.getElementById("check-in").setAttribute("min", today);
-        document.getElementById("check-in").addEventListener("change", function () {
-            let checkInDate = document.getElementById("check-in").value;
-            document.getElementById("check-out").setAttribute("min", checkInDate);
-        });
-    </script>
+           <div class="pagination">
+    <c:forEach begin="1" end="${numberp}" var="i">
+        <a href="${pageContext.request.contextPath}/LoadHotelDiscount?index=${i}"
+           class="${i == currentPage ? 'active' : ''}">
+            ${i}
+        </a>
+    </c:forEach>
+</div>
 
 
-<footer>
-    <h5>Footter</h5>
-    
-</footer>
 
-</body>
+
+        <script>
+            let today = new Date().toISOString().split('T')[0];
+            document.getElementById("check-in").setAttribute("min", today);
+            document.getElementById("check-in").addEventListener("change", function () {
+                let checkInDate = document.getElementById("check-in").value;
+                document.getElementById("check-out").setAttribute("min", checkInDate);
+            });
+        </script>
+
+
+        <footer>
+            <h5>Footter</h5>
+
+        </footer>
+
+    </body>
 
 </html>

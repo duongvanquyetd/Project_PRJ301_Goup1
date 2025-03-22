@@ -4,9 +4,10 @@
     Author     : Lenovo
 --%>
 
+<%@page import="Object.HotelDTO"%>
 <%@page import="Object.HotelImageDTA"%>
 <%@page import="Object.HotelImageDAO"%>
-<%@page import="Object.HotelDTA"%>
+
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -67,9 +68,9 @@
                 </tr>
             <%
 
-                List<HotelDTA> listA = (List<HotelDTA>) request.getAttribute("listA");
+                List<HotelDTO> listA = (List<HotelDTO>) request.getAttribute("listA");
                 List<HotelImageDTA> listB = (List<HotelImageDTA>) request.getAttribute("listB");
-                for (HotelDTA h : listA) {
+                for (HotelDTO h : listA) {
 
 
             %>

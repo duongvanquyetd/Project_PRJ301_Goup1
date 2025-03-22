@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controll;
 
 import Object.HotelDAO;
@@ -37,7 +32,35 @@ public class LoadHotelDiscount extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String nump = request.getParameter("index");
         try (PrintWriter out = response.getWriter()) {
+            
+             if (nump == null) {
+                    nump = "1" ;
+                     }
+            int  index = Integer.parseInt(nump);
+       System.out.println("Số" + index);
+            
+        HotelDAO h = new HotelDAO();
+            List<HotelDTO>list = h.getHotelDiscount(index);
+            HotelImageDAO img = new HotelImageDAO();
+            List<HotelImageDTA> b = img.getAllImgHotel();
+            HotelDAO dao = new HotelDAO();
+            int count = dao.getCountHotel()/10 ;
+            if(count != 0){
+                count++ ;
+            }
+            System.out.println(count);
+            System.out.println(list.size());
+            request.setAttribute("numberp", count);
+            
+            request.setAttribute("Img", b);
+            request.setAttribute("List", list);
+            
+            
+            request.getRequestDispatcher("MainPage_1.jsp").forward(request, response);
+            
+
 
         }
     }

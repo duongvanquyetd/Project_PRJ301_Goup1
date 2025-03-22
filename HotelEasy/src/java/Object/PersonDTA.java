@@ -11,11 +11,11 @@ package Object;
  */
 public class PersonDTA {
 
-    private String PersonID, Password, Name,Gender,Phone,RoleName;
+    private String PersonID, Password, name,Gender,Phone,RoleName;
 
     public PersonDTA(String PersonID, String Name, String Gender, String Phone, String RoleName) {
         this.PersonID = PersonID;
-        this.Name = Name;
+        this.name = Name;
         this.Gender = Gender;
         this.Phone = Phone;
         this.RoleName = RoleName;
@@ -24,7 +24,7 @@ public class PersonDTA {
     public PersonDTA(String PersonID, String Password, String Name, String Gender, String Phone, String RoleName) {
         this.PersonID = PersonID;
         this.Password = Password;
-        this.Name = Name;
+        this.name = Name;
         this.Gender = Gender;
         this.Phone = Phone;
         this.RoleName = RoleName;
@@ -47,11 +47,11 @@ public class PersonDTA {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String Name) {
-        this.Name = Name;
+        this.name = Name;
     }
 
     public String getGender() {
@@ -80,7 +80,7 @@ public class PersonDTA {
 
     @Override
     public String toString() {
-        return "PersonDTA{" + "PersonID=" + PersonID + ", Password=" + Password + ", Name=" + Name + ", Gender=" + Gender + ", Phone=" + Phone + ", RoleName=" + RoleName + '}';
+        return "PersonDTA{" + "PersonID=" + PersonID + ", Password=" + Password + ", Name=" + name + ", Gender=" + Gender + ", Phone=" + Phone + ", RoleName=" + RoleName + '}';
     }
 
  

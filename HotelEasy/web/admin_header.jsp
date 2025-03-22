@@ -32,7 +32,7 @@
             <div><a href="AdminController?action=ManagerHotel" class="link">Manager Hotel</a></div>
             <div><a href="AdminController?action=ManagerAccount" class="link">Manager Account</a></div>
         </div>
-        <div>Hi Admin | <a href="login.jsp">Logout</a></div>
+        <div>Hi Admin ${sessionScope.adminsession.name} | <a href="LoginServlet?action=logout">Logout</a></div>
     </div>
 
     <script>

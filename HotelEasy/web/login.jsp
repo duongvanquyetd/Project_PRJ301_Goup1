@@ -96,7 +96,7 @@
         <div class='all_login'>
             <div class='img'>
 
-                <img src='image/logo.jpg'>
+                <img src='image/welcom.jpg'>
 
             </div> 
             <div class='form_login'>

@@ -53,16 +53,13 @@
 
             .image-container img {
                 width: 100%;
-                opacity: 0;
+                height: 300px;
                 transition: opacity 0.5s ease;
-                position: absolute;
-                top: 0;
-                left: 0;
+                display: none; /* Ẩn tất cả ảnh ban đầu */
             }
 
             .image-container img.active {
-                opacity: 1;
-                position: relative;
+                display: block; /* Hiển thị ảnh đang được chọn */
             }
 
             .arrow {
@@ -75,6 +72,8 @@
                 padding: 10px;
                 cursor: pointer;
                 border-radius: 50%;
+                font-size: 20px;
+                z-index: 10;
             }
 
             .arrow.left {
@@ -84,6 +83,12 @@
             .arrow.right {
                 right: 10px;
             }
+
+            .arrow:hover {
+                background-color: rgba(0, 0, 0, 0.8);
+            }
+
+
 
             .stars {
                 color: gold;
@@ -184,8 +189,8 @@
         <div class="content-container">
             <%
                 HotelDTO hotel = (HotelDTO) request.getAttribute("hotel");
+                Integer price = (Integer) request.getAttribute("price");
                 pageContext.setAttribute("hotel", hotel);
-                HotelDAO dao = new HotelDAO();
                 List<String> img = (List<String>) request.getAttribute("hotelimg");
                 pageContext.setAttribute("img", img);
 
@@ -195,14 +200,10 @@
 
             <div class="card">
                 <div class="image-container">
-
                     <%                        for (String hotelimg : img) {
-
                     %>
-                    <img src="${hotelimg}" alt="Hotel Image">
-
+                    <img src="<%= hotelimg%>" alt="Hotel Image">
                     <%}%>
-
                     <button class="arrow left" onclick="prevImage()">&#10094;</button>
                     <button class="arrow right" onclick="nextImage()">&#10095;</button>
                 </div>
@@ -210,8 +211,11 @@
                 <div class="hotel-name">${hotel.namehotel}</div>
                 <div class="location">${hotel.city}, ${hotel.district}, ${hotel.streets}</div>
                 <div>
-
-                    <span class="price"><%= dao.getLowestPrice(hotel.getHotelid())%></span>
+                    <%
+                        if (price != null) {
+                    %>
+                    <span class="price"><%= price%>VND</span>
+                    <%}%>
                 </div>
                 <div class="buttons">
                     <a class="edit" href="SellerController?action=editHotel&id=${hotel.hotelid}">Edit Information</a>
@@ -220,7 +224,7 @@
                 </div>
             </div>
             <%} else {%>
-            <h3>No hotel available. <a href="" style="color: blue">Register Hotel?</a></h3>
+            <h3>No hotel available. <a href="RegisterHotel.jsp" style="color: blue">Register Hotel?</a></h3>
             <%}%>
         </div>
 
@@ -229,24 +233,33 @@
 
     </body>
     <script>
-        let currentImageIndex = 0;
-        const images = document.querySelectorAll('.image-container img');
+        document.addEventListener("DOMContentLoaded", function () {
+            let images = document.querySelectorAll(".image-container img");
+            let currentIndex = 0;
 
-        function showImage(index) {
-            images.forEach((img, i) => {
-                img.classList.toggle('active', i === index);
+            function showImage(index) {
+                images.forEach((img, i) => {
+                    img.classList.remove("active");
+                    if (i === index) {
+                        img.classList.add("active");
+                    }
+                });
+            }
+
+            document.querySelector(".arrow.left").addEventListener("click", function () {
+                currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1;
+                showImage(currentIndex);
             });
-        }
 
-        function prevImage() {
-            currentImageIndex = (currentImageIndex > 0) ? currentImageIndex - 1 : images.length - 1;
-            showImage(currentImageIndex);
-        }
+            document.querySelector(".arrow.right").addEventListener("click", function () {
+                currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1;
+                showImage(currentIndex);
+            });
 
-        function nextImage() {
-            currentImageIndex = (currentImageIndex < images.length - 1) ? currentImageIndex + 1 : 0;
-            showImage(currentImageIndex);
-        }
+            // Hiển thị ảnh đầu tiên khi trang tải lên
+            showImage(currentIndex);
+        });
     </script>
+
 
 </html>

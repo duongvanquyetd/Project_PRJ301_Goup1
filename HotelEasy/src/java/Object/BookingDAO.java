@@ -5,10 +5,12 @@
  */
 package Object;
 
+import static com.sun.corba.se.impl.util.Utility.printStackTrace;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import ultilies.DBUtils;
@@ -101,12 +103,9 @@ public class BookingDAO {
             ResultSet rs = stm.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
-
                     String roomid = rs.getString("RoomID").trim();
                     String personname = rs.getString("Name").trim();
-
                     int numberchild = rs.getInt("NumberChild");
-
                     int numberadult = rs.getInt("NumberAdult");
                     Date depaturedate = rs.getDate("DepatureDate");
                     Date arrivedate = rs.getDate("ArriveDate");
@@ -125,6 +124,81 @@ public class BookingDAO {
 
         return list;
     }
+
+    public int countAcceptBooking(String ownerID, Date fromDate, Date toDate) {
+        int count = 0;
+        String sql = "select count(b.PersonID) countAcceptBooking from Hotel h, Booking b where b.HotelID = h.HotelID and h.PersonID = ? and Status = 'Confirmed' AND TimeBooking BETWEEN ? AND ?";
+        try {
+            Connection con = DBUtils.getConnection();
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setString(1, ownerID);
+            stm.setDate(2, fromDate);
+            stm.setDate(3, toDate);
+
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("countAcceptBooking");
+            }
+            con.close();
+        } catch (SQLException e) {
+            printStackTrace();
+        }
+        return count;
+    }
+
+    public int countCancelledBooking(String ownerID, Date fromDate, Date toDate) {
+        int count = 0;
+        String sql = "select count(b.PersonID) countAcceptBooking from Hotel h, Booking b where b.HotelID = h.HotelID and h.PersonID = ? and Status = 'Cancelled' AND TimeBooking BETWEEN ? AND ?";
+        try {
+            Connection con = DBUtils.getConnection();
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setString(1, ownerID);
+            stm.setDate(2, fromDate);
+            stm.setDate(3, toDate);
+
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("countAcceptBooking");
+            }
+            con.close();
+        } catch (SQLException e) {
+            printStackTrace();
+        }
+        return count;
+    }
+
+    public int getTotalRevenueByDate(String personID, Date fromDate, Date toDate) {
+        int TotalRevenue = 0;
+        String sql = "SELECT SUM(r.Price) AS TotalRevenue\n"
+                + "FROM Booking b\n"
+                + "JOIN Room r ON b.HotelID = r.HotelID AND b.RoomID = r.RoomID\n"
+                + "JOIN Hotel h ON b.HotelID = h.HotelID\n"
+                + "WHERE h.PersonID = ?\n"
+                + "  AND b.TimeBooking >= ?\n"
+                + "  AND b.TimeBooking <= ?\n"
+                + "  AND b.Status = 'Confirmed'";
+
+        try {
+            Connection con = DBUtils.getConnection();
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setString(1, personID);
+            stm.setDate(2, fromDate);
+            stm.setDate(3, toDate);
+
+            ResultSet rs = stm.executeQuery();
+            
+            if(rs.next()){
+                TotalRevenue = rs.getInt("TotalRevenue");
+            }
+            con.close();
+        } catch (SQLException e) {
+            printStackTrace();
+        }
+
+        return TotalRevenue;
+    }
+    
+   
 
     public void accept(String hotelid, String roomid) {
         String sql = "update Booking set Status = 'Confirmed' where HotelID = ? and RoomID = ?";
@@ -157,10 +231,42 @@ public class BookingDAO {
         }
     }
 
+    public List<BookingDTO> loadAllBookingByHotelForReport(String hotelid) {
+        List<BookingDTO> list = new ArrayList<>();
+        try {
+            Connection con = DBUtils.getConnection();
+            String sql = "select b.*, p.Name from Booking b, Person p where b.PersonID = p.PersonID and HotelID = ?";
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setString(1, hotelid);
+            ResultSet rs = stm.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    String roomid = rs.getString("RoomID").trim();
+                    String personname = rs.getString("Name").trim();
+                    int numberchild = rs.getInt("NumberChild");
+                    int numberadult = rs.getInt("NumberAdult");
+                    Date depaturedate = rs.getDate("DepatureDate");
+                    Date arrivedate = rs.getDate("ArriveDate");
+                    Date timebooking = rs.getDate("TimeBooking");
+                    String status = rs.getString("Status");
+                    BookingDTO booking = new BookingDTO(hotelid, roomid, personname, numberchild, numberadult, depaturedate, arrivedate, timebooking, status);
+
+                    list.add(booking);
+                }
+
+            }
+            con.close();
+
+        } catch (Exception e) {
+        }
+
+        return list;
+    }
+    
     public static void main(String[] args) {
         BookingDAO dao = new BookingDAO();
-        List<BookingDTO> listbooking = dao.loadAllBookingByHotel("h3");
+        List<BookingDTO> f = dao.loadAllBookingByHotelForReport("h6");
 
-        System.out.println(listbooking);
+        System.out.println(f);
     }
 }

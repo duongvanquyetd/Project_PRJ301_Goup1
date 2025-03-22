@@ -1,3 +1,4 @@
+<%@page import="java.util.Map"%>
 <%@page import="Object.RoomDAO"%>
 <%@page import="Object.HotelDTO"%>
 <%@page import="Object.RoomImageDTO"%>
@@ -67,16 +68,14 @@
             .room-image {
                 position: relative;
                 width: 100%;
-                height: 200x; /* Set a fixed height for the image container */
-                overflow: hidden; /* Hide any overflow */
+                overflow: hidden;
             }
 
             .room-img {
-                width: 100%; /* Set the width to 100% of the container */
-                height: 100%; /* Set the height to be twice the width */
-                object-fit: contain; /* Ensure the entire image is visible within the container */
-                border-radius: 8px;
-                transition: transform 0.3s;
+                width: 100%;
+                height: 300px;
+                transition: opacity 0.5s ease;
+                display: none; /* Ẩn tất cả ảnh ban đầu */
             }
 
             .arrow {
@@ -89,6 +88,8 @@
                 padding: 10px;
                 cursor: pointer;
                 border-radius: 50%;
+                font-size: 20px;
+                z-index: 10;
             }
 
             .arrow.left {
@@ -97,6 +98,10 @@
 
             .arrow.right {
                 right: 10px;
+            }
+
+            .arrow:hover {
+                background-color: rgba(0, 0, 0, 0.8);
             }
 
             .room-info {
@@ -217,40 +222,39 @@
             <%
                 HotelDTO hotel = (HotelDTO) request.getAttribute("hotel");
                 pageContext.setAttribute("hotel", hotel);
-                List<RoomImageDTO> listRoomImg = (List<RoomImageDTO>) request.getAttribute("ListImgRoom");
-                List<RoomDTO> list = (List<RoomDTO>) request.getAttribute("listRoom");
-                if (list != null && !list.isEmpty()) {
-                    for (RoomDTO room : list) {
-                        pageContext.setAttribute("room", room);
+                List< RoomDTO> r = (List< RoomDTO>) request.getAttribute("listRoom");
+                List< RoomImageDTO> rimage = (List< RoomImageDTO>) request.getAttribute("roomimage");
+
+                for (RoomDTO room : r) {
+                    int i = 0;
+
+                    pageContext.setAttribute("room", room);
             %>
 
-
             <div class="room">
-                <div class="room-title"><%= room.getRoomid()%> - <%= room.getTyperoom()%></div>
+                <div class="room-title">${room.roomid} - ${room.typeroom}</div>
                 <div class="room-info">
                     <div class="room-image">
-                        <%
-                            for (RoomImageDTO roomImageDTO : listRoomImg) {
-                                if (roomImageDTO.getHotelid().equals(hotel.getHotelid()) && roomImageDTO.getRoomid().equalsIgnoreCase(room.getRoomid())) {
-                                    for (String string : roomImageDTO.getImage()) {
-
+                        <%for (RoomImageDTO ri : rimage) {
+                            if (ri.getHotelid().equals(hotel.getHotelid()) && ri.getRoomid().equals(room.getRoomid())) {
+                                    for (int j = 0; j < ri.getImage().size(); j++) {
                         %>
-                        <img src="${img.image}" alt="Room Image" class="room-img" style="display:block;">
-                        <%}
+                        <img src="<%= ri.getImage().get(j)%>" alt="Room Image" class="room-img" >
+                        <%  }
                                 }
                             }%>
+
                         <button class="arrow left" onclick="prevImage()">&#10094;</button>
                         <button class="arrow right" onclick="nextImage()">&#10095;</button>
                     </div>
                     <div class="room-details">
                         <p>Capacity Child: ${room.capacitychild}</p>
                         <p>Capacity Adult: ${room.capacityadult}</p>
-                        <p>Area: ${room.area} m²</p> <!-- Added area information -->
-                        <p>Number of Beds: ${room.numberofbed}</p> <!-- Added number of beds information -->
-                        <p class="room-price">${room.price} VND</p> <!-- Added price information -->
+                        <p>Area: ${room.area} m²</p>
+                        <p>Number of Beds: ${room.numberofbed}</p>
+                        <p class="room-price">${room.price} VND</p>
                     </div>
                     <div class="features">
-
                         <h4>Ưu đãi trong phòng</h4>
                         <ul>
                             <%
@@ -260,42 +264,61 @@
                                     pageContext.setAttribute("ft", ft);
                             %>
                             <li><span class="checkmark">✔</span> ${ft}</li>
-                                <%}%>
+                                <% } %>
                         </ul>
                     </div>
                 </div>
                 <div class="buttons">
-                    <a class="btn edit" href="SellerController?action=editRoomInfo&id=<%= room.getRoomid()%>">Edit</a>
-                    <a class="btn delete" href="SellerController?action=deleteRoom&id=<%= room.getRoomid()%>">Delete</a>
+                    <a class="btn edit" href="SellerController?action=editRoomInfo&id=${room.roomid}">Edit</a>
+                    <a class="btn delete" href="SellerController?action=deleteRoom&id=${room.roomid}">Delete</a>
                 </div>
             </div>
-            <%}
-            } else {%>
-            <h3>No room available. <a href="" style="color: blue">Create Room?</a></h3>
-            <%}%>
+
+
+
+            <% }%>
         </div>
 
 
+
         <%@ include file="Footer.jsp" %>
-        <script>
-            function changeImage(button, direction) {
-                const roomImageDiv = button.parentElement;
-                const images = roomImageDiv.querySelectorAll('.room-img');
-                let currentImageIndex = Array.from(images).findIndex(img => img.style.display !== 'none');
 
-                images[currentImageIndex].style.display = 'none';
-                currentImageIndex = (currentImageIndex + direction + images.length) % images.length;
-                images[currentImageIndex].style.display = 'block';
-            }
-
-            // Initialize the first image to be visible
-            document.querySelectorAll('.room-img').forEach((img, index) => {
-                if (index % 3 !== 0)
-                    img.style.display = 'none';
-            });
-        </script>
 
 
     </body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".room").forEach(room => {
+                let images = room.querySelectorAll(".room-img");
+                let index = 0;
+
+                if (images.length > 0) {
+                    images[0].style.display = "block"; // Hiển thị ảnh đầu tiên
+                }
+
+                let prevButton = room.querySelector(".arrow.left");
+                let nextButton = room.querySelector(".arrow.right");
+
+                function updateImageDisplay() {
+                    images.forEach(img => img.style.display = "none"); // Ẩn tất cả ảnh
+                    images[index].style.display = "block"; // Hiển thị ảnh theo index
+                }
+
+                if (prevButton && nextButton) {
+                    prevButton.addEventListener("click", function () {
+                        index = (index - 1 + images.length) % images.length; // Di chuyển về ảnh trước
+                        updateImageDisplay();
+                    });
+
+                    nextButton.addEventListener("click", function () {
+                        index = (index + 1) % images.length; // Di chuyển tới ảnh tiếp theo
+                        updateImageDisplay();
+                    });
+                }
+            });
+        });
+
+    </script>
+
 
 </html>

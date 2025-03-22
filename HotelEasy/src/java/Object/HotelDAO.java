@@ -75,7 +75,9 @@ public class HotelDAO {
                 HotelDTO ht = new HotelDTO(id, PersonID, city, district, streets, nameHotel, rate, price, discount, 0);
                 list.add(ht);
             }
+            con.close();
             return list;
+
         } catch (Exception e) {
         }
 
@@ -90,7 +92,7 @@ public class HotelDAO {
             PreparedStatement stm = con.prepareStatement(sql);
             stm.setString(1, HotelID);
             stm.executeQuery();
-
+            con.close();
         } catch (Exception e) {
         }
 
@@ -107,7 +109,7 @@ public class HotelDAO {
             if (rs.next()) {
                 return rs.getInt("NumberOfHotel");
             }
-
+            con.close();
         } catch (Exception e) {
         }
         return 0;
@@ -116,7 +118,7 @@ public class HotelDAO {
     public HotelDTO getHotelByOwnerID(String PersonID) {
         try {
             Connection con = DBUtils.getConnection();
-            String sql = " select * from Hotel h, Room r where r.HotelID = h.HotelID and h.PersonID = ? ";
+            String sql = "SELECT * FROM Hotel WHERE PersonID = ?";
 
             PreparedStatement stm = con.prepareStatement(sql);
             stm.setString(1, PersonID);
@@ -128,11 +130,10 @@ public class HotelDAO {
                 String streets = rs.getString("Streets");
                 String nameHotel = rs.getString("NameHotel");
                 String rate = rs.getString("RateHotel");
-                double discount = rs.getDouble("Discount");
-                double price = rs.getDouble("Price");
-                HotelDTO ht = new HotelDTO(id, PersonID, city, district, streets, nameHotel, rate, discount, price, 0);
+                HotelDTO ht = new HotelDTO(id, PersonID, city, district, streets, nameHotel, rate, 0);
                 return ht;
             }
+            con.close();
         } catch (Exception e) {
             System.out.println("Load hotel by owner id fail " + e.getMessage());
             e.printStackTrace();
@@ -148,10 +149,11 @@ public class HotelDAO {
             PreparedStatement stm = con.prepareStatement(sql);
             stm.setString(1, hotelID);
             ResultSet rs = stm.executeQuery();
-            
-            if(rs.next()){
+
+            if (rs.next()) {
                 return Integer.parseInt(rs.getString("Price"));
             }
+            con.close();
         } catch (Exception e) {
         }
         return null;
@@ -180,7 +182,7 @@ public class HotelDAO {
     }
 
     public void insertHotel(String hotelID, String personID, String city, String distric, String Strees, String nameHotel, String rateHotel) {
-        String sql = " insert into Hotel values(?, ?, ?, ?, ?, ?, ?, 0) ";
+        String sql = " insert into Hotel (HotelID, PersonID, City, District, Streets, NameHotel, RateHotel, Approved) values(?, ?, ?, ?, ?, ?, ?, 0) ";
         try {
             Connection conn = DBUtils.getConnection();
             PreparedStatement stm = conn.prepareStatement(sql);
@@ -237,11 +239,43 @@ public class HotelDAO {
         }
     }
 
+    public String newHotelID() {
+        String sql = "select HotelID from Hotel";
+        Integer newID = -1;
+        List<Integer> list = new ArrayList<>();
+        try {
+            Connection conn = DBUtils.getConnection();
+            PreparedStatement stm = conn.prepareStatement(sql);
+
+            ResultSet rs = stm.executeQuery();
+
+            if (rs != null) {
+                while (rs.next()) {
+                    String oldRoomID = rs.getString("HotelID");
+                    int numID = Integer.parseInt(oldRoomID.replaceAll("[^0-9]", ""));
+                    list.add(numID);
+                }
+            }
+            for (Integer integer : list) {
+                if (newID <= integer) {
+                    newID = integer;
+                }
+            }
+            conn.close();
+        } catch (Exception e) {
+        }
+        return "H" + ++newID;
+    }
+
+    public String newFileHotel(String id) {
+        Integer newID = Integer.parseInt(id.replaceAll("[^0-9]", ""));
+        return "Hotel" + newID;
+    }
+
     public static void main(String[] args) {
         HotelDAO d = new HotelDAO();
 
-        d.getHotelByOwnerID("thihanh");
-        System.out.println(d.toString());
+        Integer f = d.getLowestPrice("h16");
     }
 
 }

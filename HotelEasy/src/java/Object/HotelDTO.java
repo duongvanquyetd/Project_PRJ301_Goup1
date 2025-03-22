@@ -19,6 +19,21 @@ public class HotelDTO {
 
     public HotelDTO() {
     }
+
+    public HotelDTO(String hotelid, String personname, String city, String district, String streets, String namehotel, String ratehotel, int approved) {
+        this.hotelid = hotelid;
+        this.personname = personname;
+        this.city = city;
+        this.district = district;
+        this.streets = streets;
+        this.namehotel = namehotel;
+        this.ratehotel = ratehotel;
+        this.approved = approved;
+        this.discount = 0;
+        this.price = 0;
+    }
+    
+    
     
     public HotelDTO(String hotelid, String personname, String city, String district, String streets, String namehotel, String ratehotel, double discount, double price,int approved) {
         this.hotelid = hotelid;

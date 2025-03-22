@@ -109,11 +109,49 @@ public class HotelImageDAO {
         return list;
     }
 
-    public void updateHotelImg() {
-        
+    public String newFileHotelImg(String id) {
+        Integer newID = Integer.parseInt(id.replaceAll("[^0-9]", ""));
+        return "Hotel" + newID;
     }
-    
-    
+
+    public void updateHotelImg() {
+        String sql = "";
+    }
+
+    public void insertImg(String id, List<String> imgs) {
+        String sql = "insert into ImageHotel (HotelID, Path) values (?, ?)";
+        try {
+            Connection conn = DBUtils.getConnection();
+            PreparedStatement stm = conn.prepareStatement(sql);
+            for (String img : imgs) {
+                stm.setString(1, id);
+                stm.setString(2, img);
+                stm.executeUpdate();
+            }
+            conn.close();
+        } catch (Exception e) {
+        }
+    }
+
+    public void updateImg(String hotelID, List<String> imgs) {
+        try {
+            Connection conn = DBUtils.getConnection();
+            String sql = "delete from ImageHotel where HotelID = ?";
+            PreparedStatement stm1 = conn.prepareStatement(sql);
+            stm1.setString(1, hotelID);
+            stm1.executeUpdate();
+
+            sql = "insert into ImageHotel values (?, ?)";
+            PreparedStatement stm2 = conn.prepareStatement(sql);
+            for (String img : imgs) {
+                stm2.setString(1, hotelID);
+                stm2.setString(2, img);
+                stm2.executeUpdate();
+            }
+            conn.close();
+        } catch (Exception e) {
+        }
+    }
 
     public static void main(String[] args) {
         HotelImageDAO j = new HotelImageDAO();

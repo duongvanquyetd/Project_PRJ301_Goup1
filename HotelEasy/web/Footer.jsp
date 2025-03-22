@@ -28,6 +28,7 @@
 
 
             footer {
+        
                 background-color: #333;
                 text-align: center;
                 font-size: 14px;

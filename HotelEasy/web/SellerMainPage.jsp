@@ -1,155 +1,248 @@
+<%@page import="Object.BookingDTO"%>
+<%@page import="java.util.List"%>
+<%@page import="Object.RoomDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Seller</title>
-        <style>
-            body,
-            html {
-                margin: 0;
-                padding: 0;
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                color: #333;
-                scroll-behavior: smooth;
-            }
+<head>
+    <meta charset="UTF-8">
+    <title>Revenue Report - Seller</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Segoe UI', sans-serif;
+            background: #f0f2f5;
+        }
 
-            .content-container {
-                flex: 1;
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                text-align: center;
-                margin: 20px;
-            }
+        .content-container {
+            flex: 1;
+            padding: 20px;
+        }
 
-            .fillter {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-                margin: 20px 0;
-            }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
 
-            .fillter select {
-                padding: 12px 20px;
-                font-size: 16px;
-                color: white;
-                background-color: #0d2b4d;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: background-color 0.3s, transform 0.3s;
-            }
+        .section {
+            background: #fff;
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+        }
 
-           
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
 
-            .fillter select option {
-                color: #333;
-                background-color: white;
-            }
+        form label {
+            font-weight: bold;
+        }
 
-            .getdate {
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-                margin: 20px 0;
-            }
+        form input, button {
+            padding: 8px;
+            margin: 5px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
 
-            .getdate div {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                gap: 10px;
-            }
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-            .getdate label {
-                font-size: 16px;
-                font-weight: bold;
-                color: #333;
-                flex: 1;
-            }
+        button:hover {
+            background-color: #0056b3;
+        }
 
-            .getdate input {
-                padding: 10px;
-                font-size: 16px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                width: 100%;
-                max-width: 250px;
-                flex: 1;
-                transition: border-color 0.3s;
-            }
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            font-weight: bold;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
 
-            .getdate input:focus {
-                border-color: #0d2b4d;
-            }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
 
-            .choose {
-                display: flex;
-                gap: 20px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
 
-            .choose a {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 200px;
-                height: 70px;
-                background-color: #f58242;
-                color: white;
-                text-decoration: none;
-                font-size: 18px;
-                border-radius: 20px;
-                text-align: center;
-                transition: background-color 0.3s, box-shadow 0.3s;
-            }
+        .card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
 
-            .choose a:hover {
-                background-color: #e67335;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            }
+        .card h3 {
+            margin: 0;
+            color: #2b7a78;
+            font-size: 22px;
+        }
 
+        .card p {
+            color: #666;
+            margin-top: 8px;
+        }
 
-        </style>
-    </head>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
 
-    <body>
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
 
-        <%@ include file="HeaderSellerPage.jsp" %>
+        th {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
 
-        <div class="content-container">
-            <div class="fillter">
-                <select>
-                    <option value="day">Follow by day</option>
-                    <option value="month">Follow by month</option>
-                    <option value="year">Follow by year</option>
-                </select>
-            </div>
+<body>
 
-            <div class="getdate">
-                <div>
-                    <label for="fromDate">From date:</label>
-                    <input type="date" name="fromDate" id="fromDate">
+    <%@ include file="HeaderSellerPage.jsp" %>
+
+    <div class="content-container">
+        <h1>HOTEL REVENUE REPORT</h1>
+
+        <!-- Time Filter -->
+        <div class="section">
+            <h2>Select Date Range</h2>
+            <form id="filterForm" action="SellerController">
+                <label>
+                    From:
+                    <input type="date" id="fd" name="fromDate" required>
+                </label>
+                <label>
+                    To:
+                    <input type="date" id="td" name="toDate" required>
+                </label>
+                <div class="button">
+                    <input type="hidden" name="action" value="report">
+                    <input type="submit" value="Generate Report" class="btn-primary">
                 </div>
-                <div>
-                    <label for="toDate">To date:</label>
-                    <input type="date" name="toDate" id="toDate">
-                </div>
-            </div>
+            </form>
+        </div>
 
-            <div class="choose">
-                <a href="">Number Of Booking</a>
-            </div>
-            <div class="choose">
-                <a href="">Revenue</a>
+        <%
+            Integer totalRevenue = (Integer) request.getAttribute("totalRevenue");
+
+            RoomDTO mostRevenueByRoom = (RoomDTO) request.getAttribute("mostRevenueByRoom");
+            RoomDTO mostBookingRoom = (RoomDTO) request.getAttribute("mostBookingRoom");
+            if (mostRevenueByRoom != null && mostBookingRoom != null && totalRevenue != 0) {
+                pageContext.setAttribute("mostRevenueByRoom", mostRevenueByRoom);
+                pageContext.setAttribute("mostBookingRoom", mostBookingRoom);
+        %>
+
+        <!-- Revenue Section -->
+        <div class="section">
+            <h2>Revenue Summary</h2>
+            <div class="stats-grid">
+                <div class="card">
+                    <h3><%= totalRevenue %> VND</h3>
+                    <p>Total Revenue</p>
+                </div>
+                <div class="card">
+                    <h3>${mostRevenueByRoom.typeroom}: ${mostRevenueByRoom.price} VND</h3>
+                    <p>Highest Revenue by Room Type</p>
+                </div>
+                <div class="card">
+                    <h3>Most Booked Room</h3>
+                    <h2><%= mostBookingRoom.getRoomid() %> - <%= mostBookingRoom.getTyperoom() %></h2>
+                    <p>Based on Number of Bookings</p>
+                </div>
             </div>
         </div>
-        <%@ include file="Footer.jsp" %>
-    </body>
+        <% } %>
 
+        <%
+            Integer confirm = (Integer) request.getAttribute("confirm");
+            Integer cancel = (Integer) request.getAttribute("cancel");
+            if (confirm != null && cancel != null) {
+        %>
+        <!-- Booking Stats -->
+        <div class="section">
+            <h2>Total Bookings in This Time Range</h2>
+            <div class="stats-grid">
+                <div class="card">
+                    <h3><%= confirm %></h3>
+                    <p>Confirmed Bookings</p>
+                </div>
+                <div class="card">
+                    <h3><%= cancel %></h3>
+                    <p>Cancelled Bookings</p>
+                </div>
+            </div>
+        </div>
+        <% } %>
+
+        <%
+            List<BookingDTO> listBooking = (List<BookingDTO>) request.getAttribute("listBooking");
+            if (listBooking != null) {
+        %>
+        <!-- Booking History -->
+        <div class="section">
+            <h2>Booking History</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Room</th>
+                        <th>Booking Date</th>
+                        <th>Check-in Date</th>
+                        <th>Check-out Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        for (BookingDTO booking : listBooking) {
+                            pageContext.setAttribute("booking", booking);
+                    %>
+                    <tr>
+                        <td>${booking.personname}</td>
+                        <td>${booking.roomid}</td>
+                        <td>${booking.timebooking}</td>
+                        <td>${booking.departuredate}</td>
+                        <td>${booking.arrivedate}</td>
+                        <td>${booking.status}</td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <% } %>
+    </div>
+
+    <%@ include file="Footer.jsp" %>
+
+</body>
 </html>

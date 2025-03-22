@@ -8,8 +8,10 @@ package Object;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import ultilies.DBUtils;
@@ -39,8 +41,8 @@ public class RoomImageDAO {
                 for (int i = 0; i <= 1; i++) {
 
                     hotelid = rs.getString("hotelid").trim();
-                    roomid = rs.getString("RoomID");
-                    image.add(rs.getString("Path"));
+                    roomid = rs.getString("RoomID").trim();
+                    image.add(rs.getString("Path").trim());
                     if (i != 1) {
                         rs.next();
                     }
@@ -58,52 +60,87 @@ public class RoomImageDAO {
         return null;
     }
 
-    public List<RoomImageDTO> getAllRoomsByHotelID(String hotelID) {
-        List<RoomImageDTO> roomList = new ArrayList<>();
-        String sql = "SELECT RoomID, HotelID, Path FROM ImageRoom WHERE HotelID = ? ORDER BY RoomID";
-
+    public List<String> getRoomImagesByHotelandRoomID(String hotelid, String roomid) {
+        List<String> list = new ArrayList<>();
         try {
             Connection con = DBUtils.getConnection();
+            String sql = "SELECT HotelID,RoomID,Path FROM ImageRoom where hotelid = ? and RoomID  =? ";
             PreparedStatement stm = con.prepareStatement(sql);
 
-            stm.setString(1, hotelID);
+            stm.setString(1, hotelid);
+            stm.setString(2, roomid);
+
             ResultSet rs = stm.executeQuery();
 
-            Map<String, RoomImageDTO> roomMap = new HashMap<>();
-
             while (rs.next()) {
-                String roomID = rs.getString("RoomID");
-                String path = rs.getString("Path");
 
-                if (!roomMap.containsKey(roomID)) {
-                    roomMap.put(roomID, new RoomImageDTO(roomID, hotelID, new ArrayList<>()));
-                }
-                roomMap.get(roomID).getImage().add(path);
+                list.add(rs.getString("Path"));
+
             }
 
-            roomList.addAll(roomMap.values());
-
+            return list;
         } catch (Exception e) {
-            System.out.println("Error loading room images: " + e.getMessage());
+            System.out.println("Load room img fail");
         }
 
-        return roomList;
+        return null;
+    }
+
+    public void insertImg(String hotelid, String roomid, List<String> imgs) {
+        String sql = "insert into ImageRoom (HotelID, RoomID, Path) values (?, ? ,?)";
+        try {
+            Connection conn = DBUtils.getConnection();
+            PreparedStatement stm = conn.prepareStatement(sql);
+            for (String img : imgs) {
+                stm.setString(1, hotelid);
+                stm.setString(2, roomid);
+                stm.setString(2, img);
+                stm.executeUpdate();
+            }
+            conn.close();
+        } catch (Exception e) {
+        }
+    }
+
+    public void updateImg(String hotelID, String roomID, List<String> imgs) {
+        try {
+            Connection conn = DBUtils.getConnection();
+            String sql = "delete from ImageRoom where HotelID = ? and RoomID = ?";
+            PreparedStatement stm1 = conn.prepareStatement(sql);
+            stm1.setString(1, hotelID);
+            stm1.setString(2, roomID);
+            stm1.executeUpdate();
+
+            sql = "insert into ImageRoom values (?, ?, ?)";
+            PreparedStatement stm2 = conn.prepareStatement(sql);
+            for (String img : imgs) {
+                stm2.setString(1, hotelID);
+                stm2.setString(2, roomID);
+                stm2.setString(3, img);
+                stm2.executeUpdate();
+            }
+            conn.close();
+        } catch (Exception e) {
+        }
     }
 
     public static void main(String[] args) {
-        HotelDAO hotelDAO = new HotelDAO();
-        HotelDTO hotel = hotelDAO.getHotelByOwnerID("vanbinh");
-        RoomDAO roomDAO = new RoomDAO();
+        //      RoomDAO d = new RoomDAO();
+        RoomImageDAO d = new RoomImageDAO();
+//
+//        List<RoomDTO> roomList = roomDAO.loadRoomByHotelID("h2");
+//        Map<String, List<String>> roomImages = imageDAO.getRoomImagesByHotelID("h2");
+//
+//        // Gắn danh sách ảnh vào từng phòng (không sửa DTO)
+//        Map<RoomDTO, List<String>> roomWithImages = new LinkedHashMap<>();
+//        for (RoomDTO room : roomList) {
+//            List<String> images = roomImages.getOrDefault(room.getRoomid(), new ArrayList<>());
+//            roomWithImages.put(room, images);
+//        }
+//
+//        for (Map.Entry<RoomDTO, List<String>> entry : roomWithImages.entrySet()) {
 
-        RoomImageDAO imgDAO = new RoomImageDAO();
-        List<RoomImageDTO> listRoomImg = imgDAO.load();
-        for (RoomImageDTO roomImageDTO : listRoomImg) {
-            if (roomImageDTO.getHotelid().equals(hotel.getHotelid())) {
-                for (String string : roomImageDTO.getImage()) {
-                    System.out.println(string);
-                }
-            }
-        }
+        System.out.println(d.load());
 
     }
 }

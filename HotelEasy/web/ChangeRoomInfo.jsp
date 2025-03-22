@@ -27,9 +27,11 @@
                 text-align: center;
                 margin-bottom: 20px;
             }
-
-            .form-container {
+            .content-container{
                 flex: 1;
+            }
+            .form-container {
+
                 width: 700px; /* Reduced width */
                 margin: 0 auto; /* Centered form */
                 padding: 30px; /* Reduced padding */
@@ -96,52 +98,61 @@
             pageContext.setAttribute("room", room);
         %>
 
-        <h2>Change Room Information</h2>
-        <div class="form-container">
-            <div class="form-group">
-                <span class="label">Room Image</span>
-                <input type="file"  class="input-field" name="roomImg" value="" multiple>
-            </div>
+        <div class="content-container">
+            <form action="SellerController" method="POST" enctype="multipart/form-data">
+                <h2>Change Room Information</h2>
+                <div class="form-container">
+                    <div class="form-group">
+                        <span class="label">Room Image</span>
+                        <input type="file"  class="input-field" name="roomImg" value="" multiple="" accept="image/*">
+                    </div>
 
-            <div class="form-group">
-                <span class="label">Capacity Child</span>
-                <input type="text" class="input-field"  name="roomCapacityChild" value="${room.capacitychild}">
-            </div>
+                    <div class="form-group">
+                        <span class="label">Capacity Child</span>
+                        <input type="text" class="input-field"  name="roomCapacityChild" value="${room.capacitychild}">
+                    </div>
 
-            <div class="form-group">
-                <span class="label">Capacity Adult</span>
-                <input type="text" class="input-field"  name="roomCapacityAdult" value="${room.capacityadult}">
-            </div>
+                    <div class="form-group">
+                        <span class="label">Capacity Adult</span>
+                        <input type="text" class="input-field"  name="roomCapacityAdult" value="${room.capacityadult}">
+                    </div>
 
-            <div class="form-group">
-                <span class="label">Type Room</span>
-                <input type="text" class="input-field"  name="roomType" value="${room.typeroom}">
-            </div>
+                    <div class="form-group">
+                        <span class="label">Type Room</span>
+                        <input type="text" class="input-field"  name="roomType" value="${room.typeroom}">
+                    </div>
 
-            <div class="form-group">
-                <span class="label">Area</span>
-                <input type="text" class="input-field"  name="roomArea" value="${room.area} m²" >
-            </div>
+                    <div class="form-group">
+                        <span class="label">Area</span>
+                        <input type="text" class="input-field"  name="roomArea" value="${room.area} m²" >
+                    </div>
 
-            <div class="form-group">
-                <span class="label">Number Of Bed</span>
-                <input type="text" class="input-field"  name="numberOfBed" value="${room.numberofbed}">
-            </div>
+                    <div class="form-group">
+                        <span class="label">Number Of Bed</span>
+                        <input type="text" class="input-field"  name="numberOfBed" value="${room.numberofbed}">
+                    </div>
 
-            <div class="form-group">
-                <span class="label">Price</span>
-                <input type="text" class="input-field"  name="roomPrice" value="${room.price}">
-            </div>
+                    <div class="form-group">
+                        <span class="label">Price</span>
+                        <input type="text" class="input-field"  name="roomPrice" value="${room.price}">
+                    </div>
 
-            <div class="form-group">
-                <span class="label">Discount</span>
-                <input type="text" class="input-field"  name="roomDiscount" value="${room.discount}">
-            </div>
-            <div class="button-container">
-                <a class="save-btn" href="SellerController?action=updateRoom&idroom=${room.roomid}">Save</a>
-            </div>
-            
-            <%@ include file="Footer.jsp" %>
+                    <div class="form-group">
+                        <span class="label">Discount</span>
+                        <input type="text" class="input-field"  name="roomDiscount" value="${room.discount}">
+                    </div>
+
+
+                    <div class="button-container">
+                        <input type="hidden" name="action" value="updateRoom">
+                        <input type="hidden" name="idroom" value="${room.roomid}">
+                        <input type="submit" class="save-btn" value="Save">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <%@ include file="Footer.jsp" %>
     </body>
 
 </html>

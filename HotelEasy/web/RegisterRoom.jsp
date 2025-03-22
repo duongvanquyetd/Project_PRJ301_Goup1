@@ -6,17 +6,24 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
         <style>
-            body,
-            html {
+            body, html {
                 margin: 0;
                 padding: 0;
                 font-family: Arial, sans-serif;
                 background-color: #f4f4f4;
                 color: #333;
                 scroll-behavior: smooth;
+                min-height: 100vh; /* Đảm bảo chiều cao tối thiểu */
+                display: flex;
+                flex-direction: column;
             }
 
-            a{
+            .main-content {
+                flex: 1; /* Đẩy footer xuống cuối */
+                padding-bottom: 20px; /* Khoảng cách giữa form và footer */
+            }
+
+            a {
                 text-decoration: none;
             }
 
@@ -27,10 +34,9 @@
             }
 
             .form-container {
-                flex: 1;
-                width: 700px; /* Reduced width */
-                margin: 0 auto; /* Centered form */
-                padding: 30px; /* Reduced padding */
+                width: 700px;
+                margin: 20px auto; /* Cách xa phần footer */
+                padding: 30px;
                 background-color: white;
                 border-radius: 10px;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -39,28 +45,28 @@
             .form-group {
                 display: flex;
                 align-items: center;
-                margin-bottom: 15px; /* Reduced margin */
+                margin-bottom: 15px;
             }
 
             .label {
-                width: 180px; /* Reduced width */
+                width: 180px;
                 background-color: green;
                 color: white;
-                padding: 12px; /* Reduced padding */
+                padding: 12px;
                 text-align: center;
                 border-radius: 5px;
-                font-size: 16px; /* Reduced font size */
+                font-size: 16px;
             }
 
             .input-field {
                 flex: 1;
                 background-color: lightgray;
-                padding: 12px; /* Reduced padding */
-                margin-left: 12px; /* Reduced margin */
+                padding: 12px;
+                margin-left: 12px;
                 border-radius: 5px;
                 border: none;
                 color: gray;
-                font-size: 16px; /* Reduced font size */
+                font-size: 16px;
             }
 
             .button-container {
@@ -71,74 +77,86 @@
             .save-btn {
                 background-color: green;
                 color: white;
-                padding: 10px 20px; /* Adjusted padding */
+                padding: 10px 20px;
                 border: none;
                 border-radius: 5px;
                 cursor: pointer;
                 display: inline-block;
-                font-size: 16px; /* Reduced font size */
+                font-size: 16px;
             }
 
             .save-btn:hover {
                 background-color: darkgreen;
             }
+
+            /* Footer đặt ở cuối trang */
+            .footer {
+                background-color: #222;
+                color: white;
+                text-align: center;
+                padding: 10px;
+                position: relative;
+                bottom: 0;
+                width: 100%;
+            }
+
         </style>
     </head>
     <body>
         <%@ include file="HeaderSellerPage.jsp" %>
 
+        <div class="main-content">
+            <form action="SellerController" method="POST" enctype="multipart/form-data">
+                <h2>Change Room Information</h2>
+                <div class="form-container">
+                    <div class="form-group">
+                        <span class="label">Room Image</span>
+                        <input type="file" class="input-field" placeholder="Choose File" name="roomImg" multiple="" accept="image/*" required>
+                    </div>
 
-        <form action="SellerController">
-            
-            
-       
-        <h2>Change Room Information</h2>
-        <div class="form-container">
-            <div class="form-group">
-                <span class="label">Room Image</span>
-                <input type="file" class="input-field" placeholder="Choose File" name="roomImg" multiple>
-            </div>
+                    <div class="form-group">
+                        <span class="label">Capacity Child</span>
+                        <input type="number" class="input-field" placeholder="Input Capacity Child" name="roomCapacityChild" required>
+                    </div>
 
-            <div class="form-group">
-                <span class="label">Capacity Child</span>
-                <input type="text" class="input-field" placeholder="Input Capacity Child" name="roomCapacityChild">
-            </div>
+                    <div class="form-group">
+                        <span class="label">Capacity Adult</span>
+                        <input type="number" class="input-field" placeholder="Input Capacity Adult" name="roomCapacityAdult" required>
+                    </div>
 
-            <div class="form-group">
-                <span class="label">Capacity Adult</span>
-                <input type="text" class="input-field" placeholder="Input Capacity Adult" name="roomCapacityAdult">
-            </div>
+                    <div class="form-group">
+                        <span class="label">Type Room</span>
+                        <input type="text" class="input-field" placeholder="Input Type Room" name="roomType" required>
+                    </div>
 
-            <div class="form-group">
-                <span class="label">Type Room</span>
-                <input type="text" class="input-field" placeholder="Input Type Room" name="roomType">
-            </div>
+                    <div class="form-group">
+                        <span class="label">Area</span>
+                        <input type="number" class="input-field" placeholder="Input Area" name="roomArea" required>
+                    </div>
 
-            <div class="form-group">
-                <span class="label">Area</span>
-                <input type="text" class="input-field" placeholder="Input Area" name="roomArea">
-            </div>
+                    <div class="form-group">
+                        <span class="label">Number Of Bed</span>
+                        <input type="number" class="input-field" placeholder="Input Number Of Bed" name="numberOfBed" required>
+                    </div>
 
-            <div class="form-group">
-                <span class="label">Number Of Bed</span>
-                <input type="text" class="input-field" placeholder="Input Number Of Bed" name="numberOfBed">
-            </div>
+                    <div class="form-group">
+                        <span class="label">Price</span>
+                        <input type="number" class="input-field" placeholder="Input Price" name="roomPrice" required>
+                    </div>
 
-            <div class="form-group">
-                <span class="label">Price</span>
-                <input type="text" class="input-field" placeholder="Input Price" name="roomPrice">
-            </div>
-
-            <div class="form-group">
-                <span class="label">Discount</span>
-                <input type="text" class="input-field" placeholder="Input Discount" name="roomDiscount">
-            </div>
-            <div class="button-container">
-                <input class="save-btn" type="submit" value="Register"> 
-            </div>
+                    <div class="form-group"> 
+                        <span class="label">Discount</span>
+                        <input type="number" class="input-field" placeholder="Input Discount" name="roomDiscount" required>
+                    </div>
+                    <div class="button-container">
+                        <input name="action" type="hidden" value="insertRoom">
+                        <input class="save-btn" type="submit" value="Register"> 
+                    </div>
+                </div>
+            </form>
         </div>
-        </form>
-        
+
         <%@ include file="Footer.jsp" %>
     </body>
+
 </html>

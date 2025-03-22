@@ -22,6 +22,9 @@ public class RoomDTO {
     private int area;
     private String status;
 
+    public RoomDTO() {
+    }
+
     public RoomDTO(String hotelid, String roomid, int capacitychild, int capacityadult, int price, double discount, String typeRoom, int numberofbed, int area, String status) {
         this.hotelid = hotelid;
         this.roomid = roomid;

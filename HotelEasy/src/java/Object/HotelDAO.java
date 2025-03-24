@@ -8,6 +8,7 @@ package Object;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import ultilies.DBUtils;
@@ -17,7 +18,73 @@ import ultilies.DBUtils;
  * @author Lenovo
  */
 public class HotelDAO {
+    public List<HotelDTA> gettop5star(){
+        try {
+            Connection con = DBUtils.getConnection();
+           String sql = "SELECT H.HotelID, H.City, H.District, H.Streets, H.NameHotel, H.RateHotel, " +
+             "MIN(R.Price) AS Price, MAX(R.Discount) AS Discount " +
+             "FROM Hotel H " +
+             "JOIN Room R ON H.HotelID = R.HotelID " +
+             "WHERE H.RateHotel = 'image/Star/5sao.png' " +
+             "GROUP BY H.HotelID, H.City, H.District, H.Streets, H.NameHotel, H.RateHotel";
 
+
+             PreparedStatement stm = con.prepareStatement(sql);
+            
+            List<HotelDTA> list = new ArrayList();
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("HotelID").trim();
+                String city = rs.getString("City");
+                String district = rs.getString("District");
+                String streets = rs.getString("Streets");
+                String nameHotel = rs.getString("NameHotel");
+                String rate = rs.getString("RateHotel");
+                double discount = rs.getDouble("Discount");
+                double price = rs.getDouble("Price");
+                HotelDTA ht = new HotelDTA(id, city, district, streets, nameHotel, rate, discount, price);
+                list.add(ht);
+            }
+            con.close();
+            return list ;
+        } catch (SQLException e) {
+            System.out.println("Lỗi ở get 5 sao" + e.getLocalizedMessage());
+        }
+        return null;
+    }
+    
+    public List<HotelDTA> getAllHotelFA(String personid) {
+        try {
+            Connection con = DBUtils.getConnection();
+            String sql = " SELECT H.HotelID, H.City, H.District, H.Streets, H.NameHotel, H.RateHotel, R.Discount, R.Price\n" +
+"FROM Favorite F\n" +
+"JOIN Hotel H ON F.HotelID = H.HotelID\n" +
+"JOIN Room R ON H.HotelID = R.HotelID\n" +
+"WHERE F.PersonID = ? and R.RoomID = 'R1' AND H.Approved != 0\n"
+                    ;
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setString(1, personid);
+            List<HotelDTA> list = new ArrayList();
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("HotelID").trim();
+                String city = rs.getString("City");
+                String district = rs.getString("District");
+                String streets = rs.getString("Streets");
+                String nameHotel = rs.getString("NameHotel");
+                String rate = rs.getString("RateHotel");
+                double discount = rs.getDouble("Discount");
+                double price = rs.getDouble("Price");
+                HotelDTA ht = new HotelDTA(id, city, district, streets, nameHotel, rate, discount, price);
+                list.add(ht);
+            }
+            con.close();
+            return list;
+        } catch (Exception e) {
+        }
+        return null;
+
+    }
     public List<HotelDTA> getHotelDiscount(int index) {
         try {
             Connection con = DBUtils.getConnection();
@@ -210,17 +277,12 @@ public class HotelDAO {
         return 0;
     }
 
-    public static void main(String[] args) {
+   
+     public static void main(String[] args) {
         HotelDAO d = new HotelDAO();
-
-        List<HotelDTA> list = d.getHotelDiscount(1);
-        for (HotelDTA hotelDTA : list) {
-            System.out.println(hotelDTA.getHotelID());
-            
-        }
-HotelDAO dao = new HotelDAO();
-            int count = dao.getCountHotel();
-            System.out.println("" + count);
+        String personid ="vangia" ;
+        List<HotelDTA> list = d.gettop5star();
+        System.out.println("" + list.size());
 
     }
    

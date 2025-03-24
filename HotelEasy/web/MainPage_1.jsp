@@ -12,7 +12,7 @@
         <title>Home</title>
         <link rel="stylesheet" href="style.css">
     </head>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style> 
         /* Reset CSS */
         body, html {
@@ -293,6 +293,55 @@
         pointer-events: none;
     }
 
+/*    // nút favorite */
+.card-img-container {
+    position: relative;
+}
+
+.favorite-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 6px;
+    border-radius: 50%;
+}
+
+.card-img-container {
+    position: relative;
+}
+
+.card-img-top {
+    width: 100%;
+    display: block;
+    border-radius: 10px;
+}
+
+/* TRÁI TIM GÓC PHẢI TRÊN */
+.favorite-icon {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    padding: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.favorite-icon i {
+    font-size: 20px;
+    color: #ccc;
+}
+
+.favorite-icon:hover i {
+    color: red;
+    cursor: pointer;
+}
+
+
+    
         /* Footer */
         /* Style chung cho footer */
         footer {
@@ -378,64 +427,62 @@
 
 
         <!-- Phần tìm kiếm theo lựa chọn -->
-        <div class="option_user">
-            <ul> 
-                <b>
-                    <a href="#" style="background-color: #9FA1A5; border-radius: 20px;
-                       padding: 0px 15px;border: 2px solid black"> <h5>Khách Sạn Đang Giảm Giá</h5></a>
-                    <a href="MainPage_2.jsp"> <h5>Khách Sạn Đánh Giá Cao Nhất</h5></a>
-                    <a href="MainPage_3.jsp"> <h5>Địa Điểm Đáng Quan Tâm Nhất</h5></a>
-                    <a href="#"><h5>Your favorite</h5></a>
-                </b>
-            </ul>
-        </div>
+        <!-- Phần tìm kiếm theo lựa chọn -->
+   <div class="option_user">
+        <ul> 
+             <b>
+                <a href="LoadHotelDiscount"><h5><b>Khách Sạn Đang Giảm Giá</b></h5></a>
+        <a href="tophotelController"><h5><b>Khách Sạn Đánh Giá Cao Nhất</b></h5></a>
+        <a href="MainPage_3"><h5><b>Địa Điểm Đáng Quan Tâm Nhất</b></h5></a>
+        <a href="FavariteController"><h5><b>Favorite</b></h5></a> 
+             </b>
+        </ul>
+    </div>
+
 
 
         <!-- Phần hiển thị các phòng -->
-        <div class="Main_page">
-            <%
-                List<HotelDTA> list = (List<HotelDTA>) request.getAttribute("List");
-                List<HotelImageDTA> i = (List<HotelImageDTA>) request.getAttribute("Img");
+       <div class="Main_page">
+    <% 
+        List<HotelDTA> list = (List<HotelDTA>) request.getAttribute("List");
+        List<HotelImageDTA> i = (List<HotelImageDTA>) request.getAttribute("Img");
+        for (HotelDTA h : list) {
+    %>
 
-                for (HotelDTA h : list) {
-
-
+    <div class="card" onclick="window.location.href='${pageContext.request.contextPath}/RoomExtensioncontroller?hotelid=<%=h.getHotelID()%>'">
+        <div class="card-img-container">
+            <% for (HotelImageDTA b : i) {
+                if (h.getHotelID().equals(b.getHotelID())) {
             %>
-            
+                <img style="border-radius: 10px;" src="<%=b.getImage().get(0)%>" class="card-img-top" alt="Hotel">
+            <% }} %>
 
-            <a href="${pageContext.request.contextPath}/RoomExtensioncontroller?hotelid=<%=h.getHotelID()%>"> 
-            <div class="card">
-                <div class="card-img-container">
-                    <%      for (HotelImageDTA b : i) {
-                            if (h.getHotelID().equals(b.getHotelID())) {
+            <!-- TRÁI TIM YÊU THÍCH -->
+            <a class="favorite-icon" href="${pageContext.request.contextPath}/FavariteController?hotelid=<%=h.getHotelID()%>" onclick="event.stopPropagation();">
+                <i class="fa fa-heart"></i>
+            </a>
 
-
-                    %>
-                    <img style="border-radius: 10px"; src="<%=b.getImage().get(0)%>" class="card-img-top" alt="Hotel">
-                    <% }
-                        }
-                    %>
-                    <span class="discount-badge">Tiết kiệm <%=h.getDiscount()%>% </span>
-                    <span class="start"> <img style="margin-left:75px;" src="<%=h.getRateHotel()%>" ></span>
-                </div>
-                <div class="card-body">
-                    <h5><%=h.getNameHotel()%></h5>
-                    <p class="location">
-                        <a href="https://www.google.com/maps?q=<%=h.getStreets() + "+" + h.getDistrict() + "+" + h.getCity()%>" target="_blank">
-                            <%=h.getStreets() + "," + h.getDistrict() + "," + h.getCity()%>
-                        </a>
-                    </p>
-                    <p class="price">
-                        <del> <%=h.getPrice()%> VND </del> <!-- del dùng để gạch ngang-->
-                        <strong><%=h.getPrice() * (1 - (h.getDiscount() / 100))%> VND</strong>
-                    </p>
-                </div>
-            </div>
-</a>
-
-            <% }%>
-
+            <span class="discount-badge">Tiết kiệm <%=h.getDiscount()%>%</span>
+            <span class="start">
+                <img style="margin-left:75px;" src="<%=h.getRateHotel()%>">
+            </span>
         </div>
+        <div class="card-body">
+            <h5><%=h.getNameHotel()%></h5>
+            <p class="location">
+                <a href="https://www.google.com/maps?q=<%=h.getStreets()%>+<%=h.getDistrict()%>+<%=h.getCity()%>" target="_blank">
+                    <%=h.getStreets()%>, <%=h.getDistrict()%>, <%=h.getCity()%>
+                </a>
+            </p>
+            <p class="price">
+                <del><%=h.getPrice()%> VND</del>
+                <strong><%=h.getPrice() * (1 - (h.getDiscount() / 100))%> VND</strong>
+            </p>
+        </div>
+    </div>
+    <% } %>
+</div>
+
 
            <div class="pagination">
     <c:forEach begin="1" end="${numberp}" var="i">

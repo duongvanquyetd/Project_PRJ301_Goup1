@@ -1,20 +1,20 @@
 <%@page import="Object.HotelImageDTA"%>
-<%@page import="Object.HotelImageDTA"%>
 <%@page import="Object.HotelDTA"%>
-<%@page import="Object.HotelDTA"%>
+<%@page import="Object.CityDTO"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    </head>
 
-<style>
+    <style> 
+        /* Reset CSS */
    /* Reset CSS */
         body, html {
             margin: 0;
@@ -333,7 +333,7 @@
 
 .favorite-icon i {
     font-size: 20px;
-    color: #ccc;
+    color: #red;
 }
 
 .favorite-icon:hover i {
@@ -385,55 +385,57 @@
 
 
 
-    
-    
-</style>
 
-<body>
-    
-    <!-- Header logo và các nút home-->
-    <header>
-        <div class="container_header">
-            <a href="#"><img src="image/hotel/KhachSanPageMain/Logo.png" alt="hint error"></a>
-            <nav>
-                <div class="Menu">
-                    <a style="margin-right: 240px;
-                    background-color: dimgrey;padding: 10px 15px;border-radius: 20px;
-                    border: 1px solid white;" href="#">Home</a>
-                    <a href="#">Favourite</a>
-                    <a href="#">Login</a>
-                    <a href="#">Register user</a>
-                    <a href="#">Register seller</a>
-                </div>
 
-            </nav>
+
+    </style>
+
+    <body>
+
+        <!-- Header logo và các nút home-->
+        <header>
+            <div class="container_header">
+                <a href="#"><img src="image/hotel/KhachSanPageMain/Logo.png" alt="hint error"></a>
+                <nav>
+                    <div class="Menu">
+                        <a style="margin-right: 240px;
+                           background-color: dimgrey;padding: 10px 15px;border-radius: 20px;
+                           border: 1px solid white;" href="#">Home</a>
+                        <a href="#">Favourite</a>
+                        <a href="#">Login</a>
+                        <a href="#">Register user</a>
+                        <a href="#">Register seller</a>
+                    </div>
+
+                </nav>
+            </div>
+        </header>
+
+
+
+        <div class="search-bar">
+
+            <div class="search-container">
+                <input class="search-input" placeholder="Location or hotel name" type="text" id="location">
+            </div>
+            <div class="search-container">
+                <input type="date" id="check-in">
+                <input type="date" id="check-out">
+            </div>
+            <div class="search-container">
+                <input type="text" id="room-type" placeholder="room-type">
+            </div>
+            <button id="search-btn">Search</button>
         </div>
-    </header>
-
-
-
-    <div class="search-bar">
-        
-        <div class="search-container">
-            <input class="search-input" placeholder="Location or hotel name" type="text" id="location">
-        </div>
-        <div class="search-container">
-            <input type="date" id="check-in">
-            <input type="date" id="check-out">
-        </div>
-        <div class="search-container">
-            <input type="text" id="room-type" placeholder="room-type">
-        </div>
-        <button id="search-btn">Search</button>
-    </div>
 
 
 
 
 
 
-    <!-- Phần tìm kiếm theo lựa chọn -->
-    <div class="option_user">
+        <!-- Phần tìm kiếm theo lựa chọn -->
+       <!-- Phần tìm kiếm theo lựa chọn -->
+   <div class="option_user">
         <ul> 
              <b>
                 <a href="LoadHotelDiscount"><h5><b>Khách Sạn Đang Giảm Giá</b></h5></a>
@@ -445,10 +447,11 @@
     </div>
 
 
-    <!-- Phần hiển thị các phòng -->
-     <div class="Main_page">
+
+        <!-- Phần hiển thị các phòng -->
+ <div class="Main_page">
     <% 
-        List<HotelDTA> list = (List<HotelDTA>) request.getAttribute("listtop5sao");
+        List<HotelDTA> list = (List<HotelDTA>) request.getAttribute("Listfa");
         List<HotelImageDTA> i = (List<HotelImageDTA>) request.getAttribute("Img");
         for (HotelDTA h : list) {
     %>
@@ -486,38 +489,24 @@
     </div>
     <% } %>
 </div>
-
-
-           <div class="pagination">
-    <c:forEach begin="1" end="${numberp}" var="i">
-        <a href="${pageContext.request.contextPath}/LoadHotelDiscount?index=${i}"
-           class="${i == currentPage ? 'active' : ''}">
-            ${i}
-        </a>
-    </c:forEach>
 </div>
 
-    </div>
+
+        <script>
+            let today = new Date().toISOString().split('T')[0];
+            document.getElementById("check-in").setAttribute("min", today);
+            document.getElementById("check-in").addEventListener("change", function () {
+                let checkInDate = document.getElementById("check-in").value;
+                document.getElementById("check-out").setAttribute("min", checkInDate);
+            });
+        </script>
 
 
+        <footer>
+            <h5>Footter</h5>
 
-    
-    
-    <script>
-        let today = new Date().toISOString().split('T')[0];
-        document.getElementById("check-in").setAttribute("min", today);
-        document.getElementById("check-in").addEventListener("change", function () {
-            let checkInDate = document.getElementById("check-in").value;
-            document.getElementById("check-out").setAttribute("min", checkInDate);
-        });
-    </script>
+        </footer>
 
-
-<footer>
-    <h5>Footter</h5>
-    
-</footer>
-
-</body>
+    </body>
 
 </html>

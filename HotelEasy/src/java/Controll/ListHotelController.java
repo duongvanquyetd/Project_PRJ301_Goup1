@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author huybe
  */
 @WebServlet(name = "LoadHotelDiscount", urlPatterns = {"/LoadHotelDiscount"})
-public class LoadHotelDiscount extends HttpServlet {
+public class ListHotelController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
